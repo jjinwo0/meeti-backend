@@ -8,6 +8,7 @@ import yjhb.meeti.dto.UserDTO;
 import yjhb.meeti.entity.User;
 import yjhb.meeti.repository.UserRepository;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -33,5 +34,14 @@ public class UserService {
         userRepository.save(user);
 
         return user.getId();
+    }
+
+    public Long update(@Valid UserDTO dto, HttpSession session){
+        User loginUser = (User) session.getAttribute("loginUser");
+
+        User updateUser = loginUser.update(dto);
+        userRepository.save(updateUser);
+
+        return updateUser.getId();
     }
 }

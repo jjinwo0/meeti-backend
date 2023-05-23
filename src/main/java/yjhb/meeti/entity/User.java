@@ -34,4 +34,12 @@ public class User {
         this.password = dto.getPassword();
         this.email = dto.getEmail();
     }
+
+    public User update(UserDTO dto){
+        this.username = dto.getUsername();
+        this.password = dto.getPassword();
+        this.email = dto.getEmail();
+
+        return this;
+    }
 }
