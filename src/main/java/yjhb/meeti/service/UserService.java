@@ -2,12 +2,16 @@ package yjhb.meeti.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yjhb.meeti.dto.LoginDTO;
 import yjhb.meeti.dto.UserDTO;
 import yjhb.meeti.entity.User;
+import yjhb.meeti.jwt.utils.JwtUtils;
 import yjhb.meeti.repository.UserRepository;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
@@ -19,6 +23,9 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    @Value("${jwt.secret}")
+    private String secretKey;
+    private Long expiredMs = 1000 * 60 * 60l;
 
     private void validateDuplicateUser(User user){
         Optional<User> findUsers = userRepository.findById(user.getId());
@@ -43,5 +50,14 @@ public class UserService {
         userRepository.save(updateUser);
 
         return updateUser.getId();
+    }
+
+    public String login(@Valid LoginDTO dto){
+
+        User findUser = userRepository.findByUsername(dto.getUsername())
+                .stream().filter(u -> u.getPassword().equals(dto.getPassword()))
+                .findFirst().orElseThrow(() -> new IllegalStateException("해당 회원정보를 찾을 수 없습니다."));
+
+        return JwtUtils.createJwt(findUser.getUsername(), secretKey, expiredMs);
     }
 }
