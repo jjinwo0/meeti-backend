@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import yjhb.meeti.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -12,5 +13,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAll();
 
     @Query("select u from User u where u.username =: username")
-    List<User> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 }

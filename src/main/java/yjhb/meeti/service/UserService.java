@@ -10,6 +10,7 @@ import yjhb.meeti.dto.UserDTO;
 import yjhb.meeti.entity.User;
 import yjhb.meeti.jwt.utils.JwtUtils;
 import yjhb.meeti.repository.UserRepository;
+import yjhb.meeti.service.mail.MailService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final MailService mailService;
     @Value("${jwt.secret}")
     private String secretKey;
     private Long expiredMs = 1000 * 60 * 60l;
