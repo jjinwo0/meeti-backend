@@ -38,14 +38,14 @@ public class UserController {
         return "redirect:/";
     }
 
-//    @PostMapping("/join/email")
-//    public ResponseEntity<Void> authEmail(@RequestBody @Valid EmailRequestDTO dto, @RequestBody @Valid AuthRequestDTO auth) throws MessagingException {
-//        String authCode = mailService.sendEmail(dto.getEmail());
-//
-//        if (authCode.equals(auth.getCode()))
-//            return ResponseEntity.ok().build();
-//        // else return
-//    }
+    @PostMapping("/join/email")
+    public ResponseEntity<Void> authEmail(@RequestBody @Valid EmailRequestDTO dto, @RequestBody @Valid AuthRequestDTO auth) throws MessagingException {
+        String authCode = mailService.sendEmail(dto.getEmail());
+
+        if (authCode.equals(auth.getCode()))
+            return ResponseEntity.ok().build();
+         else return ResponseEntity.notFound().build();
+    }
 
     @PostMapping("/update/{id}")
     public String update(@RequestBody UserDTO dto, @PathVariable(name = "id") Long id){
