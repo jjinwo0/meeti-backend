@@ -15,6 +15,7 @@ import yjhb.meeti.service.mail.MailService;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,11 +30,16 @@ public class UserService {
     private String secretKey;
     private Long expiredMs = 1000 * 60 * 60l;
 
+
     private void validateDuplicateUser(User user){
         Optional<User> findUsers = userRepository.findById(user.getId());
 
         if (!findUsers.isEmpty())
             throw new IllegalStateException("이미 존재하는 회원입니다.");
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 
     public Long join(@Valid UserDTO dto){

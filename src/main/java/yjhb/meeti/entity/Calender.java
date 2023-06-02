@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yjhb.meeti.dto.CalenderDTO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -25,6 +23,9 @@ public class Calender {
     private String start;
     @NotEmpty
     private String end;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
+    private User user;
 
     @Builder
     public Calender(CalenderDTO dto){
