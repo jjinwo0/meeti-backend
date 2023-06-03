@@ -14,7 +14,8 @@ import javax.validation.constraints.NotEmpty;
 public class Calender {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "calender_id")
     private Long id;
 
     @NotEmpty
@@ -24,13 +25,14 @@ public class Calender {
     @NotEmpty
     private String end;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    public Calender(CalenderDTO dto){
+    public Calender(CalenderDTO dto, User user){
         this.color = dto.getColor();
         this.start = dto.getStart();
         this.end = dto.getEnd();
+        this.user = user;
     }
 }

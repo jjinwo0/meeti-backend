@@ -19,7 +19,9 @@ import yjhb.meeti.service.UserService;
 import yjhb.meeti.service.mail.MailService;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Base64;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,11 +33,10 @@ public class UserController {
     private final MailService mailService;
 
     @PostMapping("/join")
-    public String join(@RequestBody UserDTO dto){
-
+    public ResponseEntity<User> join(@RequestBody UserDTO dto){
         userService.join(dto);
 
-        return "redirect:/";
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/join/email")
@@ -59,7 +60,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO dto){
-        return ResponseEntity.ok().body(userService.login(dto));
+    public ResponseEntity<String> login(@RequestBody LoginDTO dto, HttpSession session){
+
+        String loginToken = userService.login(dto);
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+
+        String username = String.valueOf(decoder.decode(loginToken)[1]);
+        User loginUser = userRepository.findByUsername(username).get();
+
+        session.setAttribute("loginUser", loginUser);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.login(dto));
     }
 }

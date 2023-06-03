@@ -3,16 +3,16 @@ package yjhb.meeti.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.dto.LoginDTO;
 import yjhb.meeti.dto.UserDTO;
+import yjhb.meeti.entity.Calender;
 import yjhb.meeti.entity.User;
 import yjhb.meeti.jwt.utils.JwtUtils;
 import yjhb.meeti.repository.UserRepository;
 import yjhb.meeti.service.mail.MailService;
-
-import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -25,6 +25,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
     @Value("${jwt.secret}")
     private String secretKey;
@@ -42,13 +43,22 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
     public Long join(@Valid UserDTO dto){
         User user = User.builder().dto(dto).build();
 
-        validateDuplicateUser(user);
+        //validateDuplicateUser(user);
         userRepository.save(user);
 
         return user.getId();
+    }
+
+    public Optional<User> findByUserId(Long userId){
+        return userRepository.findById(userId);
+    }
+
+    public User findByUsername(String username){
+        return userRepository.findByUsername(username).get();
     }
 
     public Long update(@Valid UserDTO dto, HttpSession session){
@@ -69,8 +79,10 @@ public class UserService {
         return JwtUtils.createJwt(findUser.getUsername(), secretKey, expiredMs);
     }
 
-//    public void findSchedule(){
-//
-//
-//    }
+    public List<Calender> findSchedule(Long userId){
+
+        User findUser = userRepository.findById(userId).get();
+
+        return findUser.getCalenders();
+    }
 }

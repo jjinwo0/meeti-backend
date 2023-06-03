@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.dto.CalenderDTO;
 import yjhb.meeti.entity.Calender;
+import yjhb.meeti.entity.User;
 import yjhb.meeti.repository.CalenderRepository;
 
 import java.util.List;
@@ -21,10 +22,11 @@ public class CalenderService {
         return calenderRepository.findAll();
     }
 
-    public Long createSchedule(CalenderDTO dto){
+    public Long createSchedule(CalenderDTO dto, User user){
 
         Calender cal = Calender.builder()
                 .dto(dto)
+                .user(user)
                 .build();
 
         calenderRepository.save(cal);
