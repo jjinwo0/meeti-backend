@@ -32,8 +32,8 @@ public class UserService {
     private Long expiredMs = 1000 * 60 * 60l;
 
 
-    private void validateDuplicateUser(User user){
-        Optional<User> findUsers = userRepository.findById(user.getId());
+    private void validateDuplicateUsername(User user){
+        Optional<User> findUsers = userRepository.findByUsername(user.getUsername());
 
         if (!findUsers.isEmpty())
             throw new IllegalStateException("이미 존재하는 회원입니다.");
@@ -47,7 +47,7 @@ public class UserService {
     public Long join(@Valid UserDTO dto){
         User user = User.builder().dto(dto).build();
 
-        //validateDuplicateUser(user);
+        validateDuplicateUsername(user);
         userRepository.save(user);
 
         return user.getId();
