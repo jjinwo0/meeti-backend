@@ -2,9 +2,11 @@ package yjhb.meeti.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Base64Utils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +24,8 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,36 +38,40 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity<User> join(@RequestBody UserDTO dto){
-        userService.join(dto);
+        Long joinId = userService.join(dto);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity
+                .ok()
+                .body(userRepository.findById(joinId).get());
     }
 
     @PostMapping("/join/email")
-    public ResponseEntity<Void> authEmail(@RequestBody @Valid EmailRequestDTO dto, @RequestBody @Valid AuthRequestDTO auth) throws MessagingException {
+    public ResponseEntity<HttpStatus> authEmail(@RequestBody @Valid EmailRequestDTO dto, @RequestBody @Valid AuthRequestDTO auth) throws MessagingException {
         String authCode = mailService.sendEmail(dto.getEmail());
 
         if (authCode.equals(auth.getCode()))
-            return ResponseEntity.ok().build();
-         else return ResponseEntity.notFound().build();
+            return ResponseEntity.ok().body(HttpStatus.OK);
+         else return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/update/{id}")
-    public String update(@RequestBody UserDTO dto, @PathVariable(name = "id") Long id){
+    public ResponseEntity<User> update(@RequestBody UserDTO dto, @PathVariable(name = "id") Long id){
 
         User findUser = userRepository.findById(id)
                 .orElseThrow(IllegalStateException::new);
 
-        findUser.update(dto);
+        User updateUser = findUser.update(dto);
 
-        return "redirect:/";
+        return ResponseEntity
+                .ok()
+                .body(updateUser);
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginDTO dto, HttpSession session){
 
         String loginToken = userService.login(dto);
-        Base64.Decoder decoder = Base64.getUrlDecoder();
+        Base64.Decoder decoder = Base64.getDecoder();
 
         String username = String.valueOf(decoder.decode(loginToken)[1]);
         User loginUser = userRepository.findByUsername(username).get();

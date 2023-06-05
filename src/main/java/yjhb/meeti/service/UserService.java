@@ -61,6 +61,7 @@ public class UserService {
         return userRepository.findByUsername(username).get();
     }
 
+    @Transactional
     public Long update(@Valid UserDTO dto, HttpSession session){
         User loginUser = (User) session.getAttribute("loginUser");
 

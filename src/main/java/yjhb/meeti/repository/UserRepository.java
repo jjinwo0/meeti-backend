@@ -2,6 +2,7 @@ package yjhb.meeti.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import yjhb.meeti.entity.Calender;
 import yjhb.meeti.entity.User;
 
@@ -13,9 +14,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u")
     List<User> findAll();
 
-    @Query("select u from User u where u.username =: username")
-    Optional<User> findByUsername(String username);
+//    @Query("select u from User u where u.username =: username")
+    Optional<User> findByUsername(@Param("username") String username);
 
     @Query("select u.calenders from User u where u.id =: id")
-    List<Calender> findScheduleByUserId(Long id);
+    List<Calender> findScheduleByUserId(@Param("id") Long id);
 }
