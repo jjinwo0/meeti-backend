@@ -1,16 +1,19 @@
 package yjhb.meeti.config;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@AllArgsConstructor
-public class SecurityConfiguration {
+@RequiredArgsConstructor
+public class SecurityConfig {
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Bean
-    public PasswordEncoder encoder() {
+    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 }

@@ -70,16 +70,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginDTO dto, HttpSession session){
 
-        String loginToken = userService.login(dto);
-        Base64.Decoder decoder = Base64.getDecoder();
-
-        String username = String.valueOf(decoder.decode(loginToken)[1]);
-        User loginUser = userRepository.findByUsername(username).get();
-
-        session.setAttribute("loginUser", loginUser);
+        String login = userService.login(dto);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(userService.login(dto));
+                .body(login);
     }
 }

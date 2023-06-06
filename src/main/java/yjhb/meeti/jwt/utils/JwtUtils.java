@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 public class JwtUtils {
@@ -32,4 +33,8 @@ public class JwtUtils {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
                 .getBody().getExpiration().before(new Date());
     }
+
+//    public String resolveToken(HttpServletRequest request){
+//        return request.getHeader("Authorization");
+//    }
 }
