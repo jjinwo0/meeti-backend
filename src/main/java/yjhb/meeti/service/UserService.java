@@ -2,7 +2,6 @@ package yjhb.meeti.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +9,7 @@ import yjhb.meeti.dto.LoginDTO;
 import yjhb.meeti.dto.UserDTO;
 import yjhb.meeti.entity.Calender;
 import yjhb.meeti.entity.User;
-import yjhb.meeti.jwt.utils.JwtUtils;
+import yjhb.meeti.service.jwt.JwtService;
 import yjhb.meeti.repository.UserRepository;
 import yjhb.meeti.service.mail.MailService;
 import javax.servlet.http.HttpSession;
@@ -27,9 +26,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
-    @Value("${jwt.secret}")
-    private String secretKey;
-    private Long expiredMs = 1000 * 60 * 60l;
 
 
     private void validateDuplicateUsername(User user){
@@ -77,7 +73,7 @@ public class UserService {
                 .stream().filter(u -> u.getPassword().equals(dto.getPassword()))
                 .findFirst().orElseThrow(() -> new IllegalStateException("해당 회원정보를 찾을 수 없습니다."));
 
-        return JwtUtils.createJwt(findUser.getUsername(), secretKey, expiredMs);
+        return JwtService.createAccessToken(findUser.getUsername());
     }
 
     public List<Calender> findSchedule(Long userId){
