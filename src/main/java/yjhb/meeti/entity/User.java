@@ -27,6 +27,8 @@ public class User {
     private String email;
     @OneToMany(mappedBy = "user")
     List<Calender> calenders;
+    @OneToMany(mappedBy = "user")
+    List<Reservation> reservations;
 
     @Builder
     public User(UserDTO dto) {
