@@ -35,4 +35,12 @@ public class Calender {
         this.end = dto.getEnd();
         this.user = user;
     }
+
+    public Calender update(CalenderDTO dto, User user){
+        this.color = dto.getColor();
+        this.start = dto.getStart();
+        this.end = dto.getEnd();
+        this.user = user;
+
+    }
 }

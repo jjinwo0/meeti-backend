@@ -33,4 +33,10 @@ public class CalenderService {
 
         return cal.getId();
     }
+
+    public void deleteSchedule(Long id){
+
+        Calender findCal = calenderRepository.findById(id).get();
+        calenderRepository.delete(findCal);
+    }
 }
