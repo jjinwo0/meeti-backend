@@ -20,6 +20,13 @@ public class ErrorResponse {
                 .build();
     }
 
+    public static ErrorResponse of(String errorCode, BindingResult bindingResult){
+        return ErrorResponse.builder()
+                .errorCode(errorCode)
+                .errorMessage(createErrorMessage(bindingResult)) // BindingResult 안에 에러 정보들이 들어감
+                .build();
+    }
+
     public static String createErrorMessage(BindingResult bindingResult){
 
         StringBuilder sb = new StringBuilder();
