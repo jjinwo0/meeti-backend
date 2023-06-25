@@ -1,10 +1,10 @@
-package yjhb.meeti.repository;
+package yjhb.meeti.user.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import yjhb.meeti.entity.Calender;
-import yjhb.meeti.entity.User;
+import yjhb.meeti.calender.entity.Calender;
+import yjhb.meeti.user.entity.User;
 
 import java.util.List;
 import java.util.Optional;

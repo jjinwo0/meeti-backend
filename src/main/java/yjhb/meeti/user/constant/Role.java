@@ -1,4 +1,4 @@
-package yjhb.meeti.dto;
+package yjhb.meeti.user.constant;
 
 public enum Role {
 

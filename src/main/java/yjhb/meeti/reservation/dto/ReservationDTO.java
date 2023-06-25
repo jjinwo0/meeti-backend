@@ -1,4 +1,4 @@
-package yjhb.meeti.dto;
+package yjhb.meeti.reservation.dto;
 
 import lombok.Data;
 

@@ -1,9 +1,10 @@
-package yjhb.meeti.entity;
+package yjhb.meeti.reservation.entity;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import yjhb.meeti.dto.ReservationDTO;
+import yjhb.meeti.reservation.dto.ReservationDTO;
+import yjhb.meeti.user.entity.User;
 
 import javax.persistence.*;
 

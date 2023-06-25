@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import yjhb.meeti.dto.Role;
+import yjhb.meeti.user.constant.Role;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.AuthenticationException;
 import yjhb.meeti.global.jwt.constant.GrantType;

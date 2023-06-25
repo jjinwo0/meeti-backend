@@ -1,4 +1,4 @@
-package yjhb.meeti.dto;
+package yjhb.meeti.calender.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

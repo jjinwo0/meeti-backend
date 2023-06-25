@@ -1,16 +1,16 @@
-package yjhb.meeti.service;
+package yjhb.meeti.user.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yjhb.meeti.dto.LoginDTO;
-import yjhb.meeti.dto.UserDTO;
-import yjhb.meeti.entity.Calender;
-import yjhb.meeti.entity.User;
+import yjhb.meeti.user.dto.LoginDTO;
+import yjhb.meeti.user.dto.UserDTO;
+import yjhb.meeti.calender.entity.Calender;
+import yjhb.meeti.user.entity.User;
 import yjhb.meeti.service.jwt.JwtService;
-import yjhb.meeti.repository.UserRepository;
+import yjhb.meeti.user.repository.UserRepository;
 import yjhb.meeti.service.mail.MailService;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;

@@ -1,12 +1,12 @@
-package yjhb.meeti.service.calender;
+package yjhb.meeti.calender.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yjhb.meeti.dto.CalenderDTO;
-import yjhb.meeti.entity.Calender;
-import yjhb.meeti.entity.User;
-import yjhb.meeti.repository.CalenderRepository;
+import yjhb.meeti.calender.dto.CalenderDTO;
+import yjhb.meeti.calender.entity.Calender;
+import yjhb.meeti.user.entity.User;
+import yjhb.meeti.calender.repository.CalenderRepository;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package yjhb.meeti.service.reservation;
+package yjhb.meeti.reservation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import yjhb.meeti.dto.ReservationDTO;
-import yjhb.meeti.entity.Reservation;
-import yjhb.meeti.entity.User;
-import yjhb.meeti.repository.ReservationRepository;
+import yjhb.meeti.reservation.dto.ReservationDTO;
+import yjhb.meeti.reservation.entity.Reservation;
+import yjhb.meeti.user.entity.User;
+import yjhb.meeti.reservation.repository.ReservationRepository;
 
 import java.util.List;
 

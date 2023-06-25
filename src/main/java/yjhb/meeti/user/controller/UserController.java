@@ -1,31 +1,25 @@
-package yjhb.meeti.controller;
+package yjhb.meeti.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Base64Utils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import yjhb.meeti.dto.AuthRequestDTO;
 import yjhb.meeti.dto.EmailRequestDTO;
-import yjhb.meeti.dto.LoginDTO;
-import yjhb.meeti.dto.UserDTO;
-import yjhb.meeti.entity.User;
-import yjhb.meeti.repository.UserRepository;
-import yjhb.meeti.service.UserService;
+import yjhb.meeti.user.dto.LoginDTO;
+import yjhb.meeti.user.dto.UserDTO;
+import yjhb.meeti.user.entity.User;
+import yjhb.meeti.user.repository.UserRepository;
+import yjhb.meeti.user.service.UserService;
 import yjhb.meeti.service.mail.MailService;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor

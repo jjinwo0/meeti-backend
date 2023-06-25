@@ -1,9 +1,11 @@
-package yjhb.meeti.entity;
+package yjhb.meeti.user.entity;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import yjhb.meeti.dto.UserDTO;
+import yjhb.meeti.calender.entity.Calender;
+import yjhb.meeti.reservation.entity.Reservation;
+import yjhb.meeti.user.dto.UserDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

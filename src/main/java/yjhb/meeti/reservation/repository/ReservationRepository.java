@@ -1,10 +1,7 @@
-package yjhb.meeti.repository;
+package yjhb.meeti.reservation.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import yjhb.meeti.entity.Reservation;
-
-import java.util.List;
+import yjhb.meeti.reservation.entity.Reservation;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
