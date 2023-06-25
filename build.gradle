@@ -25,13 +25,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
 
-	//jwt
-	implementation 'com.auth0:java-jwt:3.18.2'
+
+	// spring cloud openfeign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	// JWT
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
-	implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
-	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// jasypt
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 
 	//email
 	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.6'

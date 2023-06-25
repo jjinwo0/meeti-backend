@@ -1,4 +1,4 @@
-package yjhb.meeti.config;
+package yjhb.meeti.global.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
