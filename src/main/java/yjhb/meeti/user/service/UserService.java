@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yjhb.meeti.global.jwt.service.TokenManager;
-import yjhb.meeti.calender.entity.Calender;
+import yjhb.meeti.global.error.ErrorCode;
+import yjhb.meeti.global.error.exception.AuthenticationException;
 import yjhb.meeti.user.constant.UserType;
 import yjhb.meeti.user.entity.User;
 import yjhb.meeti.user.entity.dto.JoinDTO;
@@ -13,6 +13,7 @@ import yjhb.meeti.user.repository.UserRepository;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +24,6 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final TokenManager tokenManager;
-
 
     private void validateDuplicateUsername(User user){
         Optional<User> findUsers = userRepository.findByUsername(user.getUsername());
@@ -72,12 +71,17 @@ public class UserService {
     public UserType findUserTypeByUsernameAndPassword(String username, String password){
         return userRepository.findUserTypeByUsernameAndPassword(username, password);
     }
+    @Transactional(readOnly = true)
+    public User findUserByRefreshToken(String refreshToken) {
 
-    public List<Calender> findSchedule(Long userId){
+        User findMember = userRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> new AuthenticationException(ErrorCode.REFRESH_TOKEN_NOT_FOUND));
 
-        User findUser = userRepository.findById(userId).get();
+        LocalDateTime tokenExpirationTime = findMember.getTokenExpirationTime(); // refresh token의 만료시간
+        if (tokenExpirationTime.isBefore(LocalDateTime.now()))
+            throw new AuthenticationException(ErrorCode.REFRESH_TOKEN_EXPIRED);
 
-        return findUser.getCalenders();
+        return findMember;
     }
 
 }

@@ -4,11 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.util.StringUtils;
-import yjhb.meeti.calender.entity.Calender;
 import yjhb.meeti.global.jwt.dto.JwtTokenDto;
 import yjhb.meeti.global.util.DateTimeUtils;
-import yjhb.meeti.reservation.entity.Reservation;
 import yjhb.meeti.user.constant.UserType;
 import yjhb.meeti.user.constant.Role;
 
@@ -35,7 +32,7 @@ public class User {
     private String email;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    @ColumnDefault("USER")
+    @ColumnDefault("COMMON")
     private Role role;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
@@ -43,10 +40,6 @@ public class User {
     private UserType userType;
     @Column(length = 200)
     private String profile; // 프로필 사진 주소 저장 컬럼
-    @OneToMany(mappedBy = "user")
-    List<Calender> calenders;
-    @OneToMany(mappedBy = "user")
-    List<Reservation> reservations;
     @Column(length = 250)
     private String refreshToken;
     private LocalDateTime tokenExpirationTime;

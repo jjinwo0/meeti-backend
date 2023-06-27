@@ -24,11 +24,9 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
-
 
 	// spring cloud openfeign
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
@@ -39,17 +37,10 @@ dependencies {
 	// jasypt
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 
-	//email
-	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.6'
-
-	//oauth2
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:2.6.2'
-
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 dependencyManagement {

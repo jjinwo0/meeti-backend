@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import yjhb.meeti.user.constant.Role;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.AuthenticationException;
@@ -20,7 +21,9 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class TokenManager {
 
+    @Value("${token.access-token-expiration-time}")
     private final String accessTokenExpirationTime;
+    @Value("${token.refresh-token-expiration-time}")
     private final String refreshTokenExpirationTime;
     private final String tokenSecret;
 
@@ -45,7 +48,7 @@ public class TokenManager {
         return new Date(System.currentTimeMillis() + Long.parseLong(accessTokenExpirationTime));
     }
 
-    private Date createAccessTokenExpireTime() {
+    public Date createAccessTokenExpireTime() {
         // 현재시간 + 2week
         return new Date(System.currentTimeMillis() + Long.parseLong(refreshTokenExpirationTime));
     }
