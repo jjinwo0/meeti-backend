@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import yjhb.meeti.api.login.dto.LoginDTO;
 import yjhb.meeti.api.login.service.LoginService;
 import yjhb.meeti.api.login.validate.Validator;
+import yjhb.meeti.domain.user.service.UserService;
 import yjhb.meeti.global.util.AuthorizationHeaderUtils;
-import yjhb.meeti.user.constant.UserType;
-import yjhb.meeti.user.service.UserService;
+import yjhb.meeti.domain.user.constant.UserType;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,13 +31,13 @@ public class LoginController {
 
         // 헤더 내부 필수값 체크 (GrantType)
         AuthorizationHeaderUtils.validateAuthorization(authorizationHeader);
-        UserType userType = userService.findUserTypeByUsernameAndPassword(requestDto.getUsername(), requestDto.getPassword());
+        UserType userType = userService.findUserTypeByUsernameAndPassword(requestDto.getEmail(), requestDto.getPassword());
         validator.validateMemberType(userType.toString());
 
         String accessToken = authorizationHeader.split(" ")[1];
 
         LoginDTO.Response jwtTokenResponseDto =
-                loginService.login(accessToken, requestDto.getUsername(), requestDto.getPassword());
+                loginService.login(accessToken, requestDto.getEmail(), requestDto.getPassword());
 
         return ResponseEntity.ok(jwtTokenResponseDto);
 

@@ -10,7 +10,7 @@ public class LoginDTO {
 
     @Getter @Setter
     public static class Request{
-        private String username;
+        private String email;
         private String password;
     }
 

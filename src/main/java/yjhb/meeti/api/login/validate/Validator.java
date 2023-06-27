@@ -3,7 +3,7 @@ package yjhb.meeti.api.login.validate;
 import org.springframework.stereotype.Service;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
-import yjhb.meeti.user.constant.UserType;
+import yjhb.meeti.domain.user.constant.UserType;
 
 @Service
 public class Validator {

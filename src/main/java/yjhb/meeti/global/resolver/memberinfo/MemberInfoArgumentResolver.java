@@ -9,7 +9,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import yjhb.meeti.global.jwt.service.TokenManager;
-import yjhb.meeti.user.constant.Role;
+import yjhb.meeti.domain.user.constant.Role;
 
 import javax.servlet.http.HttpServletRequest;
 

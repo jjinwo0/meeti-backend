@@ -1,19 +1,22 @@
 package yjhb.meeti.global.config;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import yjhb.meeti.global.jwt.service.TokenManager;
 
 @Configuration
-@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Value("${token.access-token-expiration-time}")
+    private String accessTokenExpirationTime;
+    @Value("${token.refresh-token-expiration-time}")
+    private String refreshTokenExpirationTime;
+    @Value("${token.secret}")
+    private String tokenSecret;
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    public TokenManager tokenManager(){
+        return new TokenManager(accessTokenExpirationTime, refreshTokenExpirationTime, tokenSecret);
     }
 }

@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.api.token.dto.AccessTokenResponseDto;
+import yjhb.meeti.domain.user.service.UserService;
 import yjhb.meeti.global.jwt.constant.GrantType;
 import yjhb.meeti.global.jwt.service.TokenManager;
-import yjhb.meeti.user.entity.User;
-import yjhb.meeti.user.service.UserService;
+import yjhb.meeti.domain.user.entity.User;
 
 import java.util.Date;
 

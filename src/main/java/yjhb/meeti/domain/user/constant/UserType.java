@@ -1,4 +1,4 @@
-package yjhb.meeti.user.constant;
+package yjhb.meeti.domain.user.constant;
 
 import java.util.Arrays;
 import java.util.List;
