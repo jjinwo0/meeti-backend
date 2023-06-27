@@ -19,4 +19,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u.calenders from User u where u.id =: id")
     List<Calender> findScheduleByUserId(@Param("id") Long id);
+    Optional<User> findByEmail(String email);
+    Optional<User> findByRefreshToken(String refreshToken);
 }

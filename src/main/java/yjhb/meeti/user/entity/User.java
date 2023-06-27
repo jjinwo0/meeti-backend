@@ -4,12 +4,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yjhb.meeti.calender.entity.Calender;
+import yjhb.meeti.global.jwt.dto.JwtTokenDto;
+import yjhb.meeti.global.util.DateTimeUtils;
 import yjhb.meeti.reservation.entity.Reservation;
+import yjhb.meeti.user.constant.Role;
 import yjhb.meeti.user.dto.UserDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -27,10 +31,14 @@ public class User {
     private String password;
     @NotEmpty @Email
     private String email;
+    private Role role;
     @OneToMany(mappedBy = "user")
     List<Calender> calenders;
     @OneToMany(mappedBy = "user")
     List<Reservation> reservations;
+    @Column(length = 250)
+    private String refreshToken;
+    private LocalDateTime tokenExpirationTime;
 
     @Builder
     public User(UserDTO dto) {
@@ -45,5 +53,15 @@ public class User {
         this.email = dto.getEmail();
 
         return this;
+    }
+
+    public void updateRefreshToken(JwtTokenDto jwtTokenDto){
+        this.refreshToken = jwtTokenDto.getRefreshToken();
+        this.tokenExpirationTime = DateTimeUtils.convertToLocalDateTime(jwtTokenDto.getRefreshTokenExpireTime());
+    }
+
+    // 토큰 만료를 위한 메서드
+    public void expireRefreshToken(LocalDateTime now){
+        this.tokenExpirationTime = now;
     }
 }

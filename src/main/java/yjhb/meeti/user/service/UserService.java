@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yjhb.meeti.global.jwt.dto.JwtTokenDto;
+import yjhb.meeti.global.jwt.service.TokenManager;
 import yjhb.meeti.user.dto.LoginDTO;
 import yjhb.meeti.user.dto.UserDTO;
 import yjhb.meeti.calender.entity.Calender;
@@ -24,8 +26,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final MailService mailService;
+    private final TokenManager tokenManager;
 
 
     private void validateDuplicateUsername(User user){
@@ -73,7 +74,9 @@ public class UserService {
                 .stream().filter(u -> u.getPassword().equals(dto.getPassword()))
                 .findFirst().orElseThrow(() -> new IllegalStateException("해당 회원정보를 찾을 수 없습니다."));
 
-        return JwtService.createAccessToken(findUser.getUsername());
+        JwtTokenDto jwtTokenDto = tokenManager.createJwtTokenDto(findUser.getId(), findUser.getRole());
+
+        return TokenManager.createAccessToken(findUser.getId(), findUser.getRole(), jwtTokenDto.getAccessTokenExpireTime());
     }
 
     public List<Calender> findSchedule(Long userId){
