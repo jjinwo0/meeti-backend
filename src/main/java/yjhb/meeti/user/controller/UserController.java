@@ -2,24 +2,20 @@ package yjhb.meeti.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import yjhb.meeti.dto.AuthRequestDTO;
-import yjhb.meeti.dto.EmailRequestDTO;
-import yjhb.meeti.user.dto.LoginDTO;
+import yjhb.meeti.api.login.validate.Validator;
+import yjhb.meeti.global.util.AuthorizationHeaderUtils;
+import yjhb.meeti.api.login.dto.LoginDTO;
 import yjhb.meeti.user.dto.UserDTO;
 import yjhb.meeti.user.entity.User;
 import yjhb.meeti.user.repository.UserRepository;
 import yjhb.meeti.user.service.UserService;
-import yjhb.meeti.service.mail.MailService;
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +24,7 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final UserService userService;
-    private final MailService mailService;
+    private final Validator validator;
 
     @PostMapping("/join")
     public ResponseEntity<User> join(@RequestBody UserDTO dto){
@@ -38,16 +34,6 @@ public class UserController {
                 .ok()
                 .body(userRepository.findById(joinId).get());
     }
-
-    @PostMapping("/join/email")
-    public ResponseEntity<HttpStatus> authEmail(@RequestBody @Valid EmailRequestDTO dto, @RequestBody @Valid AuthRequestDTO auth) throws MessagingException {
-        String authCode = mailService.sendEmail(dto.getEmail());
-
-        if (authCode.equals(auth.getCode()))
-            return ResponseEntity.ok().body(HttpStatus.OK);
-         else return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
-    }
-
     @PostMapping("/update/{id}")
     public ResponseEntity<User> update(@RequestBody UserDTO dto, @PathVariable(name = "id") Long id){
 
@@ -59,15 +45,5 @@ public class UserController {
         return ResponseEntity
                 .ok()
                 .body(updateUser);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO dto, HttpSession session){
-
-        String login = userService.login(dto);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(login);
     }
 }

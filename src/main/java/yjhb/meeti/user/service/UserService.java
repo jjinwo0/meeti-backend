@@ -2,19 +2,16 @@ package yjhb.meeti.user.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yjhb.meeti.global.jwt.dto.JwtTokenDto;
 import yjhb.meeti.global.jwt.service.TokenManager;
-import yjhb.meeti.user.dto.LoginDTO;
-import yjhb.meeti.user.dto.UserDTO;
 import yjhb.meeti.calender.entity.Calender;
+import yjhb.meeti.user.constant.UserType;
 import yjhb.meeti.user.entity.User;
-import yjhb.meeti.service.jwt.JwtService;
+import yjhb.meeti.user.entity.dto.JoinDTO;
 import yjhb.meeti.user.repository.UserRepository;
-import yjhb.meeti.service.mail.MailService;
-import javax.servlet.http.HttpSession;
+
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -41,8 +38,14 @@ public class UserService {
     }
 
     @Transactional
-    public Long join(@Valid UserDTO dto){
-        User user = User.builder().dto(dto).build();
+    public Long join(@Valid JoinDTO dto){
+        User user = User.builder()
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .email(dto.getEmail())
+                .role(dto.getRole())
+                .profile(dto.getProfile())
+                .build();
 
         validateDuplicateUsername(user);
         userRepository.save(user);
@@ -58,25 +61,16 @@ public class UserService {
         return userRepository.findByUsername(username).get();
     }
 
-    @Transactional
-    public Long update(@Valid UserDTO dto, HttpSession session){
-        User loginUser = (User) session.getAttribute("loginUser");
+    public User findByPasswordWithUsername(String username, String password){
+        User findUser = userRepository.findByUsername(username).stream()
+                .filter(user -> user.getPassword().equals(password))
+                .findAny().orElseThrow(() -> new EntityNotFoundException("회원 정보를 찾을 수 없습니다."));
 
-        User updateUser = loginUser.update(dto);
-        userRepository.save(updateUser);
-
-        return updateUser.getId();
+        return findUser;
     }
 
-    public String login(@Valid LoginDTO dto){
-
-        User findUser = userRepository.findByUsername(dto.getUsername())
-                .stream().filter(u -> u.getPassword().equals(dto.getPassword()))
-                .findFirst().orElseThrow(() -> new IllegalStateException("해당 회원정보를 찾을 수 없습니다."));
-
-        JwtTokenDto jwtTokenDto = tokenManager.createJwtTokenDto(findUser.getId(), findUser.getRole());
-
-        return TokenManager.createAccessToken(findUser.getId(), findUser.getRole(), jwtTokenDto.getAccessTokenExpireTime());
+    public UserType findUserTypeByUsernameAndPassword(String username, String password){
+        return userRepository.findUserTypeByUsernameAndPassword(username, password);
     }
 
     public List<Calender> findSchedule(Long userId){

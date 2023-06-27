@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import yjhb.meeti.calender.entity.Calender;
+import yjhb.meeti.user.constant.UserType;
 import yjhb.meeti.user.entity.User;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<Calender> findScheduleByUserId(@Param("id") Long id);
     Optional<User> findByEmail(String email);
     Optional<User> findByRefreshToken(String refreshToken);
+    @Query("select u.userType from User u where u.username =: username and u.password =: password")
+    UserType findUserTypeByUsernameAndPassword(String username, String password);
 }

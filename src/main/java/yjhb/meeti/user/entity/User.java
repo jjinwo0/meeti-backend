@@ -3,12 +3,14 @@ package yjhb.meeti.user.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.util.StringUtils;
 import yjhb.meeti.calender.entity.Calender;
 import yjhb.meeti.global.jwt.dto.JwtTokenDto;
 import yjhb.meeti.global.util.DateTimeUtils;
 import yjhb.meeti.reservation.entity.Reservation;
+import yjhb.meeti.user.constant.UserType;
 import yjhb.meeti.user.constant.Role;
-import yjhb.meeti.user.dto.UserDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -31,7 +33,16 @@ public class User {
     private String password;
     @NotEmpty @Email
     private String email;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    @ColumnDefault("USER")
     private Role role;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    @ColumnDefault("COMMON")
+    private UserType userType;
+    @Column(length = 200)
+    private String profile; // 프로필 사진 주소 저장 컬럼
     @OneToMany(mappedBy = "user")
     List<Calender> calenders;
     @OneToMany(mappedBy = "user")
@@ -41,18 +52,14 @@ public class User {
     private LocalDateTime tokenExpirationTime;
 
     @Builder
-    public User(UserDTO dto) {
-        this.username = dto.getUsername();
-        this.password = dto.getPassword();
-        this.email = dto.getEmail();
-    }
-
-    public User update(UserDTO dto){
-        this.username = dto.getUsername();
-        this.password = dto.getPassword();
-        this.email = dto.getEmail();
-
-        return this;
+    public User(UserType userType, String email, String password, String username,
+                String profile, Role role){
+        this.userType = userType;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.profile = profile;
+        this.role = role;
     }
 
     public void updateRefreshToken(JwtTokenDto jwtTokenDto){
