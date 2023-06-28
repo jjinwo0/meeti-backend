@@ -10,7 +10,7 @@ public enum UserType {
     public static UserType from(String type){
         return UserType.valueOf(type.toUpperCase());
     }
-    public static boolean isMemberType(String type){
+    public static boolean isUserType(String type){
         List<UserType> memberTypes = Arrays.stream(UserType.values())
                 .filter(memberType -> memberType.name().equals(type))
                 .collect(Collectors.toList());

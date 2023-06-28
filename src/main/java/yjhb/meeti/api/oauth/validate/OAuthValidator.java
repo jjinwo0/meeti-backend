@@ -1,15 +1,15 @@
-package yjhb.meeti.api.login.validate;
+package yjhb.meeti.api.oauth.validate;
 
 import org.springframework.stereotype.Service;
+import yjhb.meeti.domain.user.constant.UserType;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
-import yjhb.meeti.domain.user.constant.UserType;
 
 @Service
-public class Validator {
+public class OAuthValidator {
 
-    public void validateMemberType(String memberType){
-        if (!UserType.isUserType(memberType))
+    public void validateUserType(String userType){
+        if (!UserType.isUserType(userType))
             throw new BusinessException(ErrorCode.INVALID_MEMBER_TYPE);
     }
 }

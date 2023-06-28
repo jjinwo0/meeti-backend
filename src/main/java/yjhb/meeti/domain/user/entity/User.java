@@ -32,7 +32,7 @@ public class User extends BaseTimeEntity {
     private String password;
 
     @Column(nullable = false, length = 20)
-    private String memberName;
+    private String username;
 
     @Column(length = 200)
     private String profile; // 프로필 사진 주소 저장 컬럼
@@ -47,12 +47,12 @@ public class User extends BaseTimeEntity {
     private LocalDateTime tokenExpirationTime;
 
     @Builder
-    public User(UserType userType, String email, String password, String memberName,
+    public User(UserType userType, String email, String password, String username,
                   String profile, Role role){
         this.userType = userType;
         this.email = email;
         this.password = password;
-        this.memberName = memberName;
+        this.username = username;
         this.profile = profile;
         this.role = role;
     }
