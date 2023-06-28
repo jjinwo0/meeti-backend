@@ -14,7 +14,7 @@ public class FeingClientExceptionErrorDecoder implements ErrorDecoder{
 
     @Override
     public Exception decode(String methodKey, Response response) {
-        log.error("{} 오쳥 실패, status : {}, reason : {}", methodKey, response.status(), response.reason());
+        log.error("{} 요청 실패, status : {}, reason : {}", methodKey, response.status(), response.reason());
 
         FeignException exception = FeignException.errorStatus(methodKey, response);
         HttpStatus httpStatus = HttpStatus.valueOf(response.status());
