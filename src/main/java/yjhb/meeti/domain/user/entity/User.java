@@ -57,6 +57,13 @@ public class User extends BaseTimeEntity {
         this.role = role;
     }
 
+    public User update(String username, String profile){
+        this.username = username;
+        this.profile = profile;
+
+        return this;
+    }
+
     public void updateRefreshToken(JwtTokenDto jwtTokenDto) {
         this.refreshToken = jwtTokenDto.getRefreshToken();
         this.tokenExpirationTime = DateTimeUtils.convertToLocalDateTime(jwtTokenDto.getRefreshTokenExpireTime());

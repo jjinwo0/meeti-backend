@@ -5,7 +5,7 @@ import lombok.Getter;
 import yjhb.meeti.domain.user.constant.Role;
 
 @Getter @Builder
-public class MemberInfoDto {
+public class UserInfoDto {
 
     private Long id;
     private Role role;

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 @RequiredArgsConstructor
-public class MemberInfoArgumentResolver implements HandlerMethodArgumentResolver {
+public class UserInfoArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final TokenManager tokenManager;
 
@@ -23,7 +23,7 @@ public class MemberInfoArgumentResolver implements HandlerMethodArgumentResolver
     public boolean supportsParameter(MethodParameter parameter) {
         // return값이 true이면, resolveArgument가 실행됨
         boolean hasMemberInfoAnnotation = parameter.hasParameterAnnotation(MemberInfo.class);
-        boolean hasMemberInfoDto = MemberInfoDto.class.isAssignableFrom(parameter.getParameterType());
+        boolean hasMemberInfoDto = UserInfoDto.class.isAssignableFrom(parameter.getParameterType());
         return hasMemberInfoAnnotation && hasMemberInfoDto;
     }
 
@@ -37,7 +37,7 @@ public class MemberInfoArgumentResolver implements HandlerMethodArgumentResolver
         Long id = Long.valueOf((Integer) tokenClaims.get("id"));
         String role = (String) tokenClaims.get("role");
 
-        return MemberInfoDto.builder()
+        return UserInfoDto.builder()
                 .id(id)
                 .role(Role.from(role))
                 .build();
