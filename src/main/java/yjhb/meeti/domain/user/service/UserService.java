@@ -10,6 +10,7 @@ import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.AuthenticationException;
 import yjhb.meeti.global.error.exception.BusinessException;
 import yjhb.meeti.global.error.exception.EntityNotFoundException;
+import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -62,5 +63,18 @@ public class UserService {
 
     public UserType findUserTypeByUsernameAndPassword(String email, String password){
         return userRepository.findUserTypeByEmailAndPassword(email, password);
+    }
+
+    public UserInfoDto findUserInfo(Long id){
+        Optional<User> findUser = userRepository.findById(id);
+        if (findUser.isEmpty())
+            throw new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS);
+
+        return UserInfoDto.builder()
+                .id(id)
+                .username(findUser.get().getUsername())
+                .profile(findUser.get().getProfile())
+                .role(findUser.get().getRole())
+                .build();
     }
 }

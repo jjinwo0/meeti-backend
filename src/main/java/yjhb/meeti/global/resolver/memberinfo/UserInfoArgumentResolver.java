@@ -22,7 +22,7 @@ public class UserInfoArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         // return값이 true이면, resolveArgument가 실행됨
-        boolean hasMemberInfoAnnotation = parameter.hasParameterAnnotation(MemberInfo.class);
+        boolean hasMemberInfoAnnotation = parameter.hasParameterAnnotation(UserInfo.class);
         boolean hasMemberInfoDto = UserInfoDto.class.isAssignableFrom(parameter.getParameterType());
         return hasMemberInfoAnnotation && hasMemberInfoDto;
     }

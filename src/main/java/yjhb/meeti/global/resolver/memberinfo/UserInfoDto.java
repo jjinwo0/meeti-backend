@@ -8,5 +8,7 @@ import yjhb.meeti.domain.user.constant.Role;
 public class UserInfoDto {
 
     private Long id;
+    private String username;
+    private String profile;
     private Role role;
 }
