@@ -19,9 +19,9 @@ public class LoginService {
     private final UserService userService;
     private final TokenManager tokenManager;
 
-    public LoginDTO.Response login(String accessToken, String email, String password){
+    public LoginDTO.Response login(String email, String password){
 
-        User findUser = userService.findByPasswordWithUsername(email, password);
+        User findUser = userService.findByEmailAndPassword(email, password);
         log.info("user : {}", findUser.getId());
 
         JwtTokenDto jwtTokenDto;

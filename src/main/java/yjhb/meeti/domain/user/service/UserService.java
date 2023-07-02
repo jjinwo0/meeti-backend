@@ -56,8 +56,8 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
     }
 
-    public User findByPasswordWithUsername(String email, String password){
-        return userRepository.findByPasswordWithUsername(email, password)
+    public User findByEmailAndPassword(String email, String password){
+        return userRepository.findByEmailAndPassword(email, password)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
     }
 

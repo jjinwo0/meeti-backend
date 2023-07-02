@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/meeti")
+@RequestMapping("/api")
 public class LoginController {
 
     private final Validator validator;
@@ -26,20 +26,10 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDTO.Response> login(@RequestBody LoginDTO.Request requestDto,
-                                                   HttpServletRequest httpServletRequest){
-
-        String authorizationHeader = httpServletRequest.getHeader("Authorization");
-
-        // 헤더 내부 필수값 체크 (GrantType)
-        AuthorizationHeaderUtils.validateAuthorization(authorizationHeader);
-        UserType userType = userService.findUserTypeByUsernameAndPassword(requestDto.getEmail(), requestDto.getPassword());
-        validator.validateMemberType(userType.toString());
-
-        String accessToken = authorizationHeader.split(" ")[1];
+    public ResponseEntity<LoginDTO.Response> login(@RequestBody LoginDTO.Request requestDto){
 
         LoginDTO.Response jwtTokenResponseDto =
-                loginService.login(accessToken, requestDto.getEmail(), requestDto.getPassword());
+                loginService.login(requestDto.getEmail(), requestDto.getPassword());
 
         return ResponseEntity.ok(jwtTokenResponseDto);
 
