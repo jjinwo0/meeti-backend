@@ -14,7 +14,7 @@ import yjhb.meeti.domain.user.entity.User;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/meeti")
 public class JoinController {
 
     private final JoinService joinService;

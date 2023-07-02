@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/meeti")
 public class LoginController {
 
     private final Validator validator;
