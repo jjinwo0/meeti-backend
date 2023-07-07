@@ -1,6 +1,7 @@
 package yjhb.meeti.domain.calender.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,4 +22,12 @@ public class Calender {
     private String color;
     private Date start;
     private Date end;
+
+    @Builder
+    public Calender(String title, String color, Date start, Date end) {
+        this.title = title;
+        this.color = color;
+        this.start = start;
+        this.end = end;
+    }
 }

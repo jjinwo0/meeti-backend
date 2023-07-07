@@ -15,6 +15,10 @@ public class CalenderService {
 
     private final CalenderRepository calenderRepository;
 
+    public void createSchedule(Calender calender){
+        calenderRepository.save(calender);
+    }
+
     public Calender findCalenderById(Long id){
         return calenderRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_CALENDER));
