@@ -1,31 +1,24 @@
-package yjhb.meeti.domain.schedule.entity;
+package yjhb.meeti.domain.calender.entity;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import yjhb.meeti.domain.common.BaseTimeEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Schedule extends BaseTimeEntity {
+public class Calender {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String start;
-    private String end;
-
-    @Builder
-    public Schedule(String title, String start, String end) {
-        this.title = title;
-        this.start = start;
-        this.end = end;
-    }
+    private String color;
+    private Date start;
+    private Date end;
 }
