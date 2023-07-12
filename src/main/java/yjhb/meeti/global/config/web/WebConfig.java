@@ -43,18 +43,18 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authenticationInterceptor) // accessToken 검증 우선
                 .order(1)
-                .addPathPatterns("/api/**")
+                .addPathPatterns("/meeti/**")
                 .excludePathPatterns(
-                        "/api/join",
-                        "/api/login",
-                        "/api/oauth/login",
-                        "/api/access-token/issue",
-                        "/api/logout"
+                        "/meeti/user/join",
+                        "/meeti/user/login",
+                        "/meeti/oauth/login",
+                        "/meeti/access-token/issue",
+                        "/meeti/user/logout"
                 );
 
         registry.addInterceptor(adminAuthorizationInterceptor)
                 .order(2)
-                .addPathPatterns("/api/admin/**");
+                .addPathPatterns("/meeti/admin/**");
     }
 
     @Override

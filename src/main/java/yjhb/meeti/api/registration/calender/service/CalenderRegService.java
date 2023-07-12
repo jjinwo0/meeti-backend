@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.api.registration.calender.dto.CalenderRegDto;
+import yjhb.meeti.api.registration.calender.dto.CalenderResponseDto;
 import yjhb.meeti.domain.calender.entity.Calender;
 import yjhb.meeti.domain.calender.repository.CalenderRepository;
+import yjhb.meeti.domain.user.entity.User;
 
 @Service
 @Transactional
@@ -14,8 +16,9 @@ public class CalenderRegService {
 
     private final CalenderRepository calenderRepository;
 
-    public Long registrationCalender(CalenderRegDto calenderRegDto){
+    public CalenderResponseDto registrationCalender(CalenderRegDto calenderRegDto, User user){
         Calender calender = Calender.builder()
+                .user(user)
                 .title(calenderRegDto.getTitle())
                 .color(calenderRegDto.getColor())
                 .start(calenderRegDto.getStart())
@@ -24,6 +27,6 @@ public class CalenderRegService {
 
         calenderRepository.save(calender);
 
-        return calender.getId();
+        return CalenderResponseDto.builder().build();
     }
 }

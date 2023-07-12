@@ -1,9 +1,11 @@
 package yjhb.meeti.domain.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import yjhb.meeti.domain.calender.entity.Calender;
 import yjhb.meeti.domain.common.BaseTimeEntity;
 import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.domain.user.constant.UserType;
@@ -12,6 +14,8 @@ import yjhb.meeti.global.util.DateTimeUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,6 +23,7 @@ import java.time.LocalDateTime;
 public class User extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -45,6 +50,9 @@ public class User extends BaseTimeEntity {
     private String refreshToken;
 
     private LocalDateTime tokenExpirationTime;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Calender> calenders = new ArrayList<>();
 
     @Builder
     public User(UserType userType, String email, String password, String username,
