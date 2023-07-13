@@ -12,4 +12,8 @@ public class OfficeResponseDto {
     private int pay;
     private String description;
     private String address;
+    private String addressDetail;
+    private String telNum;
+    private String image;
+
 }

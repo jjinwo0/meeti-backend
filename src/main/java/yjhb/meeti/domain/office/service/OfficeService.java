@@ -22,6 +22,11 @@ public class OfficeService {
     private final UserRepository userRepository;
     private final OfficeRepository officeRepository;
 
+    public Office findOfficeById(Long id){
+        return officeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_OFFICE));
+    }
+
     public List<OfficeResponseDto> findOfficeByUserId(Long userId){
 
         User findUser = userRepository.findById(userId)
@@ -37,6 +42,31 @@ public class OfficeService {
                             .pay(office.getPay())
                             .description(office.getDescription())
                             .address(office.getAddress())
+                            .addressDetail(office.getDetailAddress())
+                            .telNum(office.getTelNum())
+                            .image(office.getImage())
+                            .build()
+            );
+        }
+
+        return response;
+    }
+
+    public List<OfficeResponseDto> findOfficeByAddress(String address){
+
+        List<Office> officeList = officeRepository.findOfficeByAddress(address);
+        List<OfficeResponseDto> response = new ArrayList<>();
+
+        for (Office office : officeList){
+            response.add(
+                    OfficeResponseDto.builder()
+                            .placeName(office.getPlaceName())
+                            .pay(office.getPay())
+                            .description(office.getDescription())
+                            .address(office.getAddress())
+                            .addressDetail(office.getDetailAddress())
+                            .telNum(office.getTelNum())
+                            .image(office.getImage())
                             .build()
             );
         }

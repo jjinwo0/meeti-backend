@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yjhb.meeti.api.search.office.dto.OfficeResponseDto;
-import yjhb.meeti.domain.calender.service.CalenderService;
 import yjhb.meeti.domain.office.service.OfficeService;
 import yjhb.meeti.global.jwt.service.TokenManager;
 
@@ -32,5 +31,17 @@ public class OfficeSearchController {
         List<OfficeResponseDto> responseDto = officeService.findOfficeByUserId(userId);
 
         return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping("/search/{address}")
+    public ResponseEntity<List> findOfficeByAddress(@PathVariable("address") String address,
+                                                    HttpServletRequest httpServletRequest){
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+        List<OfficeResponseDto> findOfficeList = officeService.findOfficeByAddress(address);
+
+        return ResponseEntity.ok(findOfficeList);
     }
 }

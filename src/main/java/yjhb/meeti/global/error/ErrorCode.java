@@ -26,7 +26,10 @@ public enum ErrorCode {
     MEMBER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "M-003", "해당 회원은 존재하지 않습니다."),
 
     // 스케쥴
-    NOT_FOUND_CALENDER(HttpStatus.NOT_FOUND, "S-001", "스케쥴이 존재하지 않습니다.")
+    NOT_FOUND_CALENDER(HttpStatus.NOT_FOUND, "S-001", "스케쥴이 존재하지 않습니다."),
+
+    // 오피스
+    NOT_FOUND_OFFICE(HttpStatus.NOT_FOUND, "O-001","오피스가 존재하지 않습니다.")
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {
