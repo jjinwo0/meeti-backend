@@ -1,4 +1,4 @@
-package yjhb.meeti.api.registration.calender.dto;
+package yjhb.meeti.api.search.calender.dto;
 
 import lombok.*;
 

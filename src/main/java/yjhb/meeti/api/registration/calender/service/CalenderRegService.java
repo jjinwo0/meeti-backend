@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.api.registration.calender.dto.CalenderRegDto;
-import yjhb.meeti.api.registration.calender.dto.CalenderResponseDto;
+import yjhb.meeti.api.search.calender.dto.CalenderResponseDto;
 import yjhb.meeti.domain.calender.entity.Calender;
 import yjhb.meeti.domain.calender.repository.CalenderRepository;
 import yjhb.meeti.domain.user.entity.User;
