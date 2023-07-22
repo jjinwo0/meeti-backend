@@ -40,12 +40,12 @@ public class TokenManager {
                 .build();
     }
 
-    private Date createRefreshTokenExpireTime() {
+    public Date createAccessTokenExpireTime() {
         // 현재시간 + 15min
         return new Date(System.currentTimeMillis() + Long.parseLong(accessTokenExpirationTime));
     }
 
-    public Date createAccessTokenExpireTime() {
+    public Date createRefreshTokenExpireTime() {
         // 현재시간 + 2week
         return new Date(System.currentTimeMillis() + Long.parseLong(refreshTokenExpirationTime));
     }
