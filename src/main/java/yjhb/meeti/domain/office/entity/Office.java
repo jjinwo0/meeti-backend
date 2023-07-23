@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class Office {
 
     @Id @GeneratedValue
+    @Column(name = "office_id")
     private Long id;
     private String placeName;
     private int pay;
