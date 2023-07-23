@@ -15,7 +15,7 @@ import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/meeti/user")
 public class UserController {
 
     private final TokenManager tokenManager;
