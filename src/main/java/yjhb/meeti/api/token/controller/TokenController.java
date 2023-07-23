@@ -1,5 +1,6 @@
 package yjhb.meeti.api.token.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import yjhb.meeti.global.util.AuthorizationHeaderUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "Search Calender", description = "스케쥴 검색 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeti")

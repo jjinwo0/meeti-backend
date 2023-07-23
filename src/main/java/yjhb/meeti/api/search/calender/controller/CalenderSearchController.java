@@ -1,5 +1,6 @@
 package yjhb.meeti.api.search.calender.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import yjhb.meeti.global.jwt.service.TokenManager;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@Tag(name = "Search Calender", description = "스케쥴 검색 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("meeti/calender")
@@ -22,6 +24,7 @@ public class CalenderSearchController {
     private final CalenderService calenderService;
 
 
+    @Tag(name = "Search Calender")
     @GetMapping("/search/{userId}")
     public ResponseEntity<List> findMyCalender(@PathVariable("userId") Long userId,
                                              HttpServletRequest httpServletRequest){

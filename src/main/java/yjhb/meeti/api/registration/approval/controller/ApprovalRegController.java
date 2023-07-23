@@ -1,5 +1,6 @@
 package yjhb.meeti.api.registration.approval.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import yjhb.meeti.global.jwt.service.TokenManager;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "Approval Registration", description = "결재 등록 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeti/reg")
@@ -20,6 +22,7 @@ public class ApprovalRegController {
     private final ApprovalRegService approvalRegService;
     private final UserService userService;
 
+    @Tag(name = "Approval Registration")
     @PostMapping("/approval/{userId}")
     public ResponseEntity<String> registrationApproval(@PathVariable("userId") Long userId,
                                                                @RequestBody ApprovalRegDto dto,

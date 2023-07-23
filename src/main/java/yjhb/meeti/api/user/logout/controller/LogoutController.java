@@ -1,5 +1,6 @@
 package yjhb.meeti.api.user.logout.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import yjhb.meeti.global.util.AuthorizationHeaderUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "Logout", description = "로그아웃 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeti/user")
@@ -17,6 +19,7 @@ public class LogoutController {
 
     private final LogoutService logoutService;
 
+    @Tag(name = "Logout")
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");

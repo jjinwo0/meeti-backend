@@ -1,5 +1,6 @@
 package yjhb.meeti.api.user.update.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import yjhb.meeti.global.util.AuthorizationHeaderUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "Update", description = "유저 정보 update API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeti/user")
@@ -20,6 +22,7 @@ public class UpdateController {
     private final UpdateService updateService;
     private final TokenManager tokenManager;
 
+    @Tag(name = "Update")
     @PostMapping("/update")
     public ResponseEntity<String> updateUser(@RequestBody UpdateDTO updateDTO,
                                                 @UserInfo UserInfoDto userInfoDto,

@@ -1,5 +1,6 @@
 package yjhb.meeti.api.registration.office.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import yjhb.meeti.global.util.AuthorizationHeaderUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "Office Registration", description = "개인 공유 오피스 등록 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeti/reg")
@@ -21,6 +23,7 @@ public class OfficeRegController {
     private final OfficeRegService officeRegService;
     private final UserService userService;
 
+    @Tag(name = "Office Registration")
     @PostMapping("/office/{userId}")
     public ResponseEntity<String> registrationOffice(@RequestBody OfficeRegDto officeRegDto,
                                                      @PathVariable("userId") Long userId,

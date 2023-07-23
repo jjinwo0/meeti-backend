@@ -1,5 +1,6 @@
 package yjhb.meeti.api.user.oauth.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import yjhb.meeti.global.util.AuthorizationHeaderUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "OAuth Login", description = "소셜 로그인 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeti/oauth")
@@ -22,6 +24,7 @@ public class OAuthLoginController {
     private final OAuthLoginService oAuthLoginService;
     private final OAuthValidator oAuthValidator;
 
+    @Tag(name = "OAuth Login")
     @PostMapping("/login")
     public ResponseEntity<OAuthLoginDto.Response> oauthLogin(@RequestBody OAuthLoginDto.Request oauthLoginRequestDto,
                                                              HttpServletRequest httpServletRequest){

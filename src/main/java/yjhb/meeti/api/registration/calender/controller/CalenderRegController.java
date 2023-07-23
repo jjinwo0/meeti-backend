@@ -1,5 +1,6 @@
 package yjhb.meeti.api.registration.calender.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import yjhb.meeti.global.jwt.service.TokenManager;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "Calender Registration", description = "스케쥴 등록 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeti/reg")
@@ -22,6 +24,7 @@ public class CalenderRegController {
     private final UserService userService;
     private final TokenManager tokenManager;
 
+    @Tag(name = "Calender Registration")
     @PostMapping("/calender/{userId}")
     public ResponseEntity<String> registrationCalender(@RequestBody CalenderRegDto calenderRegDto,
                                                        @PathVariable("userId") Long userId,
