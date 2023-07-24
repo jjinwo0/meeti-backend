@@ -33,6 +33,7 @@ public class ReservationRegController {
     private final UserService userService;
     private final TokenManager tokenManager;
 
+    @Tag(name = "Create Reservation")
     @PostMapping("/reservation/{userId}")
     public ResponseEntity<String> createReservation(@RequestBody ReservationRegDto reservationRegDto,
                                                     @PathVariable("userId") Long userId,
@@ -44,10 +45,9 @@ public class ReservationRegController {
         tokenManager.validateToken(accessToken);
 
         User findUser = userService.findUserByUserId(userId);
-        Calender findCalender = calenderService.findCalenderById(reservationRegDto.getCalenderId());
         Office findOffice = officeService.findOfficeById(reservationRegDto.getOfficeId());
 
-        reservationRegService.createReservation(findUser, findOffice, findCalender);
+        reservationRegService.createReservation(findUser, reservationRegDto, findOffice);
 
         return ResponseEntity.ok("Create Reservation Successfully");
     }

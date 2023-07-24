@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import yjhb.meeti.domain.calender.entity.Calender;
 import yjhb.meeti.domain.common.BaseTimeEntity;
 import yjhb.meeti.domain.office.entity.Office;
+import yjhb.meeti.domain.reservation.entity.Reservation;
 import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.domain.user.constant.UserType;
 import yjhb.meeti.global.jwt.dto.JwtTokenDto;
@@ -57,6 +58,9 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Office> offices = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
 
     @Builder
     public User(UserType userType, String email, String password, String username,
