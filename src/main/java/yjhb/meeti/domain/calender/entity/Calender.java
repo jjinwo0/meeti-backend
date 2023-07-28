@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import yjhb.meeti.domain.user.entity.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -20,14 +21,14 @@ public class Calender {
     private Long id;
     private String title;
     private String color;
-    private Date start;
-    private Date end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    public Calender(User user, String title, String color, Date start, Date end) {
+    public Calender(User user, String title, String color, LocalDateTime start, LocalDateTime end) {
         this.user = user;
         this.title = title;
         this.color = color;

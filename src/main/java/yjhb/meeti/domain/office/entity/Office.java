@@ -4,9 +4,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import yjhb.meeti.domain.reservation.entity.Reservation;
 import yjhb.meeti.domain.user.entity.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +30,9 @@ public class Office {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "office", fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
 
     @Builder
     public Office(User user, String image, String telNum, int pay, String placeName, String description, String address, String detailAddress) {

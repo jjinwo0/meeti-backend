@@ -13,6 +13,10 @@ import yjhb.meeti.domain.office.service.OfficeService;
 import yjhb.meeti.domain.reservation.entity.Reservation;
 import yjhb.meeti.domain.reservation.repository.ReservationRepository;
 import yjhb.meeti.domain.user.entity.User;
+import yjhb.meeti.global.error.ErrorCode;
+import yjhb.meeti.global.error.exception.BusinessException;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -20,6 +24,16 @@ import yjhb.meeti.domain.user.entity.User;
 public class ReservationRegService {
 
     private final ReservationRepository reservationRepository;
+
+    public void validateReservation(Office office, Reservation reservation){
+        List<Reservation> reservations = office.getReservations();
+
+        for (Reservation res : reservations){
+            if (reservation.getStartTime().isBefore(res.getEndTime())
+                    || reservation.getEndTime().isAfter(res.getStartTime()))
+                throw new BusinessException(ErrorCode.ALREADY_EXISTS_RESERVATION);
+        }
+    }
 
     public Long createReservation(User user, ReservationRegDto dto, Office office){
 
@@ -30,6 +44,9 @@ public class ReservationRegService {
                 .user(user)
                 .office(office)
                 .build();
+
+        validateReservation(office, reservation);
+        office.getReservations().add(reservation);
 
         reservationRepository.save(reservation);
 

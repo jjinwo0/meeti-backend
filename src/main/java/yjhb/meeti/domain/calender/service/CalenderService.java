@@ -24,7 +24,7 @@ public class CalenderService {
     private final CalenderRepository calenderRepository;
     private final UserRepository userRepository;
 
-    public void createSchedule(Calender calender){
+    public void createCalender(Calender calender){
         calenderRepository.save(calender);
     }
 
