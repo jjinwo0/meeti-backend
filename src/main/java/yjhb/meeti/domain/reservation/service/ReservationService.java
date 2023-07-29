@@ -20,11 +20,11 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final OfficeService officeService;
 
-    public Long findReservationById(Long id){
+    public Reservation findReservationById(Long id){
         Reservation findReservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_RESERVATION));
 
-        return findReservation.getId();
+        return findReservation;
     }
 
     public List<Reservation> findReservationByOfficeId(Long id){
