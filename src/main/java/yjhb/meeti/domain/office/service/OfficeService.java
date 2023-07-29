@@ -3,7 +3,7 @@ package yjhb.meeti.domain.office.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yjhb.meeti.api.search.office.dto.OfficeResponseDto;
+import yjhb.meeti.api.office.search.dto.OfficeResponseDto;
 import yjhb.meeti.domain.office.entity.Office;
 import yjhb.meeti.domain.office.repository.OfficeRepository;
 import yjhb.meeti.domain.user.entity.User;
