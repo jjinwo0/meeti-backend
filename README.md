@@ -1,7 +1,7 @@
 # 공유 오피스 - MEETI
 
 - 프로젝트 인원 : 4명
-- 프로젝트 기간 : 23.03 ~ 23.6 (차후 Spring Boot로 대체)
+- 프로젝트 기간 : 23.07 ~ ing (Nest.js에서 Spring Boot로 대체 진행중)
 - 백엔드 전체 기능구현
   <br/>
   <br/>
@@ -18,38 +18,26 @@
    <br/>
    
 # 기술 스택
-### 언어 <br/>
-<div>
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"/>
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white"/>
-</div>
 <br/>
   
-### 프레임워크 & 플랫폼 <br/>
+### 프레임워크 <br/>
 <div>
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"/>
-  <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=NestJS&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"/>
 </div>
   <br/>
   
 ### DB <br/>
 <div>
-  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=Mongoose&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/>
 </div>
 <br/>
 
-### 프로젝트 배포 & 툴 <br/>
+### 툴 <br/>
 <div>
-  <img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=Heroku&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Intellij IDEA-000000?style=for-the-badge&logo=Intellij IDEA&logoColor=white"/>
 </div>
 <br/>
 <br/>
-
-# 시스템 구성도
-
-![스크린샷 2023-06-13 오전 10 28 14](https://github.com/mee-ti/MEETI_BACKEND/assets/114549939/37cb4254-ff28-4419-9c00-8993b089f55d)
 
 
 
