@@ -20,7 +20,6 @@ public class ApprovalRegService {
                 .username(user.getUsername())
                 .requestDetail(dto.getRequestDetail())
                 .file(dto.getFile())
-                .decisionDetail(dto.getDecisionDetail())
                 .build();
 
         approvalRepository.save(approval);
