@@ -17,11 +17,13 @@ public class File {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String content;
     private String fileName;
     private String filePath;
 
     @Builder
-    public File(String fileName, String filePath) {
+    public File(String content, String fileName, String filePath) {
+        this.content = content;
         this.fileName = fileName;
         this.filePath = filePath;
     }
