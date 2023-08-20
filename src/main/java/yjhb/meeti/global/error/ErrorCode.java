@@ -36,7 +36,10 @@ public enum ErrorCode {
 
     // 예약
     NOT_FOUND_RESERVATION(HttpStatus.NOT_FOUND, "R-001", "예약 내역이 존재하지 않습니다."),
-    ALREADY_EXISTS_RESERVATION(HttpStatus.UNAUTHORIZED, "R-002", "이미 예약된 공간입니다.")
+    ALREADY_EXISTS_RESERVATION(HttpStatus.UNAUTHORIZED, "R-002", "이미 예약된 공간입니다."),
+
+    // 파일
+    NOT_FOUND_FILE(HttpStatus.UNAUTHORIZED, "F-001", "해당 파일을 찾을 수 없습니다.")
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

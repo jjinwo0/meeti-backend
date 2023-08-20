@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import yjhb.meeti.api.file.upload.dto.FileDto;
+import yjhb.meeti.api.file.dto.FileDto;
 import yjhb.meeti.domain.file.entity.File;
 import yjhb.meeti.domain.file.repository.FileRepository;
+import yjhb.meeti.global.error.ErrorCode;
+import yjhb.meeti.global.error.exception.BusinessException;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -20,6 +22,14 @@ public class FileService {
     @Value("${part4.upload.path}")
     private String fileDir;
     private final FileRepository fileRepository;
+
+    public File findById(Long id){
+
+        File findFile = fileRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_FILE));
+
+        return findFile;
+    }
 
     public Long save(MultipartFile files) throws IOException {
 

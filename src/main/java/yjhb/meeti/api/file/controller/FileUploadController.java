@@ -1,4 +1,4 @@
-package yjhb.meeti.api.file.upload.controller;
+package yjhb.meeti.api.file.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

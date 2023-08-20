@@ -1,4 +1,4 @@
-package yjhb.meeti.api.file.upload.dto;
+package yjhb.meeti.api.file.dto;
 
 
 import lombok.Builder;
