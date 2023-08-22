@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.api.pay.dto.KakaoApproveResponseDto;
+import yjhb.meeti.api.pay.dto.KakaoCancelResponseDto;
 import yjhb.meeti.api.pay.dto.KakaoReadyResponseDto;
 import yjhb.meeti.domain.kakaopay.service.KakaoPayService;
 import yjhb.meeti.global.error.ErrorCode;
@@ -47,5 +48,16 @@ public class KakaoPayController {
         KakaoApproveResponseDto kakaoApprove = kakaoPayService.approveResponse(token);
 
         return new ResponseEntity<>(kakaoApprove, HttpStatus.OK);
+    }
+
+    /**
+     * 환불
+     */
+    @PostMapping("/refund")
+    public ResponseEntity refund() {
+
+        KakaoCancelResponseDto kakaoCancelResponse = kakaoPayService.kakaoCancel();
+
+        return new ResponseEntity<>(kakaoCancelResponse, HttpStatus.OK);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import yjhb.meeti.api.pay.dto.KakaoApproveResponseDto;
+import yjhb.meeti.api.pay.dto.KakaoCancelResponseDto;
 import yjhb.meeti.api.pay.dto.KakaoReadyResponseDto;
 
 @Service
@@ -95,5 +96,33 @@ public class KakaoPayService {
                 KakaoApproveResponseDto.class);
 
         return approveResponse;
+    }
+
+
+    /**
+     * 결제 환불
+     */
+    public KakaoCancelResponseDto kakaoCancel() {
+
+        // 카카오페이 요청
+        MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("cid", cid);
+        parameters.add("tid", "환불할 결제 고유 번호");
+        parameters.add("cancel_amount", "환불 금액");
+        parameters.add("cancel_tax_free_amount", "환불 비과세 금액");
+        parameters.add("cancel_vat_amount", "환불 부가세");
+
+        // 파라미터, 헤더
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
+
+        // 외부에 보낼 url
+        RestTemplate restTemplate = new RestTemplate();
+
+        KakaoCancelResponseDto cancelResponse = restTemplate.postForObject(
+                "https://kapi.kakao.com/v1/payment/cancel",
+                requestEntity,
+                KakaoCancelResponseDto.class);
+
+        return cancelResponse;
     }
 }
