@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yjhb.meeti.domain.office.entity.Office;
+import yjhb.meeti.domain.payment.entity.Payment;
 import yjhb.meeti.domain.user.entity.User;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 public class Reservation {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "reservation_id")
     private Long id;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
@@ -34,6 +36,9 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "office_id")
     private Office office;
+
+    @OneToOne(mappedBy = "payment_id")
+    private Payment payment;
 
     @Builder
     public Reservation(LocalDateTime date, LocalDateTime startTime, LocalDateTime endTime, User user, Office office) {

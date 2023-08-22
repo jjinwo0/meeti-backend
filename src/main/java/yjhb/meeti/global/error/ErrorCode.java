@@ -23,7 +23,7 @@ public enum ErrorCode {
     // 회원
     INVALID_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "M-001", "잘못된 회원 타입입니다. (memberType : KAKAO)"),
     ALREADY_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "M-002", "이미 가입된 회원입니다."),
-    MEMBER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "M-003", "해당 회원은 존재하지 않습니다."),
+    USER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "M-003", "해당 회원은 존재하지 않습니다."),
 
     // 스케쥴
     NOT_FOUND_CALENDER(HttpStatus.NOT_FOUND, "S-001", "스케쥴이 존재하지 않습니다."),
@@ -39,7 +39,10 @@ public enum ErrorCode {
     ALREADY_EXISTS_RESERVATION(HttpStatus.UNAUTHORIZED, "R-002", "이미 예약된 공간입니다."),
 
     // 파일
-    NOT_FOUND_FILE(HttpStatus.UNAUTHORIZED, "F-001", "해당 파일을 찾을 수 없습니다.")
+    NOT_FOUND_FILE(HttpStatus.UNAUTHORIZED, "F-001", "해당 파일을 찾을 수 없습니다."),
+
+    // 결제
+    INVALID_PAYMENT_AMOUNT(HttpStatus.BAD_REQUEST, "P-001", "유효하지 않은 결제 요청입니다.")
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

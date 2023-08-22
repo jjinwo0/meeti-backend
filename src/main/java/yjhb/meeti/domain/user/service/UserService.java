@@ -34,8 +34,9 @@ public class UserService {
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_MEMBER);
     }
 
-    public Optional<User> findUserByEmail(String email){
-        return userRepository.findByEmail(email);
+    public User findUserByEmail(String email){
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_EXISTS));
     }
 
     @Transactional(readOnly = true)
@@ -53,12 +54,12 @@ public class UserService {
     public User findUserByUserId(Long id){
 
         return userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXISTS));
     }
 
     public User findByEmailAndPassword(String email, String password){
         return userRepository.findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXISTS));
     }
 
     public UserType findUserTypeByUsernameAndPassword(String email, String password){
@@ -68,7 +69,7 @@ public class UserService {
     public UserInfoDto findUserInfo(Long id){
         Optional<User> findUser = userRepository.findById(id);
         if (findUser.isEmpty())
-            throw new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS);
+            throw new EntityNotFoundException(ErrorCode.USER_NOT_EXISTS);
 
         return UserInfoDto.builder()
                 .id(id)

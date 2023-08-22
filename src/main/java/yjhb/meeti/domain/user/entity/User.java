@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import yjhb.meeti.domain.calender.entity.Calender;
 import yjhb.meeti.domain.common.BaseTimeEntity;
 import yjhb.meeti.domain.office.entity.Office;
+import yjhb.meeti.domain.payment.entity.Payment;
 import yjhb.meeti.domain.reservation.entity.Reservation;
 import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.domain.user.constant.UserType;
