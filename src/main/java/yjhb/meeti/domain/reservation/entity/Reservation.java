@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yjhb.meeti.domain.office.entity.Office;
-import yjhb.meeti.domain.payment.entity.Payment;
+import yjhb.meeti.domain.kakaopay.entity.KakaoPay;
 import yjhb.meeti.domain.user.entity.User;
 
 import javax.persistence.*;
@@ -38,7 +38,7 @@ public class Reservation {
     private Office office;
 
     @OneToOne(mappedBy = "payment_id")
-    private Payment payment;
+    private KakaoPay payment;
 
     @Builder
     public Reservation(LocalDateTime date, LocalDateTime startTime, LocalDateTime endTime, User user, Office office) {
