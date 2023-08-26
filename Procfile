@@ -1,1 +1,0 @@
-web:java -jar build/libs/meeti-0.0.1-SNAPSHOT.jar

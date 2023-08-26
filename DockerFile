@@ -1,0 +1,4 @@
+FROM openjdk:11
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} meeti.jar
+ENTRYPOINT ["java","-jar","/meeti.jar"]
