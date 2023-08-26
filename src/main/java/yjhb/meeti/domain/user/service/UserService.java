@@ -34,9 +34,8 @@ public class UserService {
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_MEMBER);
     }
 
-    public User findUserByEmail(String email){
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_EXISTS));
+    public Optional<User> findUserByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 
     @Transactional(readOnly = true)

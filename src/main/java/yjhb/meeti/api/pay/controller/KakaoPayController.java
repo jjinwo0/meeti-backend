@@ -10,6 +10,9 @@ import yjhb.meeti.api.pay.dto.KakaoReadyResponseDto;
 import yjhb.meeti.domain.kakaopay.service.KakaoPayService;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
+import yjhb.meeti.global.jwt.service.TokenManager;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/meeti/kakao/payment")
@@ -17,10 +20,16 @@ import yjhb.meeti.global.error.exception.BusinessException;
 public class KakaoPayController {
 
     private final KakaoPayService kakaoPayService;
+    private final TokenManager tokenManager;
 
     // 결제 요청
     @PostMapping("/ready")
-    public ResponseEntity<KakaoReadyResponseDto> readyToKakaoPay(){
+    public ResponseEntity<KakaoReadyResponseDto> readyToKakaoPay(HttpServletRequest httpServletRequest){
+
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
 
         return ResponseEntity.ok(kakaoPayService.kakaoPayReady());
     }

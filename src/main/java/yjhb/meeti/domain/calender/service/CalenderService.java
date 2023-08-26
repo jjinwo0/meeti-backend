@@ -35,7 +35,7 @@ public class CalenderService {
 
     public List<CalenderResponseDto> findCalenderByUserId(Long userId) {
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_EXISTS));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_EXISTS));
 
         List<Calender> calenders = findUser.getCalenders();
         List<CalenderResponseDto> response = new ArrayList<>();

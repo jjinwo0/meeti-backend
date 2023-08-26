@@ -17,6 +17,6 @@ public class ApprovalService {
 
     public Approval findApprovalById(Long id){
         return approvalRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXISTS));
     }
 }

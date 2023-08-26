@@ -20,7 +20,8 @@ public class KakaoPay extends BaseTimeEntity {
     private String orderName;
     private String orderId;
     private boolean paySuccessYN;
-    @OneToOne(mappedBy = "reservation_id")
+    @OneToOne
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation;
     private String paymentKey;
     private String failReason;

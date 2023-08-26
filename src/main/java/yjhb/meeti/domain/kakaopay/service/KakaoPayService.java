@@ -19,9 +19,9 @@ import yjhb.meeti.api.pay.dto.KakaoReadyResponseDto;
 public class KakaoPayService {
 
     @Value("${kakao.client.id}")
-    private final String cid;
+    private String cid;
     @Value("${kakao.admin.key}")
-    private final String adminKey;
+    private String adminKey;
     private KakaoReadyResponseDto kakaoPayResponseDto;
 
 
@@ -73,8 +73,6 @@ public class KakaoPayService {
      * 결제 완료 승인
      */
     public KakaoApproveResponseDto approveResponse(String token){
-
-
 
         // 카카오 요청
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();

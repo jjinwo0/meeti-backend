@@ -37,7 +37,7 @@ public class Reservation {
     @JoinColumn(name = "office_id")
     private Office office;
 
-    @OneToOne(mappedBy = "payment_id")
+    @OneToOne(mappedBy = "reservation")
     private KakaoPay payment;
 
     @Builder

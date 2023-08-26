@@ -30,7 +30,7 @@ public class OfficeService {
     public List<OfficeResponseDto> findOfficeByUserId(Long userId){
 
         User findUser = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_EXISTS));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXISTS));
 
         List<Office> offices = findUser.getOffices();
         List<OfficeResponseDto> response = new ArrayList<>();
