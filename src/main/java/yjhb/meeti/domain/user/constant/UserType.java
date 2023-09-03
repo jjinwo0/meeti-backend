@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum UserType {
-    COMMON, KAKAO;
+    COMMON, KAKAO, GOOGLE;
 
     public static UserType from(String type){
         return UserType.valueOf(type.toUpperCase());
