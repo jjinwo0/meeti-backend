@@ -1,0 +1,101 @@
+server:
+  port: 8080
+
+token:
+  secret: ENC(F9QSTSYJ/xZMn0qoiNe8sWbMF/CggHI1) # 임의의 문자열
+  access-token-expiration-time: 900000 # 15분 1000(ms) x 60(s) x 15(m)
+  refresh-token-expiration-time: 1209600000 # 2주 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d)
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true # query문 구조를 갖춰서 출력
+        default_batch_fetch_size: 500 # 일대다 컬렉션 조회 시 성능 최적화
+    database: mysql
+    show-sql: true
+    open-in-view: true # 영속성 컨텍스트의 생존 범위를 트랜잭션 범위로 한정
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: ENC(5VOfLepp0XCYl5HXVPercY76qR77IzKEhszhv0LJ+9D0xRfoiFVDLiFkqxcOXCSzzpyVt1IHYqWOE/zAZQctLELLBrgd93nWFXNMPvs17HFKAx9DXTLckM773uV96/aLO8HkdywYjzy1hQ2zdv3+Gw==)
+    url: ENC(IGxsVS4AEob6QhsgBpAjI/ahsRoh9K1H8eSH7FoPpBMA99oCJIU8L2PC5z3QgsZaxN/1e6qEGXc5BNZQnAH+4fbEkhP3dlTgMUfQ56e9HMVh+YlQbJUDGytmp26jyjYgLHWnDPm33L79xI/ujb84BQ==)
+#    username: i42cKz+YSkObBs26m7pBTg==
+    username: ENC(M9HaNMFao/gYcq7Lu7A2aA==)
+    password: ENC(jY0l1w3cwXsR+sQ9E55X+TMJmQONjWv0)
+
+  host: smtp.gmail.com
+  port: 587
+  username: ENC(yyhYwkGZCRb3R+wSSfm2UT7D1YEL5PCx9SwhgJA7wuA=)
+  password: ENC(EGaZVXAmnCabw5vs9zv4N5rW1oW+rUaYN6tGB+oTA+0=)
+  properties:
+    mail:
+      smtp:
+        auth: true
+        timeout: 5000
+        starttls:
+          enable: true
+
+  profiles:
+    include: oauth
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB # 파일 업로드 요청 시 하나의 파일 크기를 10MB로 제한
+      max-request-size: 100MB # 파일 업로드 요청 시 모든 파일 크기 합을 100MB로 제한
+      location: ENC(JtQdv1BTRqHvbza9TC/xgXQ+q0uuZzfWcXogvTqx6D4=)
+
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          google:
+#            client-id: ENC(zZFwNFk3f2QcDU1DCTE3nUqefoM5EhhdhvxYoZn+x1D/+tcDt2txAcC9BGt+Ir4Lk2/bTCQ81CsNrWq0oomJqUJGLXsvL7hDA/CPVe99FB+TWJ0H1sFQ8g==)
+#            client-secret: ENC(vcrdKbMPFS2ZiaGyYrrlNp0VmOjuV+cuZR/QDp25lDPZiYEnqe5ParHWJvP20iZg)
+#            redirect-uri: http://localhost:8080/login/oauth2/code/google
+#            scope:
+#              - profile
+#              - email
+#
+#        provider:
+#          token-uri: https://accounts.google.com/o/oauth2/token
+#          authorization-uri: https://accounts.google.com/o/oauth2/auth
+#          user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+
+  # Swagger 관련 설정
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    org.hibernate.type: trace # 콘솔창에 조건에 바인딩되는 값 조회 결과 및 출력
+    yjhb.meeti: debug # todo 패키지 수정
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000 # 연결 (5초 이내)
+        read-timeout: 5000 # 응답 (5초 이내)
+
+kakao:
+  client:
+    id: ENC(OxkVWGObchH4dXqk3MZCPlqk8ytgeF+QH5xwLNI9603/IS33kOHSKkhGg6wo3/kV) # Rest API Key
+    secret: ENC(nUMgOJLRyFDXVmG1C3oF80Mqqc8GMiJMVurz6wgg0hGy6/PM4uN0FgY4ZRypZV6AxWEjge8AvylTaau8QgcMFzIpwMUWBPnyjILxY07R2K4=) # Client Secret Key
+  admin:
+    key: ENC(1d6jm4IQmTfahly8uUI4JkoNoO0KNiWZ+b07Lo1gqcLaS9pp7mPwbgox0wW+vSIm)
+
+jasypt:
+  password: ${PASSWORD}
+
+part4:
+  upload:
+    path: ENC(Yjperm8kB/tciNFQ/rwM9YVwqQUGMW7rPjIVHV5r/fs=)
+
+#tosspayments:
+#  apiKey: test_ck_kYG57Eba3GZ4Rx5y2Ww8pWDOxmA1
+#  secret: test_sk_QbgMGZzorzeK4xbNRw2Vl5E1em4d
