@@ -20,8 +20,8 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(5VOfLepp0XCYl5HXVPercY76qR77IzKEhszhv0LJ+9D0xRfoiFVDLiFkqxcOXCSzzpyVt1IHYqWOE/zAZQctLELLBrgd93nWFXNMPvs17HFKAx9DXTLckM773uV96/aLO8HkdywYjzy1hQ2zdv3+Gw==) # EC2
-#    url: ENC(IGxsVS4AEob6QhsgBpAjI/ahsRoh9K1H8eSH7FoPpBMA99oCJIU8L2PC5z3QgsZaxN/1e6qEGXc5BNZQnAH+4fbEkhP3dlTgMUfQ56e9HMVh+YlQbJUDGytmp26jyjYgLHWnDPm33L79xI/ujb84BQ==) # local
+#    url: ENC(d3JB1NGPh2rC9f06uCXVl4Ho3EXQWQ/m+DrR/+YsvwufucVKTy/lC7w5PMCXwczl8nvSQ/dC+FxNQRLhKJYy5o7VeBkxnqC9n8jElg1RjnwvjAH9ysy9SjpMSYMB6XkwA9Zt7E5pqws5HBvC7Xf/Dg==) # EC2
+    url: ENC(FeN8u+sqcu4sKMG8fTZ/4nSQJ3fkghB3gpmXPDRAdvGtnWXZtDo0S1NvANniFtAubYgH3m2/jAagdLGNYAflpK/eL4jgQPD0u6NlI7b1KEH+52XHVIggynIRLfRtwItwnc+X9wU3u6TzGLi+YPh78A==) # local
     username: ENC(i42cKz+YSkObBs26m7pBTg==) # EC2
 #    username: ENC(M9HaNMFao/gYcq7Lu7A2aA==) # local
     password: ENC(jY0l1w3cwXsR+sQ9E55X+TMJmQONjWv0)
