@@ -1,5 +1,6 @@
 package yjhb.meeti.api.pay.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import yjhb.meeti.global.jwt.service.TokenManager;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "KakaoPay", description = "카카오페이 결제 API")
 @RestController
 @RequestMapping("/meeti/kakao/payment")
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class KakaoPayController {
     private final TokenManager tokenManager;
 
     // 결제 요청
+    @Tag(name = "Ready to KakaoPay")
     @PostMapping("/ready")
     public ResponseEntity<KakaoReadyResponseDto> readyToKakaoPay(HttpServletRequest httpServletRequest){
 
@@ -35,6 +38,7 @@ public class KakaoPayController {
     }
 
     // 결제 취소
+    @Tag(name = "Cancel")
     @GetMapping("/cancel")
     public void cancel(){
 
@@ -42,6 +46,7 @@ public class KakaoPayController {
     }
 
     // 결제 실패
+    @Tag(name = "Failed")
     @GetMapping("/fail")
     public void fail(){
 
@@ -51,6 +56,7 @@ public class KakaoPayController {
     /**
      * 결제 성공
      */
+    @Tag(name = "Success")
     @GetMapping("/success")
     public ResponseEntity afterPayRequest(@RequestParam("token") String token) {
 
@@ -62,6 +68,7 @@ public class KakaoPayController {
     /**
      * 환불
      */
+    @Tag(name = "Refund")
     @PostMapping("/refund")
     public ResponseEntity refund() {
 

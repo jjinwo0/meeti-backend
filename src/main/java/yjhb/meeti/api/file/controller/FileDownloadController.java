@@ -1,6 +1,7 @@
 package yjhb.meeti.api.file.controller;
 
 import feign.template.UriUtils;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -18,7 +19,7 @@ import yjhb.meeti.global.jwt.service.TokenManager;
 import javax.servlet.http.HttpServletRequest;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
-
+@Tag(name = "File Download", description = "파일 다운로드 API")
 @RestController
 @RequestMapping("/meeti/file")
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class FileDownloadController {
     private final FileService fileService;
     private final TokenManager tokenManager;
 
+    @Tag(name = "File Download")
     @GetMapping("/downloads/{fileId}")
     public ResponseEntity<Resource> downloadFile(@PathVariable("fileId") Long id,
                                                  HttpServletRequest httpServletRequest) throws MalformedURLException{

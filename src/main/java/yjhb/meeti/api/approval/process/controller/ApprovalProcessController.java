@@ -1,5 +1,6 @@
 package yjhb.meeti.api.approval.process.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/meeti/admin/process")
 @RequiredArgsConstructor
+@Tag(name = "Approval Process", description = "결재 진행 API")
 public class ApprovalProcessController {
 
     private final TokenManager tokenManager;
     private final ApprovalProcessService approvalProcessService;
 
+    @Tag(name = "Approval Process")
     @PostMapping("/approval/{approvalId}")
     public ResponseEntity<String> process(@PathVariable("approvalId") Long approvalId,
                                      @RequestBody Decision decision,

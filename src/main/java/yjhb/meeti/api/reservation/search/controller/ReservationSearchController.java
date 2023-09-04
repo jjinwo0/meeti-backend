@@ -1,5 +1,6 @@
 package yjhb.meeti.api.reservation.search.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+@Tag(name = "Search Reservation", description = "예약 조회 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeti/reservation")
@@ -29,6 +31,7 @@ public class ReservationSearchController {
     private final OfficeService officeService;
     private final ReservationService reservationService;
 
+    @Tag(name = "Find Reservation")
     @GetMapping("/search/{reservationId}")
     public ResponseEntity<Reservation> findReservation(@PathVariable("reservationId") Long id,
                                                        HttpServletRequest httpServletRequest){
@@ -43,6 +46,7 @@ public class ReservationSearchController {
         return ResponseEntity.ok(findReservation);
     }
 
+    @Tag(name = "Find Reservation by UserId")
     @GetMapping("/search/{userId}")
     public ResponseEntity<List> findUserReservation(@PathVariable("userId") Long userId,
                                                 HttpServletRequest httpServletRequest){
@@ -71,6 +75,7 @@ public class ReservationSearchController {
         return ResponseEntity.ok(reservationResponseDtos);
     }
 
+    @Tag(name = "Find Reservation by Office Id")
     @GetMapping("/search/{officeId}")
     public ResponseEntity<List> findOfficeReservation(@PathVariable("officeId") Long officeId,
                                                       HttpServletRequest httpServletRequest){

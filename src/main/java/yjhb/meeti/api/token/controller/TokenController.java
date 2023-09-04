@@ -20,6 +20,7 @@ public class TokenController {
 
     private final TokenService tokenService;
 
+    @Tag(name = "Create Access Token")
     @PostMapping("/access-token/issue")
     public ResponseEntity<AccessTokenResponseDTO> createAccessToken(HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
