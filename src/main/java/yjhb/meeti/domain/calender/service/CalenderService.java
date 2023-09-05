@@ -44,8 +44,10 @@ public class CalenderService {
                     CalenderResponseDto.builder()
                             .title(cal.getTitle())
                             .color(cal.getColor())
-                            .start(cal.getStart())
-                            .end(cal.getEnd())
+                            .startDate(cal.getStartDate())
+                            .startTime(cal.getStartTime())
+                            .endDate(cal.getEndDate())
+                            .endTime(cal.getEndTime())
                             .build()
             );
         }
