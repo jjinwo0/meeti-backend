@@ -25,6 +25,7 @@ public class Calender {
     private String startTime;
     private String endDate;
     private String endTime;
+    private String place;
 //    private LocalDateTime start;
 //    private LocalDateTime end;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -32,13 +33,14 @@ public class Calender {
     private User user;
 
     @Builder
-    public Calender(String title, String color, String startDate, String startTime, String endDate, String endTime, User user) {
+    public Calender(String title, String color, String startDate, String startTime, String endDate, String endTime, String place, User user) {
         this.title = title;
         this.color = color;
         this.startDate = startDate;
         this.startTime = startTime;
         this.endDate = endDate;
         this.endTime = endTime;
+        this.place = place;
         this.user = user;
     }
 }

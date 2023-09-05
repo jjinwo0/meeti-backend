@@ -48,6 +48,7 @@ public class CalenderService {
                             .startTime(cal.getStartTime())
                             .endDate(cal.getEndDate())
                             .endTime(cal.getEndTime())
+                            .place(cal.getPlace())
                             .build()
             );
         }

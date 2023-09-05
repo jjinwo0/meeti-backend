@@ -19,6 +19,7 @@ public class CalenderRegDto {
     private String startTime;
     private String endDate;
     private String endTime;
+    private String place;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 //    private LocalDateTime start;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
