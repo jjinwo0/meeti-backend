@@ -10,7 +10,7 @@ public class ApprovalRegDto {
 
     private String username;
     private String requestDetail;
-    private File file;
+    private String proceeding;
     private String decisionDetail;
     private String decision;
 }

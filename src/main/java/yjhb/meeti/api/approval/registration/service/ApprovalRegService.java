@@ -19,7 +19,7 @@ public class ApprovalRegService {
         Approval approval = Approval.builder()
                 .username(user.getUsername())
                 .requestDetail(dto.getRequestDetail())
-                .file(dto.getFile())
+                .proceeding(dto.getProceeding())
                 .build();
 
         approvalRepository.save(approval);

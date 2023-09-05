@@ -18,15 +18,15 @@ public class Approval {
     private Long id;
     private String username;
     private String requestDetail;
-    private File file;
+    private String proceeding;
     private String decisionDetail;
     private Decision decision;
 
     @Builder
-    public Approval(String username, String requestDetail, File file, String decisionDetail, Decision decision) {
+    public Approval(String username, String requestDetail, String proceeding, String decisionDetail, Decision decision) {
         this.username = username;
         this.requestDetail = requestDetail;
-        this.file = file;
+        this.proceeding = proceeding;
         this.decisionDetail = decisionDetail;
         this.decision = decision;
     }
