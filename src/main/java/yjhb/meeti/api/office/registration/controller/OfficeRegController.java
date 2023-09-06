@@ -25,7 +25,7 @@ public class OfficeRegController {
 
     @Tag(name = "Office Registration")
     @PostMapping("/office/{userId}")
-    public ResponseEntity<String> registrationOffice(@RequestBody OfficeRegDto officeRegDto,
+    public ResponseEntity<Boolean> registrationOffice(@RequestBody OfficeRegDto officeRegDto,
                                                      @PathVariable("userId") Long userId,
                                                      HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
@@ -37,6 +37,6 @@ public class OfficeRegController {
         User findUser = userService.findUserByUserId(userId);
         officeRegService.registrationOffice(officeRegDto, findUser);
 
-        return ResponseEntity.ok("Office Registration Success");
+        return ResponseEntity.ok(true);
     }
 }

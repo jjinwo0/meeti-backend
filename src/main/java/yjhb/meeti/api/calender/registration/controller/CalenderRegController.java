@@ -38,6 +38,5 @@ public class CalenderRegController {
         calenderRegService.registrationCalender(calenderRegDto, findUser);
 
         return ResponseEntity.ok(true);
-//        return ResponseEntity.ok("Calender Registration Success");
     }
 }

@@ -24,7 +24,7 @@ public class ApprovalRegController {
 
     @Tag(name = "Approval Registration")
     @PostMapping("/approval/{userId}")
-    public ResponseEntity<String> registrationApproval(@PathVariable("userId") Long userId,
+    public ResponseEntity<Boolean> registrationApproval(@PathVariable("userId") Long userId,
                                                                @RequestBody ApprovalRegDto dto,
                                                                HttpServletRequest httpServletRequest){
 
@@ -37,6 +37,6 @@ public class ApprovalRegController {
 
         approvalRegService.regApproval(dto, findUser);
 
-        return ResponseEntity.ok("Approval Registration Successfully");
+        return ResponseEntity.ok(true);
     }
 }

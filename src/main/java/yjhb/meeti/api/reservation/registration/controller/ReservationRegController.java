@@ -29,7 +29,7 @@ public class ReservationRegController {
 
     @Tag(name = "Create Reservation")
     @PostMapping("/reservation/{userId}")
-    public ResponseEntity<String> createReservation(@RequestBody ReservationRegDto reservationRegDto,
+    public ResponseEntity<Boolean> createReservation(@RequestBody ReservationRegDto reservationRegDto,
                                                     @PathVariable("userId") Long userId,
                                                     HttpServletRequest httpServletRequest){
 
@@ -43,6 +43,6 @@ public class ReservationRegController {
 
         reservationRegService.createReservation(findUser, reservationRegDto, findOffice);
 
-        return ResponseEntity.ok("Create Reservation Successfully");
+        return ResponseEntity.ok(true);
     }
 }

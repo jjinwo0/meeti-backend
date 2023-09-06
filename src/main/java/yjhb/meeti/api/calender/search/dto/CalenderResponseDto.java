@@ -10,6 +10,7 @@ import java.util.Date;
 @NoArgsConstructor @AllArgsConstructor
 public class CalenderResponseDto {
 
+    private Long id;
     private String title;
     private String color;
     private String startDate;

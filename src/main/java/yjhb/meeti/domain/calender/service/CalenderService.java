@@ -42,6 +42,7 @@ public class CalenderService {
         for (Calender cal : calenders){
             response.add(
                     CalenderResponseDto.builder()
+                            .id(cal.getId())
                             .title(cal.getTitle())
                             .color(cal.getColor())
                             .startDate(cal.getStartDate())
