@@ -29,7 +29,7 @@ public class OfficeRegController {
                                                      @PathVariable("userId") Long userId,
                                                      HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
-        AuthorizationHeaderUtils.validateAuthorization(authorization);
+        tokenManager.validateToken(authorization);
 
         String accessToken = authorization.split(" ")[1];
         tokenManager.validateToken(accessToken);

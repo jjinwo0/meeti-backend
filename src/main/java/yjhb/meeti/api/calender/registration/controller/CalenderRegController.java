@@ -26,7 +26,7 @@ public class CalenderRegController {
 
     @Tag(name = "Calender Registration")
     @PostMapping("/calender/{userId}")
-    public ResponseEntity<String> registrationCalender(@RequestBody CalenderRegDto calenderRegDto,
+    public ResponseEntity<Boolean> registrationCalender(@RequestBody CalenderRegDto calenderRegDto,
                                                        @PathVariable("userId") Long userId,
                                                        HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
@@ -37,6 +37,7 @@ public class CalenderRegController {
         User findUser = userService.findUserByUserId(userId);
         calenderRegService.registrationCalender(calenderRegDto, findUser);
 
-        return ResponseEntity.ok("Calender Registration Success");
+        return ResponseEntity.ok(true);
+//        return ResponseEntity.ok("Calender Registration Success");
     }
 }

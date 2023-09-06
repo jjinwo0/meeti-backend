@@ -22,6 +22,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        // preflight 요청 넘기기
+        if (request.getMethod().equals("OPTIONS")) {
+            return true;
+        }
+
         // 1. Authorization Header 검증
         String authorization = request.getHeader("Authorization");
         AuthorizationHeaderUtils.validateAuthorization(authorization);

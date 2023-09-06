@@ -12,7 +12,6 @@ import yjhb.meeti.global.util.AuthorizationHeaderUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Tag(name = "Search Calender", description = "스케쥴 검색 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeti")
