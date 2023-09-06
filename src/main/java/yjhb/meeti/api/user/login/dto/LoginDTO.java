@@ -19,6 +19,8 @@ public class LoginDTO {
     @Builder @NoArgsConstructor @AllArgsConstructor
     public static class Response{
 
+        @Schema(description = "로그인 유저의 고유 id", example = "1", required = true)
+        private Long id;
         @Schema(description = "인증 방식을 정의하는 타입 (JWT/OAuth 부여 방식 : Bearer)", example = "Bearer", required = true)
         private String grantType;
         @Schema(description = "User Access Token", required = true)
@@ -36,6 +38,7 @@ public class LoginDTO {
         // Service의 가독성을 위해 사용
         public static Response of(JwtTokenDto jwtTokenDto){
             return Response.builder()
+                    .id(jwtTokenDto.getId())
                     .grantType(jwtTokenDto.getGrantType())
                     .accessToken(jwtTokenDto.getAccessToken())
                     .accessTokenExpireTime(jwtTokenDto.getAccessTokenExpireTime())

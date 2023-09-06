@@ -32,6 +32,7 @@ public class TokenManager {
         String refreshToken = createRefreshToken(id, refreshTokenExpireTime);
 
         return JwtTokenDto.builder()
+                .id(id)
                 .grantType(GrantType.BEARER.getType())
                 .accessToken(accessToken)
                 .accessTokenExpireTime(accessTokenExpireTime)
