@@ -23,23 +23,21 @@ public class Calender {
     private Long id;
     private String title;
     private String color;
-    private String startDate;
-    private String startTime;
-    private String endDate;
-    private String endTime;
+    private String start;
+//    private String startTime;
+    private String end;
+//    private String endTime;
     private String place;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    public Calender(String title, String color, String startDate, String startTime, String endDate, String endTime, String place, User user) {
+    public Calender(String title, String color, String start, String end, String place, User user) {
         this.title = title;
         this.color = color;
-        this.startDate = startDate;
-        this.startTime = startTime;
-        this.endDate = endDate;
-        this.endTime = endTime;
+        this.start = start;
+        this.end = end;
         this.place = place;
         this.user = user;
     }

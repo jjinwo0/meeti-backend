@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 public class CalenderRegController {
 
     private final CalenderRegService calenderRegService;
-    private final CalenderService calenderService;
     private final UserService userService;
     private final TokenManager tokenManager;
 
