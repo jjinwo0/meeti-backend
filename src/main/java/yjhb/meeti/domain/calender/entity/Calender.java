@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import yjhb.meeti.domain.user.entity.User;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -26,8 +28,6 @@ public class Calender {
     private String endDate;
     private String endTime;
     private String place;
-//    private LocalDateTime start;
-//    private LocalDateTime end;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
