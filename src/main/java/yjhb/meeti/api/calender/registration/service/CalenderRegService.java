@@ -22,9 +22,9 @@ public class CalenderRegService {
                 .title(calenderRegDto.getTitle())
                 .color(calenderRegDto.getColor())
                 .startDate(calenderRegDto.getStartDate().substring(0, 10))
-                .startTime(calenderRegDto.getStartTime().substring(11, 19))
+                .startTime(calenderRegDto.getStartTime())
                 .endDate(calenderRegDto.getEndDate().substring(0, 10))
-                .endTime(calenderRegDto.getEndTime().substring(11, 19))
+                .endTime(calenderRegDto.getEndTime())
                 .build();
 
         calenderRepository.save(calender);
