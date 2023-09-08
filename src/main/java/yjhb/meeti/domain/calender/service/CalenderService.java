@@ -46,9 +46,9 @@ public class CalenderService {
                             .title(cal.getTitle())
                             .color(cal.getColor())
                             .start(cal.getStart())
-//                            .startTime(cal.getStartTime())
+                            .initTime(cal.getInitTime())
                             .end(cal.getEnd())
-//                            .endTime(cal.getEndTime())
+                            .finishTime(cal.getFinishTime())
                             .place(cal.getPlace())
                             .build()
             );

@@ -24,20 +24,22 @@ public class Calender {
     private String title;
     private String color;
     private String start;
-//    private String startTime;
+    private String initTime;
     private String end;
-//    private String endTime;
+    private String finishTime;
     private String place;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    public Calender(String title, String color, String start, String end, String place, User user) {
+    public Calender(String title, String color, String start, String initTime, String end, String finishTime, String place, User user) {
         this.title = title;
         this.color = color;
         this.start = start;
+        this.initTime = initTime;
         this.end = end;
+        this.finishTime = finishTime;
         this.place = place;
         this.user = user;
     }
