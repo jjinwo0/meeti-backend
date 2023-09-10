@@ -17,7 +17,7 @@ public class ApprovalRegService {
 
     public Long regApproval(ApprovalRegDto dto, User user){
         Approval approval = Approval.builder()
-                .username(user.getUsername())
+                .user(user)
                 .requestDetail(dto.getRequestDetail())
                 .proceeding(dto.getProceeding())
                 .build();

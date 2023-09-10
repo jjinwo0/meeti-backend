@@ -8,7 +8,6 @@ import java.io.File;
 @NoArgsConstructor @AllArgsConstructor
 public class ApprovalRegDto {
 
-    private String username;
     private String requestDetail;
     private String proceeding;
     private String decisionDetail;

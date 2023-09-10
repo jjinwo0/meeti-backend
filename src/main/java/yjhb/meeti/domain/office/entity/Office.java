@@ -31,7 +31,7 @@ public class Office {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "office", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "office", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 
     @Builder

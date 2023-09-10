@@ -76,7 +76,7 @@ public class MeetingController {
     }
 
     @Schema(name = "Delete All Meeting", description = "회의록 삭제 API (회원의 전체 회의록)")
-    @PostMapping("/delete/{userId}")
+    @PostMapping("/delete/user/{userId}")
     public ResponseEntity<Boolean> deleteAllMeetingByUserId(@PathVariable("userId") Long userId,
                                                             HttpServletRequest request){
 
