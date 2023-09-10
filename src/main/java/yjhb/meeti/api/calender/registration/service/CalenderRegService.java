@@ -17,13 +17,23 @@ public class CalenderRegService {
     private final CalenderRepository calenderRepository;
 
     public CalenderResponseDto registrationCalender(CalenderRegDto calenderRegDto, User user){
+
+        String startDate = calenderRegDto.getStart().substring(0, 10);
+        String endDate = calenderRegDto.getEnd().substring(0, 10);
+
+        String start = startDate.substring(0, 8) + (Integer.parseInt(startDate.substring(8, 10)) + 1 < 10 ?
+                "0" + (Integer.parseInt(startDate.substring(8, 10)) + 1) : (Integer.parseInt(startDate.substring(8, 10)) + 1));
+
+        String end = endDate.substring(0, 8) + (Integer.parseInt(endDate.substring(8, 10)) + 2 < 10 ?
+                "0" + (Integer.parseInt(endDate.substring(8, 10)) + 2) : (Integer.parseInt(endDate.substring(8, 10)) + 2));
+
         Calender calender = Calender.builder()
                 .user(user)
                 .title(calenderRegDto.getTitle())
                 .color(calenderRegDto.getColor())
-                .start(calenderRegDto.getStart().substring(0, 10))
+                .start(start)
                 .initTime(calenderRegDto.getInitTime())
-                .end(calenderRegDto.getEnd().substring(0, 10))
+                .end(end)
                 .finishTime(calenderRegDto.getFinishTime())
                 .place(calenderRegDto.getPlace())
                 .build();

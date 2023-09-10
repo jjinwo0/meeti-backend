@@ -50,23 +50,9 @@ public class MeetingController {
 
         tokenManager.validateToken(accessToken);
 
-        List<Meeting> meetings = userService.findUserByUserId(userId).getMeetings();
+        List findMeetings = meetingService.findMeetingByUserId(userId);
 
-        return ResponseEntity.ok(meetings);
-    }
-
-    @GetMapping("/search/{meetingId}")
-    public ResponseEntity<Meeting> searchMeetingById(@PathVariable("meetingId") Long id,
-                                                      HttpServletRequest request){
-
-        String authorization = request.getHeader("Authorization");
-        String accessToken = authorization.split(" ")[1];
-
-        tokenManager.validateToken(accessToken);
-
-        Meeting findMeeting = meetingService.findByMeetingId(id);
-
-        return ResponseEntity.ok(findMeeting);
+        return ResponseEntity.ok(findMeetings);
     }
 
     @PostMapping("/delete/{meetingId}")

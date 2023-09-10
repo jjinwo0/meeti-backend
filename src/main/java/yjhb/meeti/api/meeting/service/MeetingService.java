@@ -7,8 +7,12 @@ import yjhb.meeti.api.meeting.dto.MeetingDto;
 import yjhb.meeti.domain.meeting.dto.Meeting;
 import yjhb.meeti.domain.meeting.repository.MeetingRepository;
 import yjhb.meeti.domain.user.entity.User;
+import yjhb.meeti.domain.user.service.UserService;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -16,6 +20,8 @@ import yjhb.meeti.global.error.exception.BusinessException;
 public class MeetingService {
 
     private final MeetingRepository meetingRepository;
+
+    private final UserService userService;
 
     public void register(MeetingDto.Request dto, User user){
 
@@ -27,6 +33,29 @@ public class MeetingService {
                 .build();
 
         meetingRepository.save(meeting);
+    }
+
+    public List findMeetingByUserId(Long userId){
+
+        User findUser = userService.findUserByUserId(userId);
+
+        List<Meeting> meetings = findUser.getMeetings();
+        List<MeetingDto.Response> response = new ArrayList<>();
+
+        for (Meeting meet : meetings){
+
+            response.add(
+                    MeetingDto.Response.builder()
+                            .id(meet.getId())
+                            .username(meet.getUser().getUsername())
+                            .title(meet.getTitle())
+                            .detail(meet.getDetail())
+                            .date(meet.getDate())
+                            .build()
+            );
+        }
+
+        return response;
     }
 
     public Meeting findByMeetingId(Long id){
