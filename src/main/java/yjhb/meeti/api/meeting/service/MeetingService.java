@@ -11,6 +11,7 @@ import yjhb.meeti.domain.user.service.UserService;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class MeetingService {
         Meeting meeting = Meeting.builder()
                 .title(dto.getTitle())
                 .detail(dto.getDetail())
-                .date(dto.getDate())
+                .date(LocalDate.now())
                 .user(user)
                 .build();
 
