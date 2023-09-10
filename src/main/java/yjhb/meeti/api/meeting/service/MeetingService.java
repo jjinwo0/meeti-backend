@@ -7,6 +7,8 @@ import yjhb.meeti.api.meeting.dto.MeetingDto;
 import yjhb.meeti.domain.meeting.dto.Meeting;
 import yjhb.meeti.domain.meeting.repository.MeetingRepository;
 import yjhb.meeti.domain.user.entity.User;
+import yjhb.meeti.global.error.ErrorCode;
+import yjhb.meeti.global.error.exception.BusinessException;
 
 @Service
 @Transactional
@@ -25,5 +27,18 @@ public class MeetingService {
                 .build();
 
         meetingRepository.save(meeting);
+    }
+
+    public Meeting findByMeetingId(Long id){
+
+        Meeting meeting = meetingRepository.findById(id)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_MEETING));
+
+        return meeting;
+    }
+
+    public void deleteMeeting(Long id){
+
+        meetingRepository.deleteById(id);
     }
 }

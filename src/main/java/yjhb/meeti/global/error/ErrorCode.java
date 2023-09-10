@@ -43,7 +43,10 @@ public enum ErrorCode {
 
     // 결제
     INVALID_PAYMENT(HttpStatus.BAD_REQUEST, "P-001", "유효하지 않은 결제 요청입니다."),
-    PAY_FAILED(HttpStatus.FORBIDDEN, "P-002", "결제 실패.")
+    PAY_FAILED(HttpStatus.FORBIDDEN, "P-002", "결제 실패."),
+
+    // 회의록
+    NOT_FOUND_MEETING(HttpStatus.NOT_FOUND, "M-001", "해당하는 회의록을 찾을 수 업습니다.")
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {
