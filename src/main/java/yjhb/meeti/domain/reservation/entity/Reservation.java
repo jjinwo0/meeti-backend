@@ -10,7 +10,9 @@ import yjhb.meeti.domain.kakaopay.entity.KakaoPay;
 import yjhb.meeti.domain.user.entity.User;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -22,13 +24,13 @@ public class Reservation {
     private Long id;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDateTime date;
+    private LocalDate date;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime startTime;
+    private LocalTime startTime;
     @Column
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime endTime;
+    private LocalTime endTime;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -41,7 +43,7 @@ public class Reservation {
     private KakaoPay payment;
 
     @Builder
-    public Reservation(LocalDateTime date, LocalDateTime startTime, LocalDateTime endTime, User user, Office office) {
+    public Reservation(LocalDate date, LocalTime startTime, LocalTime endTime, User user, Office office) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;

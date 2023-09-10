@@ -1,4 +1,4 @@
-package yjhb.meeti.domain.meeting.dto;
+package yjhb.meeti.domain.meeting.entity;
 
 import lombok.Builder;
 import lombok.Getter;

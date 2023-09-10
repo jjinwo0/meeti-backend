@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.api.meeting.dto.MeetingDto;
-import yjhb.meeti.domain.meeting.dto.Meeting;
+import yjhb.meeti.domain.meeting.entity.Meeting;
 import yjhb.meeti.domain.meeting.repository.MeetingRepository;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.domain.user.service.UserService;

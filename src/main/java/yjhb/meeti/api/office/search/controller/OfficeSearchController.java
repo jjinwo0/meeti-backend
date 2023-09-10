@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yjhb.meeti.api.office.search.dto.OfficeResponseDto;
+import yjhb.meeti.domain.office.entity.Office;
 import yjhb.meeti.domain.office.service.OfficeService;
 import yjhb.meeti.global.jwt.service.TokenManager;
 
@@ -21,7 +22,7 @@ public class OfficeSearchController {
     private final TokenManager tokenManager;
     private final OfficeService officeService;
 
-    @GetMapping("/search/{userId}")
+    @GetMapping("/search/user/{userId}")
     public ResponseEntity<List> findMyOffice(@PathVariable("userId") Long userId,
                                              HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
@@ -31,6 +32,18 @@ public class OfficeSearchController {
         List<OfficeResponseDto> responseDto = officeService.findOfficeByUserId(userId);
 
         return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping("/search/{officeId}")
+    public ResponseEntity<Office> findOffice(@PathVariable("officeId") Long id,
+                                             HttpServletRequest httpServletRequest){
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+        Office findOffice = officeService.findOfficeById(id);
+
+        return ResponseEntity.ok(findOffice);
     }
 
     @GetMapping("/search/{address}")
@@ -43,5 +56,17 @@ public class OfficeSearchController {
         List<OfficeResponseDto> findOfficeList = officeService.findOfficeByAddress(address);
 
         return ResponseEntity.ok(findOfficeList);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List> findAllOffice(HttpServletRequest httpServletRequest){
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        List<OfficeResponseDto> allOffice = officeService.findAllOffice();
+
+        return ResponseEntity.ok(allOffice);
     }
 }

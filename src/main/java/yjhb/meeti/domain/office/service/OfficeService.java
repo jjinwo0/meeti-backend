@@ -54,10 +54,32 @@ public class OfficeService {
 
     public List<OfficeResponseDto> findOfficeByAddress(String address){
 
-        List<Office> officeList = officeRepository.findOfficeByAddress(address);
+        List<Office> officeList = officeRepository.findByAddressContaining(address);
         List<OfficeResponseDto> response = new ArrayList<>();
 
         for (Office office : officeList){
+            response.add(
+                    OfficeResponseDto.builder()
+                            .placeName(office.getPlaceName())
+                            .pay(office.getPay())
+                            .description(office.getDescription())
+                            .address(office.getAddress())
+                            .addressDetail(office.getDetailAddress())
+                            .telNum(office.getTelNum())
+                            .image(office.getImage())
+                            .build()
+            );
+        }
+
+        return response;
+    }
+
+    public List<OfficeResponseDto> findAllOffice(){
+
+        List<Office> findAll = officeRepository.findAll();
+        List<OfficeResponseDto> response = new ArrayList<>();
+
+        for (Office office : findAll){
             response.add(
                     OfficeResponseDto.builder()
                             .placeName(office.getPlaceName())

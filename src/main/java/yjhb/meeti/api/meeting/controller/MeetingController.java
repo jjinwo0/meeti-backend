@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.api.meeting.dto.MeetingDto;
 import yjhb.meeti.api.meeting.service.MeetingService;
-import yjhb.meeti.domain.meeting.dto.Meeting;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.domain.user.service.UserService;
 import yjhb.meeti.global.jwt.service.TokenManager;
@@ -61,7 +60,7 @@ public class MeetingController {
     }
 
     @Schema(name = "Delete Meeting", description = "회의록 삭제 API (회의록 ID)")
-    @PostMapping("/delete/{meetingId}")
+    @DeleteMapping("/delete/{meetingId}")
     public ResponseEntity<Boolean> deleteMeetingByMeetingId(@PathVariable("meetingId") Long id,
                                                             HttpServletRequest request){
 
@@ -76,7 +75,7 @@ public class MeetingController {
     }
 
     @Schema(name = "Delete All Meeting", description = "회의록 삭제 API (회원의 전체 회의록)")
-    @PostMapping("/delete/user/{userId}")
+    @DeleteMapping("/delete/user/{userId}")
     public ResponseEntity<Boolean> deleteAllMeetingByUserId(@PathVariable("userId") Long userId,
                                                             HttpServletRequest request){
 
