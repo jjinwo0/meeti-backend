@@ -42,13 +42,13 @@ public class OAuthLoginService {
             userService.registerUser(oauthUser);
 
             jwtTokenDto = tokenManager.createJwtTokenDto(oauthUser.getId(), oauthUser.getRole());
-            oauthUser.updateRefreshToken(jwtTokenDto);
+            oauthUser.updateToken(jwtTokenDto);
         }else{ // 기존 회원
             // 토큰 생성
             User oauthUser = findUser.get();
 
             jwtTokenDto = tokenManager.createJwtTokenDto(oauthUser.getId(), oauthUser.getRole());
-            oauthUser.updateRefreshToken(jwtTokenDto);
+            oauthUser.updateToken(jwtTokenDto);
         }
 
         return OAuthLoginDto.Response.of(jwtTokenDto);

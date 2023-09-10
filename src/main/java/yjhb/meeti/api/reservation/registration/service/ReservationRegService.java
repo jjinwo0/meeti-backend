@@ -35,7 +35,7 @@ public class ReservationRegService {
 
     public Long createReservation(User user, ReservationRegDto dto, Office office){
 
-        LocalDate date = LocalDate.parse(dto.getDate());
+        LocalDate date = LocalDate.parse(dto.getDate().substring(0, 10));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime startTime = LocalTime.parse(dto.getStartTime(), formatter);

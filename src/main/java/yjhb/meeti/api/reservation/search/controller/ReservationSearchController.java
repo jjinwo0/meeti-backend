@@ -31,7 +31,7 @@ public class ReservationSearchController {
 
     @Tag(name = "Find Reservation")
     @GetMapping("/search/{reservationId}")
-    public ResponseEntity<Reservation> findReservation(@PathVariable("reservationId") Long id,
+    public ResponseEntity<ReservationResponseDto> findReservation(@PathVariable("reservationId") Long id,
                                                        HttpServletRequest httpServletRequest){
 
         String authorization = httpServletRequest.getHeader("Authorization");
@@ -41,7 +41,9 @@ public class ReservationSearchController {
 
         Reservation findReservation = reservationService.findReservationById(id);
 
-        return ResponseEntity.ok(findReservation);
+        ReservationResponseDto dto = ReservationResponseDto.of(findReservation);
+
+        return ResponseEntity.ok(dto);
     }
 
     @Tag(name = "Find Reservation by UserId")

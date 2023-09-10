@@ -42,10 +42,13 @@ public class ReservationService {
         for (Reservation res : findReservation){
 
             ReservationResponseDto dto = ReservationResponseDto.builder()
+                    .id(res.getId())
                     .date(res.getDate())
                     .startTime(res.getStartTime())
                     .endTime(res.getEndTime())
                     .officeName(officeService.findOfficeById(res.getId()).getPlaceName())
+                    .telNum(officeService.findOfficeById(res.getId()).getTelNum())
+                    .image(officeService.findOfficeById(res.getId()).getImage())
                     .build();
 
             reservationResponseDtos.add(dto);
@@ -64,10 +67,13 @@ public class ReservationService {
         for (Reservation res : findReservation){
 
             ReservationResponseDto dto = ReservationResponseDto.builder()
+                    .id(res.getId())
                     .date(res.getDate())
                     .startTime(res.getStartTime())
                     .endTime(res.getEndTime())
                     .officeName(officeService.findOfficeById(res.getId()).getPlaceName())
+                    .telNum(officeService.findOfficeById(res.getId()).getTelNum())
+                    .image(officeService.findOfficeById(res.getId()).getImage())
                     .build();
 
             reservationResponseDtos.add(dto);

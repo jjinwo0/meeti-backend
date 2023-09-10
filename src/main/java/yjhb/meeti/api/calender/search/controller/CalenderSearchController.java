@@ -3,10 +3,7 @@ package yjhb.meeti.api.calender.search.controller;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.api.calender.search.dto.CalenderResponseDto;
 import yjhb.meeti.domain.calender.service.CalenderService;
 import yjhb.meeti.global.jwt.service.TokenManager;
@@ -35,5 +32,19 @@ public class CalenderSearchController {
         List<CalenderResponseDto> calenders = calenderService.findCalenderByUserId(userId);
 
         return ResponseEntity.ok(calenders);
+    }
+
+    @Tag(name = "Delete Calender")
+    @DeleteMapping("delete/{calenderId}")
+    public ResponseEntity<Boolean> deleteCalender(@PathVariable("calenderId") Long id,
+                                                  HttpServletRequest httpServletRequest){
+
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+        calenderService.deleteCalender(id);
+
+        return ResponseEntity.ok(true);
     }
 }
