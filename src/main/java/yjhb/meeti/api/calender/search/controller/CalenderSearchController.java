@@ -35,7 +35,7 @@ public class CalenderSearchController {
     }
 
     @Tag(name = "Delete Calender")
-    @DeleteMapping("delete/{calenderId}")
+    @DeleteMapping("/delete/{calenderId}")
     public ResponseEntity<Boolean> deleteCalender(@PathVariable("calenderId") Long id,
                                                   HttpServletRequest httpServletRequest){
 
@@ -43,6 +43,7 @@ public class CalenderSearchController {
         String accessToken = authorization.split(" ")[1];
 
         tokenManager.validateToken(accessToken);
+
         calenderService.deleteCalender(id);
 
         return ResponseEntity.ok(true);

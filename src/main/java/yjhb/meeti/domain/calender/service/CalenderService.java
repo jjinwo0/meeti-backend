@@ -57,11 +57,9 @@ public class CalenderService {
         return response;
     }
 
+    @Transactional
     public void deleteCalender(Long id){
 
-        Calender findCal = calenderRepository.findById(id)
-                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_CALENDER));
-
-        calenderRepository.delete(findCal);
+        calenderRepository.deleteById(id);
     }
 }
