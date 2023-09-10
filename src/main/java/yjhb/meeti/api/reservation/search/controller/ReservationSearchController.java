@@ -27,8 +27,6 @@ import java.util.List;
 public class ReservationSearchController {
 
     private final TokenManager tokenManager;
-    private final UserService userService;
-    private final OfficeService officeService;
     private final ReservationService reservationService;
 
     @Tag(name = "Find Reservation")
@@ -56,23 +54,9 @@ public class ReservationSearchController {
 
         tokenManager.validateToken(accessToken);
 
-        User findUser = userService.findUserByUserId(userId);
-        List<Reservation> reservations = findUser.getReservations();
-        List<ReservationResponseDto> reservationResponseDtos = new ArrayList<>();
+        List<ReservationResponseDto> findReservation = reservationService.findReservationByUserId(userId);
 
-        for (Reservation res : reservations){
-
-            ReservationResponseDto dto = ReservationResponseDto.builder()
-                    .date(res.getDate())
-                    .startTime(res.getStartTime())
-                    .endTime(res.getEndTime())
-                    .officeName(officeService.findOfficeById(res.getId()).getPlaceName())
-                    .build();
-
-            reservationResponseDtos.add(dto);
-        }
-
-        return ResponseEntity.ok(reservationResponseDtos);
+        return ResponseEntity.ok(findReservation);
     }
 
     @Tag(name = "Find Reservation by Office Id")
@@ -85,21 +69,8 @@ public class ReservationSearchController {
 
         tokenManager.validateToken(accessToken);
 
-        Office findOffice = officeService.findOfficeById(officeId);
-        List<Reservation> reservations = findOffice.getReservations();
-        List<ReservationResponseDto> reservationResponseDtos = new ArrayList<>();
+        List<ReservationResponseDto> findReservation = reservationService.findReservationByOfficeId(officeId);
 
-        for (Reservation res : reservations){
-            ReservationResponseDto dto = ReservationResponseDto.builder()
-                    .officeName(res.getOffice().getPlaceName())
-                    .startTime(res.getStartTime())
-                    .endTime(res.getEndTime())
-                    .date(res.getDate())
-                    .build();
-
-            reservationResponseDtos.add(dto);
-        }
-
-        return ResponseEntity.ok(reservationResponseDtos);
+        return ResponseEntity.ok(findReservation);
     }
 }
