@@ -25,6 +25,7 @@ public class OfficeRegService {
                 .description(officeRegDto.getDescription())
                 .address(officeRegDto.getAddress())
                 .detailAddress(officeRegDto.getDetailAddress())
+                .status(true)
                 .build();
 
         officeRepository.save(office);

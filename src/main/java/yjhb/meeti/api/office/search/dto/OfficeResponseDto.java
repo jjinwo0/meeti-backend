@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter @Builder
 @NoArgsConstructor @AllArgsConstructor
 public class OfficeResponseDto {
+    private Long id;
     private String placeName;
     private int pay;
     private String description;
@@ -15,5 +16,6 @@ public class OfficeResponseDto {
     private String addressDetail;
     private String telNum;
     private String image;
+    private boolean status;
 
 }

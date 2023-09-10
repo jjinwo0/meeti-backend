@@ -41,6 +41,8 @@ public class ReservationRegService {
                 .build();
 
         validateReservation(office, reservation);
+        office.updateStatus(false); //todo: 예약 기간에 따른 상태 변경 로직 구현
+
         office.getReservations().add(reservation);
 
         reservationRepository.save(reservation);

@@ -38,6 +38,7 @@ public class OfficeService {
         for (Office office : offices){
             response.add(
                     OfficeResponseDto.builder()
+                            .id(office.getId())
                             .placeName(office.getPlaceName())
                             .pay(office.getPay())
                             .description(office.getDescription())
@@ -60,6 +61,7 @@ public class OfficeService {
         for (Office office : officeList){
             response.add(
                     OfficeResponseDto.builder()
+                            .id(office.getId())
                             .placeName(office.getPlaceName())
                             .pay(office.getPay())
                             .description(office.getDescription())
@@ -82,6 +84,7 @@ public class OfficeService {
         for (Office office : findAll){
             response.add(
                     OfficeResponseDto.builder()
+                            .id(office.getId())
                             .placeName(office.getPlaceName())
                             .pay(office.getPay())
                             .description(office.getDescription())
@@ -104,6 +107,7 @@ public class OfficeService {
         for (Office office : findOffices){
             response.add(
                     OfficeResponseDto.builder()
+                            .id(office.getId())
                             .placeName(office.getPlaceName())
                             .pay(office.getPay())
                             .description(office.getDescription())

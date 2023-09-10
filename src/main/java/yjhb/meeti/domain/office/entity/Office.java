@@ -26,6 +26,7 @@ public class Office {
     private String detailAddress;
     private String image;
     private String telNum;
+    private boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -35,7 +36,7 @@ public class Office {
     private List<Reservation> reservations = new ArrayList<>();
 
     @Builder
-    public Office(User user, String image, String telNum, int pay, String placeName, String description, String address, String detailAddress) {
+    public Office(User user, String image, String telNum, int pay, String placeName, String description, String address, String detailAddress, boolean status) {
         this.user = user;
         this.image = image;
         this.telNum = telNum;
@@ -44,6 +45,11 @@ public class Office {
         this.description = description;
         this.address = address;
         this.detailAddress = detailAddress;
+        this.status = status;
         user.getOffices().add(this);
+    }
+
+    public void updateStatus(boolean status){
+        this.status = status;
     }
 }

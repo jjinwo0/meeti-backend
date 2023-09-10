@@ -46,7 +46,7 @@ public class OfficeSearchController {
         return ResponseEntity.ok(findOffice);
     }
 
-    @GetMapping("/search/{address}")
+    @GetMapping("/search/address/{address}")
     public ResponseEntity<List> findOfficeByAddress(@PathVariable("address") String address,
                                                     HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
@@ -58,7 +58,7 @@ public class OfficeSearchController {
         return ResponseEntity.ok(findOfficeList);
     }
 
-    @GetMapping("/search/{placeName}")
+    @GetMapping("/search/place/{placeName}")
     public ResponseEntity<List> findOfficeByPlaceName(@PathVariable("placeName") String placeName,
                                                     HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
