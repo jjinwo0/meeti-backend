@@ -23,13 +23,10 @@ public class Reservation {
     @Column(name = "reservation_id")
     private Long id;
     @Column
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate date;
     @Column
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
     private LocalTime startTime;
     @Column
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
     private LocalTime endTime;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

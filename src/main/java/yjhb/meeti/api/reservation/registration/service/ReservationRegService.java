@@ -11,6 +11,9 @@ import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -32,10 +35,16 @@ public class ReservationRegService {
 
     public Long createReservation(User user, ReservationRegDto dto, Office office){
 
+        LocalDate date = LocalDate.parse(dto.getDate());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime startTime = LocalTime.parse(dto.getStartTime(), formatter);
+        LocalTime endTime = LocalTime.parse(dto.getEndTime(), formatter);
+
         Reservation reservation = Reservation.builder()
-                .date(dto.getDate())
-                .startTime(dto.getStartTime())
-                .endTime(dto.getEndTime())
+                .date(date)
+                .startTime(startTime)
+                .endTime(endTime)
                 .user(user)
                 .office(office)
                 .build();

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class OfficeRegDto {
 
     private String placeName;
-    private int pay;
+    private String pay;
     private String description;
     private String address;
     private String detailAddress;

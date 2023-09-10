@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import yjhb.meeti.domain.office.entity.Office;
 
 @Getter @Builder
 @NoArgsConstructor @AllArgsConstructor
 public class OfficeResponseDto {
     private Long id;
     private String placeName;
-    private int pay;
+    private String pay;
     private String description;
     private String address;
     private String addressDetail;
@@ -18,4 +19,18 @@ public class OfficeResponseDto {
     private String image;
     private boolean status;
 
+    public static OfficeResponseDto of(Office office){
+
+        return OfficeResponseDto.builder()
+                .id(office.getId())
+                .placeName(office.getPlaceName())
+                .pay(office.getPay())
+                .description(office.getDescription())
+                .address(office.getAddress())
+                .addressDetail(office.getDetailAddress())
+                .telNum(office.getTelNum())
+                .image(office.getImage())
+                .status(office.isStatus())
+                .build();
+    }
 }

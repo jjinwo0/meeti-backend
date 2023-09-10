@@ -17,14 +17,17 @@ import java.time.LocalTime;
 public class ReservationRegDto {
 
     @Schema(description = "예약 날짜 설정")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate date;
+    private String date;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+//    private LocalDate date;
     @Schema(description = "대여 시작 시간")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalTime startTime;
+    private String startTime;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
+//    private LocalTime startTime;
     @Schema(description = "대여 종료 시간")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalTime endTime;
+    private String endTime;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
+//    private LocalTime endTime;
     @Schema(description = "예약할 오피스의 id")
     private Long officeId;
 }

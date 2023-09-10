@@ -47,7 +47,7 @@ public class ReservationSearchController {
     }
 
     @Tag(name = "Find Reservation by UserId")
-    @GetMapping("/search/{userId}")
+    @GetMapping("/search/user/{userId}")
     public ResponseEntity<List> findUserReservation(@PathVariable("userId") Long userId,
                                                 HttpServletRequest httpServletRequest){
 
@@ -76,7 +76,7 @@ public class ReservationSearchController {
     }
 
     @Tag(name = "Find Reservation by Office Id")
-    @GetMapping("/search/{officeId}")
+    @GetMapping("/search/office/{officeId}")
     public ResponseEntity<List> findOfficeReservation(@PathVariable("officeId") Long officeId,
                                                       HttpServletRequest httpServletRequest){
 

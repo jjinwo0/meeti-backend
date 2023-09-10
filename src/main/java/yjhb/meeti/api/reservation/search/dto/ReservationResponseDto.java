@@ -16,13 +16,10 @@ import java.time.LocalTime;
 public class ReservationResponseDto {
 
     @Schema(description = "예약 날짜 설정")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate date;
     @Schema(description = "대여 시작 시간")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
     private LocalTime startTime;
     @Schema(description = "대여 종료 시간")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Asia/Seoul")
     private LocalTime endTime;
     @Schema(description = "예약 오피스의 이름")
     private String officeName;

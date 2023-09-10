@@ -35,7 +35,7 @@ public class OfficeSearchController {
     }
 
     @GetMapping("/search/{officeId}")
-    public ResponseEntity<Office> findOffice(@PathVariable("officeId") Long id,
+    public ResponseEntity<OfficeResponseDto> findOffice(@PathVariable("officeId") Long id,
                                              HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
@@ -43,7 +43,9 @@ public class OfficeSearchController {
         tokenManager.validateToken(accessToken);
         Office findOffice = officeService.findOfficeById(id);
 
-        return ResponseEntity.ok(findOffice);
+        OfficeResponseDto officeDto = OfficeResponseDto.of(findOffice);
+
+        return ResponseEntity.ok(officeDto);
     }
 
     @GetMapping("/search/address/{address}")

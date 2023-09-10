@@ -46,6 +46,7 @@ public class OfficeService {
                             .addressDetail(office.getDetailAddress())
                             .telNum(office.getTelNum())
                             .image(office.getImage())
+                            .status(office.isStatus())
                             .build()
             );
         }
@@ -69,6 +70,7 @@ public class OfficeService {
                             .addressDetail(office.getDetailAddress())
                             .telNum(office.getTelNum())
                             .image(office.getImage())
+                            .status(office.isStatus())
                             .build()
             );
         }
@@ -92,6 +94,7 @@ public class OfficeService {
                             .addressDetail(office.getDetailAddress())
                             .telNum(office.getTelNum())
                             .image(office.getImage())
+                            .status(office.isStatus())
                             .build()
             );
         }

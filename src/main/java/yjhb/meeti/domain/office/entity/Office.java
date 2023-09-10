@@ -20,7 +20,7 @@ public class Office {
     @Column(name = "office_id")
     private Long id;
     private String placeName;
-    private int pay;
+    private String pay;
     private String description;
     private String address;
     private String detailAddress;
@@ -36,7 +36,7 @@ public class Office {
     private List<Reservation> reservations = new ArrayList<>();
 
     @Builder
-    public Office(User user, String image, String telNum, int pay, String placeName, String description, String address, String detailAddress, boolean status) {
+    public Office(User user, String image, String telNum, String pay, String placeName, String description, String address, String detailAddress, boolean status) {
         this.user = user;
         this.image = image;
         this.telNum = telNum;
