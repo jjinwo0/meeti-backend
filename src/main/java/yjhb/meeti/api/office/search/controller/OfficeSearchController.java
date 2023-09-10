@@ -58,6 +58,18 @@ public class OfficeSearchController {
         return ResponseEntity.ok(findOfficeList);
     }
 
+    @GetMapping("/search/{placeName}")
+    public ResponseEntity<List> findOfficeByPlaceName(@PathVariable("placeName") String placeName,
+                                                    HttpServletRequest httpServletRequest){
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+        List<OfficeResponseDto> findOfficeList = officeService.findByPlaceName(placeName);
+
+        return ResponseEntity.ok(findOfficeList);
+    }
+
     @GetMapping("/search")
     public ResponseEntity<List> findAllOffice(HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");

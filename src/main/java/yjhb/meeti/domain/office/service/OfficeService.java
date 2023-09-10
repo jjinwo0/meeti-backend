@@ -95,4 +95,26 @@ public class OfficeService {
 
         return response;
     }
+
+    public List<OfficeResponseDto> findByPlaceName(String placeName){
+
+        List<Office> findOffices = officeRepository.findByPlaceNameContaining(placeName);
+        List<OfficeResponseDto> response = new ArrayList<>();
+
+        for (Office office : findOffices){
+            response.add(
+                    OfficeResponseDto.builder()
+                            .placeName(office.getPlaceName())
+                            .pay(office.getPay())
+                            .description(office.getDescription())
+                            .address(office.getAddress())
+                            .addressDetail(office.getDetailAddress())
+                            .telNum(office.getTelNum())
+                            .image(office.getImage())
+                            .build()
+            );
+        }
+
+        return response;
+    }
 }
