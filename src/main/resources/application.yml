@@ -9,7 +9,7 @@ token:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true # query문 구조를 갖춰서 출력
@@ -43,7 +43,7 @@ spring:
       enabled: true
       max-file-size: 10MB # 파일 업로드 요청 시 하나의 파일 크기를 10MB로 제한
       max-request-size: 100MB # 파일 업로드 요청 시 모든 파일 크기 합을 100MB로 제한
-      location: ENC(JtQdv1BTRqHvbza9TC/xgXQ+q0uuZzfWcXogvTqx6D4=)
+#      location: ENC(JtQdv1BTRqHvbza9TC/xgXQ+q0uuZzfWcXogvTqx6D4=)
 
 #  security:
 #    oauth2:

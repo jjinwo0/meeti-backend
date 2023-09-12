@@ -1,4 +1,4 @@
-package yjhb.meeti.api.office.registration.dto;
+package yjhb.meeti.api.office.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

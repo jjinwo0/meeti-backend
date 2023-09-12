@@ -3,7 +3,8 @@ package yjhb.meeti.domain.office.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import yjhb.meeti.api.office.search.dto.OfficeResponseDto;
+import yjhb.meeti.api.office.dto.OfficeRegDto;
+import yjhb.meeti.api.office.dto.OfficeResponseDto;
 import yjhb.meeti.domain.office.entity.Office;
 import yjhb.meeti.domain.office.repository.OfficeRepository;
 import yjhb.meeti.domain.user.entity.User;
@@ -123,5 +124,23 @@ public class OfficeService {
         }
 
         return response;
+    }
+
+    public Long registrationOffice(OfficeRegDto officeRegDto, User user){
+        Office office = Office.builder()
+                .user(user)
+                .placeName(officeRegDto.getPlaceName())
+                .image(officeRegDto.getImage())
+                .telNum(officeRegDto.getTelNum())
+                .pay(officeRegDto.getPay())
+                .description(officeRegDto.getDescription())
+                .address(officeRegDto.getAddress())
+                .detailAddress(officeRegDto.getDetailAddress())
+                .status(true)
+                .build();
+
+        officeRepository.save(office);
+
+        return office.getId();
     }
 }

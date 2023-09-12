@@ -49,10 +49,6 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, length = 10)
     private Role role;
 
-    private String accessToken;
-
-    private LocalDateTime accessTokenExpirationTime;
-
     @Column(length = 250)
     private String refreshToken;
 
@@ -92,14 +88,11 @@ public class User extends BaseTimeEntity {
     }
 
     public void updateToken(JwtTokenDto jwtTokenDto) {
-        this.accessToken = jwtTokenDto.getAccessToken();
         this.refreshToken = jwtTokenDto.getRefreshToken();
-        this.accessTokenExpirationTime = DateTimeUtils.convertToLocalDateTime(jwtTokenDto.getAccessTokenExpireTime());
         this.tokenExpirationTime = DateTimeUtils.convertToLocalDateTime(jwtTokenDto.getRefreshTokenExpireTime());
     }
 
     public void expireToken(LocalDateTime now) {
-        this.accessTokenExpirationTime = now;
         this.tokenExpirationTime = now;
     }
 }
