@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import yjhb.meeti.api.approval.process.service.ApprovalProcessService;
 import yjhb.meeti.domain.approval.constant.Decision;
+import yjhb.meeti.domain.approval.service.ApprovalService;
 import yjhb.meeti.global.interceptor.AdminAuthorizationInterceptor;
 import yjhb.meeti.global.jwt.service.TokenManager;
 
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ApprovalProcessController {
 
     private final TokenManager tokenManager;
-    private final ApprovalProcessService approvalProcessService;
+    private final ApprovalService approvalService;
 
     @Tag(name = "Approval Process")
     @PostMapping("/approval/{approvalId}")
@@ -31,7 +31,7 @@ public class ApprovalProcessController {
 
         tokenManager.validateToken(accessToken);
 
-        approvalProcessService.proceed(approvalId, decision);
+        approvalService.proceed(approvalId, decision);
 
         return ResponseEntity.ok("Approval is " + decision.toString());
     }

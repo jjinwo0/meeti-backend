@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.api.approval.registration.dto.ApprovalRegDto;
-import yjhb.meeti.api.approval.registration.service.ApprovalRegService;
+import yjhb.meeti.domain.approval.service.ApprovalService;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.domain.user.service.UserService;
 import yjhb.meeti.global.jwt.service.TokenManager;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ApprovalRegController {
 
     private final TokenManager tokenManager;
-    private final ApprovalRegService approvalRegService;
+    private final ApprovalService approvalService;
     private final UserService userService;
 
     @Tag(name = "Approval Registration")
@@ -35,7 +35,7 @@ public class ApprovalRegController {
 
         User findUser = userService.findUserByUserId(userId);
 
-        approvalRegService.regApproval(dto, findUser);
+        approvalService.regApproval(dto, findUser);
 
         return ResponseEntity.ok(true);
     }
