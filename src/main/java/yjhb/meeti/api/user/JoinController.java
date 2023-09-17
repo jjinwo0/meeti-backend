@@ -20,7 +20,7 @@ public class JoinController {
     private final JoinService joinService;
 
     @PostMapping("/join")
-    public ResponseEntity<String> join(@RequestBody UserJoinDTO userJoinDTO){
+    public ResponseEntity<Boolean> join(@RequestBody UserJoinDTO userJoinDTO){
 
         User createUser = User.builder()
                 .userType(UserType.COMMON)
@@ -32,11 +32,11 @@ public class JoinController {
 
         joinService.join(createUser);
 
-        return ResponseEntity.ok("Join Success");
+        return ResponseEntity.ok(true);
     }
 
     @PostMapping("/join/office")
-    public ResponseEntity<String> joinOffice(@RequestBody UserJoinDTO userJoinDTO){
+    public ResponseEntity<Boolean> joinOffice(@RequestBody UserJoinDTO userJoinDTO){
 
         User createUser = User.builder()
                 .userType(UserType.COMMON)
@@ -48,6 +48,6 @@ public class JoinController {
 
         joinService.join(createUser);
 
-        return ResponseEntity.ok("Join Success");
+        return ResponseEntity.ok(true);
     }
 }
