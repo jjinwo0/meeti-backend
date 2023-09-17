@@ -27,8 +27,23 @@ public class JoinController {
                 .email(userJoinDTO.getEmail())
                 .password(userJoinDTO.getPassword())
                 .username(userJoinDTO.getUsername())
-                .profile(userJoinDTO.getProfile())
                 .role(Role.COMMON)
+                .build();
+
+        joinService.join(createUser);
+
+        return ResponseEntity.ok("Join Success");
+    }
+
+    @PostMapping("/join/office")
+    public ResponseEntity<String> joinOffice(@RequestBody UserJoinDTO userJoinDTO){
+
+        User createUser = User.builder()
+                .userType(UserType.COMMON)
+                .email(userJoinDTO.getEmail())
+                .password(userJoinDTO.getPassword())
+                .username(userJoinDTO.getUsername())
+                .role(Role.COMMON_OFFICE)
                 .build();
 
         joinService.join(createUser);

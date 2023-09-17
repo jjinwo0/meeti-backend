@@ -25,10 +25,6 @@ public class CalenderService {
     private final CalenderRepository calenderRepository;
     private final UserRepository userRepository;
 
-    public void createCalender(Calender calender){
-        calenderRepository.save(calender);
-    }
-
     public Calender findCalenderById(Long id){
         return calenderRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_CALENDER));
