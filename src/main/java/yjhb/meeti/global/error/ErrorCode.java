@@ -24,6 +24,8 @@ public enum ErrorCode {
     INVALID_MEMBER_TYPE(HttpStatus.BAD_REQUEST, "M-001", "잘못된 회원 타입입니다. (memberType : KAKAO)"),
     ALREADY_REGISTERED_MEMBER(HttpStatus.BAD_REQUEST, "M-002", "이미 가입된 회원입니다."),
     USER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "M-003", "해당 회원은 존재하지 않습니다."),
+    NOT_EXISTS_EMAIL(HttpStatus.BAD_REQUEST, "M-004", "일치하는 Email 정보가 존재하지 않습니다."),
+    NOT_EXISTS_PASSWORD(HttpStatus.BAD_REQUEST, "M-005", "Password가 일치하지 않습니다."),
 
     // 스케쥴
     NOT_FOUND_CALENDER(HttpStatus.NOT_FOUND, "S-001", "스케쥴이 존재하지 않습니다."),

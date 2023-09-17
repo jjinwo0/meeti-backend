@@ -57,8 +57,14 @@ public class UserService {
     }
 
     public User findByEmailAndPassword(String email, String password){
-        return userRepository.findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXISTS));
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_EXISTS_EMAIL));
+
+        if (!user.getPassword().equals(password))
+            throw new EntityNotFoundException(ErrorCode.NOT_EXISTS_PASSWORD);
+
+        return user;
     }
 
     public UserType findUserTypeByUsernameAndPassword(String email, String password){
