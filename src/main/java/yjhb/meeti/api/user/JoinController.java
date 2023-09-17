@@ -2,11 +2,9 @@ package yjhb.meeti.api.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.dto.user.UserJoinDTO;
+import yjhb.meeti.service.user.EmailService;
 import yjhb.meeti.service.user.JoinService;
 import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.domain.user.constant.UserType;
@@ -18,6 +16,7 @@ import yjhb.meeti.domain.user.entity.User;
 public class JoinController {
 
     private final JoinService joinService;
+    private final EmailService emailService;
 
     @PostMapping("/join")
     public ResponseEntity<Boolean> join(@RequestBody UserJoinDTO userJoinDTO){
@@ -49,5 +48,13 @@ public class JoinController {
         joinService.join(createUser);
 
         return ResponseEntity.ok(true);
+    }
+
+    @PostMapping("/valid/{email}")
+    public String validEmail(@PathVariable("email") String email) throws Exception {
+
+        String send = emailService.sendSimpleMessage(email);
+
+        return send;
     }
 }

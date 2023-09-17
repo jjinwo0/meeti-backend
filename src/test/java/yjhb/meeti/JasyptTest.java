@@ -17,7 +17,7 @@ public class JasyptTest {
 
         String content = "";
         String encryptedContent = encryptor.encrypt(content);
-        String decryptedContent = encryptor.decrypt("M9HaNMFao/gYcq7Lu7A2aA==");
+        String decryptedContent = encryptor.decrypt(encryptedContent);
 
         System.out.println("Enc : " + encryptedContent + ", Dec : " + decryptedContent);
     }
