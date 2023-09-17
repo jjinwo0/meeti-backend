@@ -50,7 +50,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/meeti/oauth/login",
                         "/meeti/access-token/issue",
                         "/meeti/user/logout",
-                        "meeti/user/valid/**"
+                        "/meeti/user/valid/**"
                 );
 
         registry.addInterceptor(adminAuthorizationInterceptor)
