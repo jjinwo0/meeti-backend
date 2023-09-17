@@ -49,12 +49,4 @@ public class JoinController {
 
         return ResponseEntity.ok(true);
     }
-
-    @PostMapping("/valid/{email:.+}")
-    public String validEmail(@PathVariable("email") String email) throws Exception {
-
-        String send = emailService.sendSimpleMessage(email);
-
-        return send;
-    }
 }
