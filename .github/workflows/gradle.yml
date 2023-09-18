@@ -19,19 +19,18 @@ permissions:
 jobs:
   build-docker-image:
 
-    # runs-on: ubuntu-latest
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
-    # services:
-    #   mysql:
-    #     image: mysql:8.0
-    #     env:
-    #       MYSQL_USER: ${{ secrets.DB_USER }}
-    #       MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
-    #       MYSQL_DATABASE: ${{ secrets.DB_NAME }}
-    #     ports:
-    #       - 3306:3306
-    #     options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=10
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_USER: ${{ secrets.DB_USER }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.DB_NAME }}
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=10
 
     steps:
     - uses: actions/checkout@v3
@@ -42,53 +41,44 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-      
-    - name: Grand execute permission for gradlew # permission 에러가 발생할 경우
-      run: sudo chmod +x /root/actions-runner/_work/meeti-backend/meeti-backend/server/meeti/gradlew
-      
-    - name: build # 경로를 직접 설정하여 빌드 명령을 내려준다.
-      run: /root/actions-runner/_work/meeti-backend/meeti-backend/server/meeti/gradlew build
-
-    - name: Execute Jar File
-      run: sudo kill -9 `sudo lsof -t -i:8080` & sudo java -jar /root/actions-runner/_work/meeti-backend/meeti-backend/server/meeti/build/libs/meeti-0.0.1-SNAPSHOT.jar &
-    
-    # - name: Spring Boot Build
-    #   run: ./gradlew clean build
-      
-  #   # Docker 이미지 Build (2)
-  #   - name: docker image build
-  #     run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend .
-          
-  #   # DockerHub Login (3)
-  #   - name: docker login 
-  #     uses: docker/login-action@v2
-  #     with: 
-  #       username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #       password: ${{ secrets.DOCKERHUB_PASSWORD }}
         
-  #   # Docker Hub push (4)
-  #   - name: docker Hub push
-  #     run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend
-
-  # # 위 과정에서 푸시한 이미지를 ec2에서 풀받아서 실행시키는 과정 
-  # run-docker-image-on-ec2:
-  #   # build-docker-image (위)과정이 완료되어야 실행됩니다.
-  #   needs: build-docker-image
-  #   runs-on: self-hosted
-
-  #   steps:
-  #     # 1. 최신 이미지를 풀받습니다
-  #     - name: docker pull
-  #       run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend
+    - name: Spring Boot Build
+      run: ./gradlew clean build
       
-  #     # 2. 기존의 컨테이너를 중지시킵니다
-  #     - name: docker stop container
-  #       run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
+    # Docker 이미지 Build (2)
+    - name: docker image build
+      run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend .
+          
+    # DockerHub Login (3)
+    - name: docker login 
+      uses: docker/login-action@v2
+      with: 
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        
+    # Docker Hub push (4)
+    - name: docker Hub push
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend
 
-  #     # 3. 최신 이미지를 컨테이너화하여 실행시킵니다
-  #     - name: docker run new container
-  #       run: sudo docker run --name meeti_backend --rm -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend
+  # 위 과정에서 푸시한 이미지를 ec2에서 풀받아서 실행시키는 과정 
+  run-docker-image-on-ec2:
+    # build-docker-image (위)과정이 완료되어야 실행됩니다.
+    needs: build-docker-image
+    runs-on: self-hosted
 
-  #     # 4. 미사용 이미지를 정리합니다
-  #     - name: delete old docker image
-  #       run: sudo docker system prune -f
+    steps:
+      # 1. 최신 이미지를 풀받습니다
+      - name: docker pull
+        run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend
+      
+      # 2. 기존의 컨테이너를 중지시킵니다
+      - name: docker stop container
+        run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
+
+      # 3. 최신 이미지를 컨테이너화하여 실행시킵니다
+      - name: docker run new container
+        run: sudo docker run --name meeti_backend --rm -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend
+
+      # 4. 미사용 이미지를 정리합니다
+      - name: delete old docker image
+        run: sudo docker system prune -f
