@@ -61,16 +61,6 @@ jobs:
     - name: Spring Boot Build
       run: ./gradlew clean build
 
-    #test를 위한 mysql설정
-    - name: Start MySQL
-      uses: samin/mysql-action@v1.3
-      with:
-        host port: 3305
-        container port: 3305
-        mysql database: ${{ secrets.DB_NAME }}
-        mysql user: ${{ secrets.DB_USER }}
-        mysql password: ${{ secrets.DB_PASSWORD }}
-
     # Docker 이미지 Build (2)
     - name: docker image build
       run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend .
@@ -116,11 +106,16 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          envs: GITHUB_SHA
-          script: |
-             docker stop goorm
-             docker rm goorm
-             sudo docker pull ${{ secrets.DOCKER_REPO }}/goorm
-             docker run -d --name goorm -p 8080:8080 ${{ secrets.DOCKER_REPO }}/goorm
-             docker rmi -f $(docker images -f "dangling=true" -q)
+          key_id : ${{ secrets.EC2_PRIVATE_KEY_ID }} #key_id 로 변경 
+          envs : GITHUB_SHA 
+          script : |
+            # Stop and remove the existing container if it exists.
+            sudo docker stop meeti_backend || true 
+            sudo docker rm meeti_backend || true 
+            
+            # Pull the latest image and start a new container.
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend 
+            sudo docker run --name meeti_backend --rm -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend 
+
+            # Remove unused images.
+            sudo docker system prune -f 
