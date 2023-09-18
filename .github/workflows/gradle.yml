@@ -17,7 +17,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  build-docker-image:
 
     runs-on: ubuntu-latest
 
@@ -41,21 +41,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        
-    # - name: Build with Gradle
-    #   uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
-    #   with:
-    #     arguments: build
-        
-    # - name: Build with Gradle
-    #   uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-    #   with:
-    #     arguments: clean bootJar
-      
-
-    # # Spring Boot 어플리케이션 Build (1)
-    # - name: Spring Boot Clean Build
-    #   run: ./gradlew clean build
 
     - name: Spring Boot Build
       run: ./gradlew build -x test
@@ -74,3 +59,26 @@ jobs:
     # Docker Hub push (4)
     - name: docker Hub push
       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend
+
+  # 위 과정에서 푸시한 이미지를 ec2에서 풀받아서 실행시키는 과정 
+  run-docker-image-on-ec2:
+    # build-docker-image (위)과정이 완료되어야 실행됩니다.
+    needs: build-docker-image
+    runs-on: self-hosted
+
+    steps:
+      # 1. 최신 이미지를 풀받습니다
+      - name: docker pull
+        run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend
+      
+      # 2. 기존의 컨테이너를 중지시킵니다
+      - name: docker stop container
+        run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
+
+      # 3. 최신 이미지를 컨테이너화하여 실행시킵니다
+      - name: docker run new container
+        run: sudo docker run --name github-actions-demo --rm -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/meeti_backend
+
+      # 4. 미사용 이미지를 정리합니다
+      - name: delete old docker image
+        run: sudo docker system prune -f
