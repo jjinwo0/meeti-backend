@@ -16,7 +16,7 @@ import java.util.Random;
 public class EmailService {
 
     private final JavaMailSender javaMailSender;
-    @Value("${spring.mail.username}")
+    @Value("${spring.username}")
     private String sendMail;
 
     public static final String ePw = createKey();

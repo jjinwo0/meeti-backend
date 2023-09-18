@@ -25,7 +25,7 @@ public class EmailConfig {
     private boolean fallback;
     @Value("${spring.username}")
     private String id;
-    @Value("${spring.mail.password}")
+    @Value("${spring.password}")
     private String password;
 
     @Bean
