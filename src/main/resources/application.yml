@@ -26,22 +26,18 @@ spring:
 #    username: ENC(M9HaNMFao/gYcq7Lu7A2aA==) # local
     password: ENC(jY0l1w3cwXsR+sQ9E55X+TMJmQONjWv0)
 
-  host: smtp.gmail.com
-  port: 465
-  username: ENC(yyhYwkGZCRb3R+wSSfm2UT7D1YEL5PCx9SwhgJA7wuA=)
-  password: ENC(2ZGhvJMNwmslaao1lJjRUzbiOKRt9Gz8AcxoFOnm098=)
-  properties:
-    mail:
-      smtp:
-        socketFactory:
-          class: javax.net.ssl.SSLSocketFactory
-          port: 465
-          fallback: false
-        auth: true
-        timeout: 5000
-        starttls:
-          required: true
-          enable: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ENC(PtT4wKQ1Nt8xua9Mhd6QTkMbo0v963olmg0GVPZ4Tbw=)
+    password: ENC(INOVaD+xxrA79gFU/Kooord/LE6IsJPYiZmdkOAF5i8=)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 30000
+          starttls:
+            enable: true
 
   servlet:
     multipart:

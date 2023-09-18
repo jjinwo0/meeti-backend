@@ -1,10 +1,9 @@
 package yjhb.meeti.api.user;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import yjhb.meeti.dto.user.EmailDto;
 import yjhb.meeti.service.user.EmailService;
 
 @RestController
@@ -14,11 +13,13 @@ public class EmailController {
 
     private final EmailService emailService;
 
-    @PostMapping("/valid/{email:.+}")
-    public String validEmail(@PathVariable("email") String email) throws Exception {
+    @PostMapping("/valid")
+    public ResponseEntity<String> validEmail(@RequestBody EmailDto dto){
 
-        String send = emailService.sendSimpleMessage(email);
+        int number = emailService.sendMail(dto.getEmail());
 
-        return send;
+        String num = "" + number;
+
+        return ResponseEntity.ok(num);
     }
 }
