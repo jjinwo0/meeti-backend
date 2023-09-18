@@ -42,7 +42,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-
+      
+    - name: Grand execute permission for gradlew # permission 에러가 발생할 경우
+      run: chmod +x /root/actions-runner/_work/meeti-backend/meeti-backend/server/meeti/gradlew
+      
     - name: build # 경로를 직접 설정하여 빌드 명령을 내려준다.
       run: /root/actions-runner/_work/meeti-backend/meeti-backend/server/meeti/gradlew build
 
