@@ -22,7 +22,7 @@ public class UpdateController {
     private final UpdateService updateService;
     private final TokenManager tokenManager;
 
-    @Tag(name = "Update")
+    @Tag(name = "Update User")
     @PostMapping("/update")
     public ResponseEntity<String> updateUser(@RequestBody UpdateDTO updateDTO,
                                                 @UserInfo UserInfoDto userInfoDto,
