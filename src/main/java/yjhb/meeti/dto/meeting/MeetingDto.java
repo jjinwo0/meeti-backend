@@ -13,9 +13,6 @@ public class MeetingDto {
         private String title;
 
         private String detail;
-
-//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-//        private LocalDate date;
     }
 
     @Data

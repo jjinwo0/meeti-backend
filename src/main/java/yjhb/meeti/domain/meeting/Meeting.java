@@ -34,4 +34,13 @@ public class Meeting {
         this.date = date;
         this.user = user;
     }
+
+    public Meeting update(String title, String detail, LocalDate date, User user){
+        this.title = title;
+        this.detail = detail;
+        this.date = date;
+        this.user = user;
+
+        return this;
+    }
 }

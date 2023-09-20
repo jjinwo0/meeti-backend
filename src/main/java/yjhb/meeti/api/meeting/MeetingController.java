@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import yjhb.meeti.domain.meeting.Meeting;
 import yjhb.meeti.dto.meeting.MeetingDto;
 import yjhb.meeti.service.meeting.MeetingService;
 import yjhb.meeti.domain.user.entity.User;
@@ -40,6 +41,26 @@ public class MeetingController {
         User findUser = userService.findUserByUserId(userId);
 
         meetingService.register(dto, findUser);
+
+        return ResponseEntity.ok(true);
+    }
+
+    @Schema(name = "Update Meeting", description = "회의록 수정 API")
+    @PostMapping("/update/{meetingId}/{userId}")
+    public ResponseEntity<Boolean> createMeeting(@RequestBody MeetingDto.Request dto,
+                                                 @PathVariable("meetingId")Long meetingId,
+                                                 @PathVariable("userId")Long userId,
+                                                 HttpServletRequest request){
+
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        Meeting findMeeting = meetingService.findByMeetingId(meetingId);
+        User findUser = userService.findUserByUserId(userId);
+
+        meetingService.update(dto, findMeeting, findUser);
 
         return ResponseEntity.ok(true);
     }
