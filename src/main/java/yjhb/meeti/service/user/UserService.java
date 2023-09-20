@@ -83,4 +83,10 @@ public class UserService {
                 .role(findUser.get().getRole())
                 .build();
     }
+
+    public void deleteUser(Long id){
+        User findUser = findUserByUserId(id);
+
+        userRepository.delete(findUser);
+    }
 }
