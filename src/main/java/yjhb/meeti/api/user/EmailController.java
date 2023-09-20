@@ -22,4 +22,10 @@ public class EmailController {
 
         return ResponseEntity.ok(num);
     }
+
+    @PostMapping("/valid/code")
+    public ResponseEntity<Boolean> validCode(@RequestBody EmailDto.Valid valid){
+
+        return ResponseEntity.ok(emailService.validNumber(valid.getCode()));
+    }
 }

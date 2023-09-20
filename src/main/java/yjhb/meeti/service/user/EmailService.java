@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import yjhb.meeti.global.error.ErrorCode;
+import yjhb.meeti.global.error.exception.AuthenticationException;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -16,6 +18,14 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String senderEmail;
     private static int number;
+
+    public Boolean validNumber(String num){
+
+        if (number != Integer.parseInt(num))
+            throw new AuthenticationException(ErrorCode.NOT_EQUAL_CODE);
+
+        return true;
+    }
 
     public static void createNumber(){
         number = (int)(Math.random() * (90000)) + 100000;// (int) Math.random() * (최댓값-최소값+1) + 최소값

@@ -46,6 +46,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/meeti/**")
                 .excludePathPatterns(
                         "/meeti/user/join",
+                        "/meeti/user/join/office",
                         "/meeti/user/login",
                         "/meeti/oauth/login",
                         "/meeti/access-token/issue",
