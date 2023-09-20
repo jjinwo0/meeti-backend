@@ -46,7 +46,7 @@ public class User extends BaseTimeEntity {
     private String profile; // 프로필 사진 주소 저장 컬럼
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 50)
     private Role role;
 
     @Column(length = 250)
