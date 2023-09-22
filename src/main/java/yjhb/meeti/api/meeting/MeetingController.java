@@ -45,6 +45,7 @@ public class MeetingController {
         return ResponseEntity.ok(true);
     }
 
+
     @Schema(name = "Update Meeting", description = "회의록 수정 API")
     @PostMapping("/update/{meetingId}/{userId}")
     public ResponseEntity<Boolean> createMeeting(@RequestBody MeetingDto.Request dto,

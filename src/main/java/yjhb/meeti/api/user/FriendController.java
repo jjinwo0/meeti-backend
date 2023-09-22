@@ -29,7 +29,7 @@ public class FriendController {
 
         tokenManager.validateToken(accessToken);
 
-        friendService.addFrieend(userId, friendId);
+        friendService.addFriend(userId, friendId);
 
         return ResponseEntity.ok(true);
     }

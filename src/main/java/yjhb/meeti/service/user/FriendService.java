@@ -21,7 +21,7 @@ public class FriendService {
 
         Friend friend = Friend.builder()
                 .user(findUser)
-                .friendId(friendId)
+                .fId(friendId)
                 .favorite(false)
                 .build();
 

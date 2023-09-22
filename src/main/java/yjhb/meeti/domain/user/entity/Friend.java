@@ -20,14 +20,14 @@ public class Friend {
     @JoinColumn(name = "friends")
     private User user;
 
-    private Long friendId;
+    private Long fId;
 
     private boolean favorite;
 
     @Builder
-    public Friend(User user, Long friendId, boolean favorite) {
+    public Friend(User user, Long fId, boolean favorite) {
         this.user = user;
-        this.friendId = friendId;
+        this.fId = fId;
         this.favorite = favorite;
     }
 }
