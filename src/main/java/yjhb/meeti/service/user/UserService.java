@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.user.constant.UserType;
+import yjhb.meeti.domain.user.entity.Friend;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.repository.user.UserRepository;
 import yjhb.meeti.global.error.ErrorCode;
@@ -13,6 +14,7 @@ import yjhb.meeti.global.error.exception.EntityNotFoundException;
 import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -72,15 +74,13 @@ public class UserService {
     }
 
     public UserInfoDto findUserInfo(Long id){
-        Optional<User> findUser = userRepository.findById(id);
-        if (findUser.isEmpty())
-            throw new EntityNotFoundException(ErrorCode.USER_NOT_EXISTS);
+        User findUser = findUserByUserId(id);
 
         return UserInfoDto.builder()
                 .id(id)
-                .username(findUser.get().getUsername())
-                .profile(findUser.get().getProfile())
-                .role(findUser.get().getRole())
+                .username(findUser.getUsername())
+                .profile(findUser.getProfile())
+                .role(findUser.getRole())
                 .build();
     }
 

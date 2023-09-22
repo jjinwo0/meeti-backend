@@ -55,6 +55,9 @@ public class User extends BaseTimeEntity {
     private LocalDateTime tokenExpirationTime;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Friend> friends = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Calender> calenders = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
