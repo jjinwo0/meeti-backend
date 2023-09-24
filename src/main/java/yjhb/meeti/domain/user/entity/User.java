@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yjhb.meeti.domain.approval.entity.Approval;
-import yjhb.meeti.domain.calender.Calender;
+import yjhb.meeti.domain.calender.Calendar;
 import yjhb.meeti.domain.common.BaseTimeEntity;
 import yjhb.meeti.domain.meeting.Meeting;
 import yjhb.meeti.domain.office.Office;
@@ -58,7 +58,7 @@ public class User extends BaseTimeEntity {
     private List<Friend> friends = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Calender> calenders = new ArrayList<>();
+    private List<Calendar> calenders = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Office> offices = new ArrayList<>();

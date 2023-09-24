@@ -21,13 +21,13 @@ public class LogoutController {
 
     @Tag(name = "Logout")
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest httpServletRequest){
+    public ResponseEntity<Boolean> logout(HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
         AuthorizationHeaderUtils.validateAuthorization(authorization);
 
         String accessToken = authorization.split(" ")[1];
         logoutService.logout(accessToken);
 
-        return ResponseEntity.ok("Logout Success");
+        return ResponseEntity.ok(true);
     }
 }

@@ -1,16 +1,10 @@
 package yjhb.meeti.dto.calender;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 
 @Getter @Builder
 @NoArgsConstructor @AllArgsConstructor
-public class CalenderResponseDto {
+public class CalendarResponseDto {
 
     private Long id;
     private String title;

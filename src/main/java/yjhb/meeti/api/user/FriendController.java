@@ -2,10 +2,7 @@ package yjhb.meeti.api.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.global.jwt.service.TokenManager;
 import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 import yjhb.meeti.service.user.FriendService;
@@ -36,8 +33,8 @@ public class FriendController {
         return ResponseEntity.ok(true);
     }
 
-    @PostMapping("/friend/search/{userId}")
-    public ResponseEntity<List> addFriend(@PathVariable("userId") Long userId,
+    @GetMapping("/friend/search/{userId}")
+    public ResponseEntity<List> searchFriend(@PathVariable("userId") Long userId,
                                              HttpServletRequest request){
 
         String authorization = request.getHeader("Authorization");

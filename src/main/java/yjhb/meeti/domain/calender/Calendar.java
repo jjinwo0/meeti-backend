@@ -16,7 +16,7 @@ import java.util.Date;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Calender {
+public class Calendar {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "calender_id")
@@ -33,7 +33,7 @@ public class Calender {
     private User user;
 
     @Builder
-    public Calender(String title, String color, String start, String initTime, String end, String finishTime, String place, User user) {
+    public Calendar(String title, String color, String start, String initTime, String end, String finishTime, String place, User user) {
         this.title = title;
         this.color = color;
         this.start = start;

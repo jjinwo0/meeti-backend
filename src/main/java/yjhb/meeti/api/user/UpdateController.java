@@ -24,7 +24,7 @@ public class UpdateController {
 
     @Tag(name = "Update User")
     @PostMapping("/update")
-    public ResponseEntity<String> updateUser(@RequestBody UpdateDTO updateDTO,
+    public ResponseEntity<Boolean> updateUser(@RequestBody UpdateDTO updateDTO,
                                                 @UserInfo UserInfoDto userInfoDto,
                                                 HttpServletRequest httpServletRequest){
 
@@ -37,6 +37,6 @@ public class UpdateController {
 
         updateService.updateUser(userInfoDto.getId(), updateDTO.getUsername(), updateDTO.getProfile());
 
-        return ResponseEntity.ok("Update Success");
+        return ResponseEntity.ok(true);
     }
 }
