@@ -10,6 +10,7 @@ public class MeetingDto {
 
     @Data
     public static class Request{
+        private String title;
 
         private String detail;
     }
