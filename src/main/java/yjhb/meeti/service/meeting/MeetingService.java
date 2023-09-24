@@ -38,7 +38,7 @@ public class MeetingService {
 
     public void update(MeetingDto.Request dto, Meeting meeting, User user){
 
-        meeting.update(dto.getTitle(), dto.getDetail(), LocalDate.now(), user);
+        meeting.update(dto.getDetail(), LocalDate.now(), user);
     }
 
     public List findMeetingByUserId(Long userId){

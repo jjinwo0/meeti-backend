@@ -35,8 +35,7 @@ public class Meeting {
         this.user = user;
     }
 
-    public Meeting update(String title, String detail, LocalDate date, User user){
-        this.title = title;
+    public Meeting update(String detail, LocalDate date, User user){
         this.detail = detail;
         this.date = date;
         this.user = user;
