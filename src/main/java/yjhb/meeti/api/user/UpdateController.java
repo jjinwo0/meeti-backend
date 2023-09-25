@@ -2,16 +2,21 @@ package yjhb.meeti.api.user;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.dto.user.UpdateDTO;
 import yjhb.meeti.service.user.UpdateService;
 import yjhb.meeti.global.jwt.service.TokenManager;
 import yjhb.meeti.global.resolver.memberinfo.UserInfo;
 import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 import yjhb.meeti.global.util.AuthorizationHeaderUtils;
+import yjhb.meeti.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Tag(name = "Update", description = "유저 정보 update API")
 @RestController
@@ -20,22 +25,26 @@ import javax.servlet.http.HttpServletRequest;
 public class UpdateController {
 
     private final UpdateService updateService;
+    private final UserService userService;
     private final TokenManager tokenManager;
 
     @Tag(name = "Update User")
-    @PostMapping("/update")
-    public ResponseEntity<Boolean> updateUser(@RequestBody UpdateDTO updateDTO,
-                                                @UserInfo UserInfoDto userInfoDto,
-                                                HttpServletRequest httpServletRequest){
+    @PostMapping(value = "/update/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Boolean> updateUser(@RequestPart("username")  String username,
+                                                @PathVariable("userId") Long userId,
+                                                @RequestPart(value = "image")  MultipartFile image,
+                                                HttpServletRequest httpServletRequest) throws IOException {
 
         String authorization = httpServletRequest.getHeader("Authorization");
         AuthorizationHeaderUtils.validateAuthorization(authorization);
 
         String accessToken = authorization.split(" ")[1];
-        // 토큰 유효성 체크
+
         tokenManager.validateToken(accessToken);
 
-        updateService.updateUser(userInfoDto.getId(), updateDTO.getUsername(), updateDTO.getProfile());
+        User findUser = userService.findUserByUserId(userId);
+
+        updateService.updateUser(findUser.getId(), username, image);
 
         return ResponseEntity.ok(true);
     }

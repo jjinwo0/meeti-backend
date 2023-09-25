@@ -15,7 +15,7 @@ public class JasyptTest {
         encryptor.setPassword(password);
         encryptor.setAlgorithm("PBEWithMD5AndTripleDES");
 
-        String content = "";
+        String content = "meetibucket";
         String encryptedContent = encryptor.encrypt(content);
         String decryptedContent = encryptor.decrypt(encryptedContent);
 

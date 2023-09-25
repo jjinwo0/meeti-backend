@@ -87,12 +87,26 @@ kakao:
   admin:
     key: ENC(1d6jm4IQmTfahly8uUI4JkoNoO0KNiWZ+b07Lo1gqcLaS9pp7mPwbgox0wW+vSIm)
 
+# S3
+cloud:
+  aws:
+    s3:
+      bucket: ENC(T2iTCvojoJCFVKh9FIt+YKdgYywKdwHE)
+    stack:
+      auto: false
+    region:
+      static: us-east-1
+    credentials:
+      access-key: ENC(ZhRqNiGHyb3gpLDz1ln5yzNXSECbtK9RzZzRJKTzUdY=)
+      secret-key: ENC(aJ8DcMYxlfALmSOAf4zY6EkS7YnzNL3IWi+tGjFgcvmRwlVGuKMfRHPmyY2hlXMHUfUl3mUSuhA=)
+
 jasypt:
   password: aiejoaifp##@*!&@^aoweuiai372786
 
 part4:
   upload:
     path: ENC(Yjperm8kB/tciNFQ/rwM9YVwqQUGMW7rPjIVHV5r/fs=)
+
 
 #tosspayments:
 #  apiKey: test_ck_kYG57Eba3GZ4Rx5y2Ww8pWDOxmA1

@@ -49,7 +49,10 @@ public enum ErrorCode {
     PAY_FAILED(HttpStatus.FORBIDDEN, "P-002", "결제 실패."),
 
     // 회의록
-    NOT_FOUND_MEETING(HttpStatus.NOT_FOUND, "M-001", "해당하는 회의록을 찾을 수 업습니다.")
+    NOT_FOUND_MEETING(HttpStatus.NOT_FOUND, "M-001", "해당하는 회의록을 찾을 수 업습니다."),
+
+    // 파일
+    FILE_CONVERT_FAIL(HttpStatus.BAD_REQUEST, "F-001", "MultipartFile -> File 전환 실패")
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {

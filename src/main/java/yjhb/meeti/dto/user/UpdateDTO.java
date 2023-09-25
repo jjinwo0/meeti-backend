@@ -6,5 +6,4 @@ import lombok.Data;
 public class UpdateDTO {
 
     private String username;
-    private String profile;
 }
