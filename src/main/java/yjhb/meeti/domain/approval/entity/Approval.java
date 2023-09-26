@@ -39,7 +39,12 @@ public class Approval {
     public void updateDecision(Decision decision){
         this.decision = decision;
     }
-    public void updateFile(String file){
+
+    public void update(String requestDetail, String proceeding, String decisionDetail, Decision decision, String file) {
+        this.requestDetail = requestDetail;
+        this.proceeding = proceeding;
+        this.decisionDetail = decisionDetail;
+        this.decision = decision;
         this.file = file;
     }
 }

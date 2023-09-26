@@ -1,5 +1,6 @@
 package yjhb.meeti.api.approval;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -19,13 +20,13 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/meeti/reg")
-public class ApprovalRegController {
+public class ApprovalController {
 
     private final TokenManager tokenManager;
     private final ApprovalService approvalService;
     private final UserService userService;
 
-    @Tag(name = "Approval Registration")
+    @Schema(name = "Approval Registration")
     @PostMapping(value = "/approval/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Boolean> registrationApproval(@PathVariable("userId") Long userId,
                                                         @RequestBody ApprovalRegDto dto,
@@ -43,4 +44,20 @@ public class ApprovalRegController {
 
         return ResponseEntity.ok(true);
     }
+
+    @Schema(name = "Approval Update")
+    @PostMapping(value = "/approval/update/{approvalId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Boolean> updateApproval(@PathVariable("approvalId") Long approvalId,
+                                                  @RequestBody ApprovalRegDto dto,
+                                                  @RequestPart(value = "file") MultipartFile file,
+                                                  HttpServletRequest httpServletRequest) throws IOException{
+
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        approvalService.update(approvalId, dto, file);
+    }
+
 }

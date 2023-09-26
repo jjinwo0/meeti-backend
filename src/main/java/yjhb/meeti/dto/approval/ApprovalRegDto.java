@@ -1,6 +1,7 @@
 package yjhb.meeti.dto.approval;
 
 import lombok.*;
+import yjhb.meeti.domain.approval.constant.Decision;
 
 import java.io.File;
 
@@ -11,5 +12,5 @@ public class ApprovalRegDto {
     private String requestDetail;
     private String proceeding;
     private String decisionDetail;
-    private String decision;
+    private Decision decision;
 }

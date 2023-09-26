@@ -49,11 +49,11 @@ public class ApprovalService {
         findApproval.updateDecision(decision);
     }
 
-    public void changeFile(Long id, User user, MultipartFile file) throws IOException {
+    public void update(Long id, ApprovalRegDto dto, MultipartFile file) throws IOException {
 
         Approval approval = approvalRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_APPROVAL));
 
-        approval.updateFile(s3Service.upload(file, "approvalFile"));
+        approval.update(dto.getRequestDetail(), dto.getProceeding(), dto.getDecisionDetail(), dto.getDecision(), s3Service.upload(file, "approvalFile"));
     }
 }
