@@ -58,6 +58,8 @@ public class ApprovalController {
         tokenManager.validateToken(accessToken);
 
         approvalService.update(approvalId, dto, file);
+
+        return ResponseEntity.ok(true);
     }
 
 }
