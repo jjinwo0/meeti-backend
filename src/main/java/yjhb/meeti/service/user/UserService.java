@@ -3,6 +3,7 @@ package yjhb.meeti.service.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.domain.user.constant.UserType;
 import yjhb.meeti.domain.user.entity.Friend;
 import yjhb.meeti.domain.user.entity.User;
@@ -82,6 +83,13 @@ public class UserService {
                 .profile(findUser.getProfile())
                 .role(findUser.getRole())
                 .build();
+    }
+
+    public void validOfficeAdmin(Long id){
+        User findUser = findUserByUserId(id);
+
+        if (!findUser.getRole().equals(Role.ADMIN_OFFICE))
+            throw new AuthenticationException(ErrorCode.FORBIDDEN_ADMIN);
     }
 
     public void deleteUser(Long id){
