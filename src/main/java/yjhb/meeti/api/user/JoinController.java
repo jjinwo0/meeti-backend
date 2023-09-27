@@ -49,4 +49,20 @@ public class JoinController {
 
         return ResponseEntity.ok(true);
     }
+
+    @PostMapping("/join/office/admin")
+    public ResponseEntity<Boolean> joinOfficeAdmin(@RequestBody UserJoinDTO userJoinDTO){
+
+        User createUser = User.builder()
+                .userType(UserType.COMMON)
+                .email(userJoinDTO.getEmail())
+                .password(userJoinDTO.getPassword())
+                .username(userJoinDTO.getUsername())
+                .role(Role.ADMIN_OFFICE)
+                .build();
+
+        joinService.join(createUser);
+
+        return ResponseEntity.ok(true);
+    }
 }
