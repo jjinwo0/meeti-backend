@@ -4,11 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import yjhb.meeti.dto.payment.request.KakaoApproveRequestDto;
+import yjhb.meeti.dto.payment.request.KakaoCompletedRequestDto;
 import yjhb.meeti.dto.payment.response.KakaoApproveResponseDto;
 import yjhb.meeti.dto.payment.response.KakaoCancelResponseDto;
 import yjhb.meeti.dto.payment.response.KakaoReadyResponseDto;
@@ -22,21 +25,20 @@ public class KakaoPayService {
     private String cid;
     @Value("${kakao.admin.key}")
     private String adminKey;
-    private KakaoReadyResponseDto kakaoPayResponseDto;
 
 
-    public KakaoReadyResponseDto kakaoPayReady() {
+    public KakaoReadyResponseDto kakaoPayReady(KakaoApproveRequestDto dto) {
 
         // 카카오페이 요청 양식
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("cid", cid);
-        parameters.add("partner_order_id", "가맹점 주문 번호");
-        parameters.add("partner_user_id", "가맹점 회원 ID");
-        parameters.add("item_name", "상품명");
-        parameters.add("quantity", "주문 수량");
-        parameters.add("total_amount", "총 금액");
-        parameters.add("vat_amount", "부가세");
-        parameters.add("tax_free_amount", "상품 비과세 금액");
+        parameters.add("partner_order_id", dto.getPartner_order_id());
+        parameters.add("partner_user_id", dto.getPartner_user_id());
+        parameters.add("item_name", dto.getItem_name());
+        parameters.add("item_code", dto.getItem_code());
+        parameters.add("quantity", String.valueOf(dto.getQuantity()));
+        parameters.add("total_amount", String.valueOf(dto.getTotal_amount()));
+        parameters.add("tax_free_amount", String.valueOf(dto.getTax_free_amount()));
         parameters.add("approval_url", "http://localhost:8080/meeti/kakao/payment/success"); // 성공 시 redirect url
         parameters.add("cancel_url", "http://localhost:8080/meeti/kakao/payment/cancel"); // 취소 시 redirect url
         parameters.add("fail_url", "http://localhost:8080/meeti/kakao/payment/fail"); // 실패 시 redirect url
@@ -47,12 +49,14 @@ public class KakaoPayService {
         // 외부에 보낼 url
         RestTemplate restTemplate = new RestTemplate();
 
-        kakaoPayResponseDto = restTemplate.postForObject(
+        KakaoReadyResponseDto readyResponseDto = restTemplate.postForObject(
                 "https://kapi.kakao.com/v1/payment/ready",
                 requestEntity,
                 KakaoReadyResponseDto.class);
 
-        return kakaoPayResponseDto;
+        readyResponseDto.setPartner_order_id(dto.getPartner_order_id());
+
+        return readyResponseDto;
     }
 
     /**
@@ -72,21 +76,23 @@ public class KakaoPayService {
     /**
      * 결제 완료 승인
      */
-    public KakaoApproveResponseDto approveResponse(String token){
+    public KakaoApproveResponseDto approveResponse(KakaoCompletedRequestDto dto){
 
         // 카카오 요청
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+
         parameters.add("cid", cid);
-        parameters.add("id", String.valueOf(kakaoPayReady().getId()));
-        parameters.add("partner_order_id", "가맹점 주문 번호");
-        parameters.add("partner_user_id", "가맹점 회원 ID");
-        parameters.add("pg_token", token);
+        parameters.add("tid", dto.getTid());
+        parameters.add("partner_order_id", dto.getPartner_order_id());
+        parameters.add("partner_user_id", dto.getPartner_user_id());
+        parameters.add("pg_token", dto.getPg_token());
 
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
 
         // 외부에 보낼 url
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
         KakaoApproveResponseDto approveResponse = restTemplate.postForObject(
                 "https://kapi.kakao.com/v1/payment/approve",

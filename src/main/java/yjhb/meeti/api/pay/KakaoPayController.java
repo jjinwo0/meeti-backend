@@ -2,9 +2,12 @@ package yjhb.meeti.api.pay;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import yjhb.meeti.dto.payment.request.KakaoApproveRequestDto;
+import yjhb.meeti.dto.payment.request.KakaoCompletedRequestDto;
 import yjhb.meeti.dto.payment.response.KakaoApproveResponseDto;
 import yjhb.meeti.dto.payment.response.KakaoCancelResponseDto;
 import yjhb.meeti.dto.payment.response.KakaoReadyResponseDto;
@@ -16,8 +19,9 @@ import yjhb.meeti.global.jwt.service.TokenManager;
 import javax.servlet.http.HttpServletRequest;
 
 @Tag(name = "KakaoPay", description = "카카오페이 결제 API")
+@Slf4j
 @RestController
-@RequestMapping("/meeti/kakao/payment")
+@RequestMapping("/kakao/payment")
 @RequiredArgsConstructor
 public class KakaoPayController {
 
@@ -27,14 +31,15 @@ public class KakaoPayController {
     // 결제 요청
     @Tag(name = "Ready to KakaoPay")
     @PostMapping("/ready")
-    public ResponseEntity<KakaoReadyResponseDto> readyToKakaoPay(HttpServletRequest httpServletRequest){
+    public ResponseEntity<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoApproveRequestDto requestDto){
 
-        String authorization = httpServletRequest.getHeader("Authorization");
-        String accessToken = authorization.split(" ")[1];
+        log.info("approveRequestDto : " + requestDto.getItem_name());
+        log.info("approveRequestDto.getPartner_order_id : " + requestDto.getPartner_order_id());
 
-        tokenManager.validateToken(accessToken);
+        KakaoReadyResponseDto readyResponseDto = kakaoPayService.kakaoPayReady(requestDto);
+        System.out.println("readyResponseDto.getId() : " + readyResponseDto.getId());
 
-        return ResponseEntity.ok(kakaoPayService.kakaoPayReady());
+        return ResponseEntity.ok(readyResponseDto);
     }
 
     // 결제 취소
@@ -54,15 +59,19 @@ public class KakaoPayController {
     }
 
     /**
-     * 결제 성공
+     * 결제 완료
      */
-    @Tag(name = "Success")
-    @GetMapping("/success")
-    public ResponseEntity afterPayRequest(@RequestParam("token") String token) {
+    @Tag(name = "Completed")
+    @GetMapping("/completed")
+    public ResponseEntity afterPayRequest(@RequestBody KakaoCompletedRequestDto completedRequestDto) {
 
-        KakaoApproveResponseDto kakaoApprove = kakaoPayService.approveResponse(token);
+        log.info("completedRequestDto.getCid() : " + completedRequestDto.getCid());
 
-        return new ResponseEntity<>(kakaoApprove, HttpStatus.OK);
+        KakaoApproveResponseDto approveResponseDto = kakaoPayService.approveResponse(completedRequestDto);
+
+        log.info("approveResponseDto.getItem_code() : " + approveResponseDto.getItem_code());
+
+        return new ResponseEntity<>(approveResponseDto, HttpStatus.OK);
     }
 
     /**
