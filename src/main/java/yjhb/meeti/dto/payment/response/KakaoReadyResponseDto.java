@@ -1,4 +1,4 @@
-package yjhb.meeti.dto.payment;
+package yjhb.meeti.dto.payment.response;
 
 import lombok.Data;
 import lombok.ToString;
@@ -8,6 +8,6 @@ import lombok.ToString;
 public class KakaoReadyResponseDto {
 
     private Long id;
-    private String redirectUrl;
-    private String createAt;
+    private String redirect_url;
+    private String partner_order_id;
 }

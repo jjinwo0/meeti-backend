@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import yjhb.meeti.dto.payment.KakaoApproveResponseDto;
-import yjhb.meeti.dto.payment.KakaoCancelResponseDto;
-import yjhb.meeti.dto.payment.KakaoReadyResponseDto;
+import yjhb.meeti.dto.payment.response.KakaoApproveResponseDto;
+import yjhb.meeti.dto.payment.response.KakaoCancelResponseDto;
+import yjhb.meeti.dto.payment.response.KakaoReadyResponseDto;
 
 @Service
 @RequiredArgsConstructor

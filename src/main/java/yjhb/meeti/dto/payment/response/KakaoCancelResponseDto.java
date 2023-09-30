@@ -1,4 +1,4 @@
-package yjhb.meeti.dto.payment;
+package yjhb.meeti.dto.payment.response;
 
 import lombok.Data;
 import lombok.ToString;

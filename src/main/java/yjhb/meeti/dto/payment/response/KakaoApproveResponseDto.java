@@ -1,4 +1,4 @@
-package yjhb.meeti.dto.payment;
+package yjhb.meeti.dto.payment.response;
 
 import lombok.Data;
 import lombok.ToString;
@@ -7,11 +7,10 @@ import lombok.ToString;
 @ToString
 public class KakaoApproveResponseDto {
 
-
-    private String aid; // 요청 고유 번호
-    private String tid; // 결제 고유 번호
-    private String cid; // 가맹점 코드
-    private String sid; // 정기결제용 ID
+    private String aid;
+    private String tid;
+    private String cid;
+    private String sid;
     private String partner_order_id; // 가맹점 주문 번호
     private String partner_user_id; // 가맹점 회원 id
     private String payment_method_type; // 결제 수단
@@ -30,8 +29,7 @@ public class KakaoApproveResponseDto {
         private int total; // 총 결제 금액
         private int tax_free; // 비과세 금액
         private int tax; // 부가세 금액
-        private int point; // 사용한 포인트
-        private int discount; // 할인금액
-        private int green_deposit; // 컵 보증금
+        private int point;
+        private int discount;
     }
 }
