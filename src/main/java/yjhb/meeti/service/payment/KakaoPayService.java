@@ -39,7 +39,7 @@ public class KakaoPayService {
         parameters.add("quantity", String.valueOf(dto.getQuantity()));
         parameters.add("total_amount", String.valueOf(dto.getTotal_amount()));
         parameters.add("tax_free_amount", String.valueOf(dto.getTax_free_amount()));
-        parameters.add("approval_url", "http://localhost:8080/meeti/kakao/payment/success"); // 성공 시 redirect url
+        parameters.add("approval_url", "http://localhost:8080/meeti/kakao/payment/completed"); // 성공 시 redirect url
         parameters.add("cancel_url", "http://localhost:8080/meeti/kakao/payment/cancel"); // 취소 시 redirect url
         parameters.add("fail_url", "http://localhost:8080/meeti/kakao/payment/fail"); // 실패 시 redirect url
 

@@ -83,9 +83,9 @@ feign:
 kakao:
   client:
     id: ENC(OxkVWGObchH4dXqk3MZCPlqk8ytgeF+QH5xwLNI9603/IS33kOHSKkhGg6wo3/kV) # Rest API Key
-    secret: ENC(nUMgOJLRyFDXVmG1C3oF80Mqqc8GMiJMVurz6wgg0hGy6/PM4uN0FgY4ZRypZV6AxWEjge8AvylTaau8QgcMFzIpwMUWBPnyjILxY07R2K4=) # Client Secret Key
+    secret: ENC(wcm09O/TXYBs84lgqSl3CUgPU8lOXvaRErqt2KWyOeammCEp/yaBnHgcigqYXA2u) # Client Secret Key
   admin:
-    key: ENC(1d6jm4IQmTfahly8uUI4JkoNoO0KNiWZ+b07Lo1gqcLaS9pp7mPwbgox0wW+vSIm)
+    key: ENC(jLO3kG56QXyWucuQjBqb/CHfpCqz8xbdXC1xXxT3hTfLtQGXQVgs5UDYMPAVl3ce)
 
 # S3
 cloud:
