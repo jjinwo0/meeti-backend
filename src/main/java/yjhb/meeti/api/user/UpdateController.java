@@ -30,10 +30,10 @@ public class UpdateController {
 
     @Tag(name = "Update User")
     @PostMapping(value = "/update/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Boolean> updateUser(@RequestPart("username")  String username,
-                                                @PathVariable("userId") Long userId,
-                                                @RequestPart(value = "image")  MultipartFile image,
-                                                HttpServletRequest httpServletRequest) throws IOException {
+    public ResponseEntity<Boolean> updateUser(@PathVariable("userId") Long userId,
+                                              @RequestPart(value = "username")  String username,
+                                              @RequestPart(value = "image")  MultipartFile image,
+                                              HttpServletRequest httpServletRequest) throws IOException {
 
         String authorization = httpServletRequest.getHeader("Authorization");
         AuthorizationHeaderUtils.validateAuthorization(authorization);
