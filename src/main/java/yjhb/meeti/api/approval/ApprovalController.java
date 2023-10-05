@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import yjhb.meeti.domain.approval.constant.Decision;
 import yjhb.meeti.dto.approval.ApprovalRegDto;
 import yjhb.meeti.service.approval.ApprovalService;
 import yjhb.meeti.domain.user.entity.User;
@@ -29,7 +30,10 @@ public class ApprovalController {
     @Schema(name = "Approval Registration")
     @PostMapping(value = "/approval/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Boolean> registrationApproval(@PathVariable("userId") Long userId,
-                                                        @RequestBody ApprovalRegDto dto,
+                                                        @RequestPart(value = "request")String request,
+                                                        @RequestPart(value = "proceeding")String proceeding,
+                                                        @RequestPart(value = "decision")Decision decision,
+                                                        @RequestPart(value = "decisionDetail")String decisionDetail,
                                                         @RequestPart(value = "file") MultipartFile file,
                                                         HttpServletRequest httpServletRequest) throws IOException {
 
@@ -40,6 +44,13 @@ public class ApprovalController {
 
         User findUser = userService.findUserByUserId(userId);
 
+        ApprovalRegDto dto = ApprovalRegDto.builder()
+                .requestDetail(request)
+                .proceeding(proceeding)
+                .decision(decision)
+                .decisionDetail(decisionDetail)
+                .build();
+
         approvalService.regApproval(dto, findUser, file);
 
         return ResponseEntity.ok(true);
@@ -48,7 +59,10 @@ public class ApprovalController {
     @Schema(name = "Approval Update")
     @PostMapping(value = "/approval/update/{approvalId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Boolean> updateApproval(@PathVariable("approvalId") Long approvalId,
-                                                  @RequestBody ApprovalRegDto dto,
+                                                  @RequestPart(value = "request")String request,
+                                                  @RequestPart(value = "proceeding")String proceeding,
+                                                  @RequestPart(value = "decision")Decision decision,
+                                                  @RequestPart(value = "decisionDetail")String decisionDetail,
                                                   @RequestPart(value = "file") MultipartFile file,
                                                   HttpServletRequest httpServletRequest) throws IOException{
 
@@ -56,6 +70,13 @@ public class ApprovalController {
         String accessToken = authorization.split(" ")[1];
 
         tokenManager.validateToken(accessToken);
+
+        ApprovalRegDto dto = ApprovalRegDto.builder()
+                .requestDetail(request)
+                .proceeding(proceeding)
+                .decision(decision)
+                .decisionDetail(decisionDetail)
+                .build();
 
         approvalService.update(approvalId, dto, file);
 
