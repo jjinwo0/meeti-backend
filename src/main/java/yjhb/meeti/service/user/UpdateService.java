@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import yjhb.meeti.domain.user.entity.User;
+import yjhb.meeti.global.error.ErrorCode;
+import yjhb.meeti.global.error.exception.BusinessException;
 import yjhb.meeti.service.file.S3Service;
 import yjhb.meeti.service.user.UserService;
 
@@ -21,11 +23,14 @@ public class UpdateService {
     public Long updateUser(Long userId, String username, MultipartFile image) throws IOException {
         User findUser = userService.findUserByUserId(userId);
 
+        if (username.isEmpty())
+            throw new BusinessException(ErrorCode.USERNAME_IS_NULL);
+
         if (!image.isEmpty()){
 
             String profileImages = s3Service.upload(image, "profileImages");
             findUser.update(username, profileImages);
-        }else findUser.update(username, null);
+        } else findUser.update(username, null);
 
         return findUser.getId();
     }

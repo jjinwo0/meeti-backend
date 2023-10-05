@@ -27,6 +27,7 @@ public enum ErrorCode {
     USER_NOT_EXISTS(HttpStatus.BAD_REQUEST, "M-003", "해당 회원은 존재하지 않습니다."),
     NOT_EXISTS_EMAIL(HttpStatus.BAD_REQUEST, "M-004", "일치하는 Email 정보가 존재하지 않습니다."),
     NOT_EXISTS_PASSWORD(HttpStatus.BAD_REQUEST, "M-005", "Password가 일치하지 않습니다."),
+    USERNAME_IS_NULL(HttpStatus.BAD_REQUEST, "M-006", "Username이 null 입니다."),
 
     // 스케쥴
     NOT_FOUND_CALENDER(HttpStatus.NOT_FOUND, "S-001", "스케쥴이 존재하지 않습니다."),
