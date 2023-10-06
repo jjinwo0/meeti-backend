@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.domain.meeting.Meeting;
 import yjhb.meeti.dto.meeting.MeetingDto;
+import yjhb.meeti.service.calender.CalendarService;
 import yjhb.meeti.service.meeting.MeetingService;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.service.user.UserService;
@@ -24,6 +25,7 @@ public class MeetingController {
     private final MeetingService meetingService;
 
     private final UserService userService;
+    private final CalendarService calendarService;
 
     private final TokenManager tokenManager;
 
@@ -41,6 +43,8 @@ public class MeetingController {
         User findUser = userService.findUserByUserId(userId);
 
         meetingService.register(dto, findUser);
+
+        calendarService.registrationCalenderByMeeting(dto, findUser);
 
         return ResponseEntity.ok(true);
     }

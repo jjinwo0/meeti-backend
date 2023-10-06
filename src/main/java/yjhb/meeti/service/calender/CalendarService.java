@@ -7,12 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.calender.Calendar;
 import yjhb.meeti.dto.calender.CalendarRegDto;
 import yjhb.meeti.dto.calender.CalendarResponseDto;
+import yjhb.meeti.dto.meeting.MeetingDto;
 import yjhb.meeti.repository.calender.CalendarRepository;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.repository.user.UserRepository;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +76,24 @@ public class CalendarService {
                 .end(end)
                 .finishTime(calendarRegDto.getFinishTime())
                 .place(calendarRegDto.getPlace())
+                .build();
+
+        calendarRepository.save(calender);
+
+        return CalendarResponseDto.builder().build();
+    }
+
+    public CalendarResponseDto registrationCalenderByMeeting(MeetingDto.Request meetingDto, User user){
+
+        Calendar calender = Calendar.builder()
+                .user(user)
+                .title(meetingDto.getTitle())
+//                .color(calendarRegDto.getColor()) // todo 색상 추가
+                .start(LocalDate.now().toString())
+//                .initTime() // todo 시간 처리 추가
+                .end(LocalDate.now().toString())
+//                .finishTime() // todo 시간 처리 추가
+//                .place() // todo 장소 추가
                 .build();
 
         calendarRepository.save(calender);
