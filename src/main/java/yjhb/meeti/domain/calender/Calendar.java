@@ -43,4 +43,17 @@ public class Calendar {
         this.place = place;
         this.user = user;
     }
+
+    public Calendar update(String title, String color, String start, String initTime, String end, String finishTime, String place, User user) {
+        this.title = title;
+        this.color = color;
+        this.start = start;
+        this.initTime = initTime;
+        this.end = end;
+        this.finishTime = finishTime;
+        this.place = place;
+        this.user = user;
+
+        return this;
+    }
 }

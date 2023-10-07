@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import yjhb.meeti.domain.calender.Calendar;
 import yjhb.meeti.dto.calender.CalendarRegDto;
 import yjhb.meeti.dto.calender.CalendarResponseDto;
 import yjhb.meeti.service.calender.CalendarService;
@@ -65,6 +66,24 @@ public class CalendarController {
 
         User findUser = userService.findUserByUserId(userId);
         calendarService.registrationCalender(calendarRegDto, findUser);
+
+        return ResponseEntity.ok(true);
+    }
+
+    @Tag(name = "Update Calendar")
+    @PostMapping("/reg/{userId}/{calendarId}")
+    public ResponseEntity<Boolean> updateCalender(@RequestBody CalendarRegDto calendarRegDto,
+                                                  @PathVariable("userId") Long userId,
+                                                  @PathVariable("calendarId") Long calendarId,
+                                                        HttpServletRequest httpServletRequest){
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        User findUser = userService.findUserByUserId(userId);
+        Calendar finaCalendar = calendarService.findCalenderById(calendarId);
+        calendarService.updateCalendar(finaCalendar, calendarRegDto, findUser);
 
         return ResponseEntity.ok(true);
     }

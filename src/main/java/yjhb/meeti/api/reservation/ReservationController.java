@@ -93,7 +93,7 @@ public class ReservationController {
 
         reservationService.createReservation(findUser, reservationRegDto, findOffice);
 
-        calendarService.registrationCalenderByReservation(reservationRegDto, findOffice, findUser)
+        calendarService.registrationCalenderByReservation(reservationRegDto, findOffice, findUser);
 
         return ResponseEntity.ok(true);
     }

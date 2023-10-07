@@ -10,6 +10,7 @@ import yjhb.meeti.dto.calender.CalendarRegDto;
 import yjhb.meeti.dto.calender.CalendarResponseDto;
 import yjhb.meeti.dto.meeting.MeetingDto;
 import yjhb.meeti.dto.reservation.ReservationRegDto;
+import yjhb.meeti.global.error.exception.AuthenticationException;
 import yjhb.meeti.repository.calender.CalendarRepository;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.repository.user.UserRepository;
@@ -121,6 +122,25 @@ public class CalendarService {
         calendarRepository.save(calender);
 
         return CalendarResponseDto.builder().build();
+    }
+
+    public Boolean updateCalendar(Calendar calendar, CalendarRegDto dto, User user){
+
+        if (!user.getCalenders().contains(calendar))
+            throw new AuthenticationException(ErrorCode.NOT_VALID_CALENDAR);
+
+        String startDate = dto.getStart().substring(0, 10);
+        String endDate = dto.getEnd().substring(0, 10);
+
+        String start = startDate.substring(0, 8) + (Integer.parseInt(startDate.substring(8, 10)) + 1 < 10 ?
+                "0" + (Integer.parseInt(startDate.substring(8, 10)) + 1) : (Integer.parseInt(startDate.substring(8, 10)) + 1));
+
+        String end = endDate.substring(0, 8) + (Integer.parseInt(endDate.substring(8, 10)) + 2 < 10 ?
+                "0" + (Integer.parseInt(endDate.substring(8, 10)) + 2) : (Integer.parseInt(endDate.substring(8, 10)) + 2));
+
+        calendar.update(dto.getTitle(), dto.getColor(), start, dto.getInitTime(), end, dto.getFinishTime(), dto.getPlace(), user);
+
+        return true;
     }
 
     @Transactional
