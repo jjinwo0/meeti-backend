@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.calender.Calendar;
+import yjhb.meeti.domain.office.Office;
 import yjhb.meeti.dto.calender.CalendarRegDto;
 import yjhb.meeti.dto.calender.CalendarResponseDto;
 import yjhb.meeti.dto.meeting.MeetingDto;
+import yjhb.meeti.dto.reservation.ReservationRegDto;
 import yjhb.meeti.repository.calender.CalendarRepository;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.repository.user.UserRepository;
@@ -94,6 +96,26 @@ public class CalendarService {
                 .end(LocalDate.now().toString())
 //                .finishTime() // todo 시간 처리 추가
 //                .place() // todo 장소 추가
+                .build();
+
+        calendarRepository.save(calender);
+
+        return CalendarResponseDto.builder().build();
+    }
+
+    public CalendarResponseDto registrationCalenderByReservation(ReservationRegDto dto, Office office, User user){
+
+        // todo Office 규격 수정
+
+        Calendar calender = Calendar.builder()
+                .user(user)
+                .title(office.getPlaceName())
+//                .color(calendarRegDto.getColor()) // todo 색상 추가
+                .start(LocalDate.now().toString())
+                .initTime(dto.getStartTime())
+                .end(LocalDate.now().toString())
+                .finishTime(dto.getEndTime())
+                .place(office.getPlaceName())
                 .build();
 
         calendarRepository.save(calender);
