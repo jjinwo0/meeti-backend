@@ -20,6 +20,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -42,24 +43,10 @@ public class ReservationService {
         Office findOffice = officeService.findOfficeById(id);
 
         List<Reservation> findReservation = findOffice.getReservations();
-        List<ReservationResponseDto> reservationResponseDtos = new ArrayList<>();
 
-        for (Reservation res : findReservation){
-
-            ReservationResponseDto dto = ReservationResponseDto.builder()
-                    .id(res.getId())
-                    .date(res.getDate())
-                    .startTime(res.getStartTime())
-                    .endTime(res.getEndTime())
-                    .officeName(officeService.findOfficeById(res.getId()).getPlaceName())
-                    .telNum(officeService.findOfficeById(res.getId()).getTelNum())
-                    .image(officeService.findOfficeById(res.getId()).getImage())
-                    .build();
-
-            reservationResponseDtos.add(dto);
-        }
-
-        return reservationResponseDtos;
+        return findReservation.stream()
+                .map(ReservationResponseDto::of)
+                .collect(Collectors.toList());
     }
 
     public List<ReservationResponseDto> findReservationByUserId(Long id){
@@ -67,24 +54,10 @@ public class ReservationService {
         User findUser = userService.findUserByUserId(id);
 
         List<Reservation> findReservation = findUser.getReservations();
-        List<ReservationResponseDto> reservationResponseDtos = new ArrayList<>();
 
-        for (Reservation res : findReservation){
-
-            ReservationResponseDto dto = ReservationResponseDto.builder()
-                    .id(res.getId())
-                    .date(res.getDate())
-                    .startTime(res.getStartTime())
-                    .endTime(res.getEndTime())
-                    .officeName(officeService.findOfficeById(res.getId()).getPlaceName())
-                    .telNum(officeService.findOfficeById(res.getId()).getTelNum())
-                    .image(officeService.findOfficeById(res.getId()).getImage())
-                    .build();
-
-            reservationResponseDtos.add(dto);
-        }
-
-        return reservationResponseDtos;
+        return findReservation.stream()
+                .map(ReservationResponseDto::of)
+                .collect(Collectors.toList());
     }
 
     public void validateReservation(Office office, Reservation reservation){
