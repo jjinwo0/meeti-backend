@@ -104,6 +104,7 @@ public class CalendarService {
         return CalendarResponseDto.builder().build();
     }
 
+    @Transactional
     public CalendarResponseDto registrationCalenderByReservation(ReservationRegDto dto, Office office, User user){
 
         // todo Office 규격 수정

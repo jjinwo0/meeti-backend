@@ -70,6 +70,7 @@ public class ReservationService {
         }
     }
 
+    @Transactional
     public Long createReservation(User user, ReservationRegDto dto, Office office){
 
         LocalDate date = LocalDate.parse(dto.getDate().substring(0, 10));
