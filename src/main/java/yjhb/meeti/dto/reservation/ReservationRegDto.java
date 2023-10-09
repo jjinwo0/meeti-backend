@@ -30,4 +30,6 @@ public class ReservationRegDto {
 //    private LocalTime endTime;
     @Schema(description = "예약할 오피스의 id")
     private Long officeId;
+
+    private String color;
 }

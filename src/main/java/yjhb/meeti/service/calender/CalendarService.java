@@ -111,7 +111,7 @@ public class CalendarService {
         Calendar calender = Calendar.builder()
                 .user(user)
                 .title(office.getPlaceName())
-//                .color(calendarRegDto.getColor()) // todo 색상 추가
+                .color(dto.getColor())
                 .start(LocalDate.now().toString())
                 .initTime(dto.getStartTime())
                 .end(LocalDate.now().toString())
