@@ -21,10 +21,11 @@ import yjhb.meeti.dto.payment.response.KakaoReadyResponseDto;
 @Transactional(readOnly = true)
 public class KakaoPayService {
 
-    @Value("${kakao.client.id}")
-    private String cid;
+//    @Value("${kakao.client.id}")
+    private static String cid = "TC0ONETIME";
     @Value("${kakao.admin.key}")
-    private String adminKey;
+    private static String adminKey;
+    private KakaoReadyResponseDto readyResponseDto;
 
 
     public KakaoReadyResponseDto kakaoPayReady(KakaoApproveRequestDto dto) {
@@ -39,9 +40,9 @@ public class KakaoPayService {
         parameters.add("quantity", String.valueOf(dto.getQuantity()));
         parameters.add("total_amount", String.valueOf(dto.getTotal_amount()));
         parameters.add("tax_free_amount", String.valueOf(dto.getTax_free_amount()));
-        parameters.add("approval_url", "http://localhost:8080/meeti/kakao/payment/completed"); // 성공 시 redirect url
-        parameters.add("cancel_url", "http://localhost:8080/meeti/kakao/payment/cancel"); // 취소 시 redirect url
-        parameters.add("fail_url", "http://localhost:8080/meeti/kakao/payment/fail"); // 실패 시 redirect url
+        parameters.add("approval_url", "http://localhost:8080/kakao/payment/completed"); // 성공 시 redirect url
+        parameters.add("cancel_url", "http://localhost:8080/kakao/payment/cancel"); // 취소 시 redirect url
+        parameters.add("fail_url", "http://localhost:8080/kakao/payment/fail"); // 실패 시 redirect url
 
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
@@ -49,12 +50,10 @@ public class KakaoPayService {
         // 외부에 보낼 url
         RestTemplate restTemplate = new RestTemplate();
 
-        KakaoReadyResponseDto readyResponseDto = restTemplate.postForObject(
+        readyResponseDto = restTemplate.postForObject(
                 "https://kapi.kakao.com/v1/payment/ready",
                 requestEntity,
                 KakaoReadyResponseDto.class);
-
-        readyResponseDto.setPartner_order_id(dto.getPartner_order_id());
 
         return readyResponseDto;
     }

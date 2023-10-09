@@ -37,7 +37,7 @@ public class KakaoPayController {
         log.info("approveRequestDto.getPartner_order_id : " + requestDto.getPartner_order_id());
 
         KakaoReadyResponseDto readyResponseDto = kakaoPayService.kakaoPayReady(requestDto);
-        System.out.println("readyResponseDto.getId() : " + readyResponseDto.getId());
+        System.out.println("readyResponseDto.getTid() : " + readyResponseDto.getTid());
 
         return ResponseEntity.ok(readyResponseDto);
     }

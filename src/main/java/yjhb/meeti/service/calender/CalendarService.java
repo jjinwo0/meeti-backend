@@ -112,7 +112,7 @@ public class CalendarService {
         Calendar calender = Calendar.builder()
                 .user(user)
                 .title(office.getPlaceName())
-                .color(dto.getColor())
+                .color("#548ff7")
                 .start(LocalDate.now().toString())
                 .initTime(dto.getStartTime())
                 .end(LocalDate.now().toString())
