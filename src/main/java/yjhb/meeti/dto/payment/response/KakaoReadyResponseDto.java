@@ -7,7 +7,7 @@ import lombok.ToString;
 @ToString
 public class KakaoReadyResponseDto {
 
-    private Long tid;
+    private String tid;
     private String next_redirect_pc_url;
     private String created_at;
 }

@@ -23,8 +23,8 @@ public class KakaoPayService {
 
 //    @Value("${kakao.client.id}")
     private static String cid = "TC0ONETIME";
-    @Value("${kakao.admin.key}")
-    private static String adminKey;
+    @Value(value = "${kakao.admin.key}")
+    private String adminKey;
     private KakaoReadyResponseDto readyResponseDto;
 
 
@@ -49,13 +49,12 @@ public class KakaoPayService {
 
         // 외부에 보낼 url
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
-        readyResponseDto = restTemplate.postForObject(
+        return restTemplate.postForObject(
                 "https://kapi.kakao.com/v1/payment/ready",
                 requestEntity,
                 KakaoReadyResponseDto.class);
-
-        return readyResponseDto;
     }
 
     /**
@@ -93,12 +92,10 @@ public class KakaoPayService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
-        KakaoApproveResponseDto approveResponse = restTemplate.postForObject(
+        return restTemplate.postForObject(
                 "https://kapi.kakao.com/v1/payment/approve",
                 requestEntity,
                 KakaoApproveResponseDto.class);
-
-        return approveResponse;
     }
 
 
@@ -121,11 +118,9 @@ public class KakaoPayService {
         // 외부에 보낼 url
         RestTemplate restTemplate = new RestTemplate();
 
-        KakaoCancelResponseDto cancelResponse = restTemplate.postForObject(
+        return restTemplate.postForObject(
                 "https://kapi.kakao.com/v1/payment/cancel",
                 requestEntity,
                 KakaoCancelResponseDto.class);
-
-        return cancelResponse;
     }
 }
