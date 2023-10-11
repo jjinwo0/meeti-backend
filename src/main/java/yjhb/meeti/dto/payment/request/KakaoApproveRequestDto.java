@@ -8,8 +8,6 @@ import lombok.ToString;
 public class KakaoApproveRequestDto {
 
     private String cid;
-    private String partner_order_id;
-    private String partner_user_id;
     private String item_name;
     private String item_code;
     private int quantity;

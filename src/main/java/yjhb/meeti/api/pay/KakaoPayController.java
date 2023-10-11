@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.dto.payment.request.KakaoApproveRequestDto;
 import yjhb.meeti.dto.payment.request.KakaoCompletedRequestDto;
@@ -26,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 public class KakaoPayController {
 
     private final KakaoPayService kakaoPayService;
-    private final TokenManager tokenManager;
 
     // 결제 요청
     @Tag(name = "Ready to KakaoPay")
@@ -34,7 +34,6 @@ public class KakaoPayController {
     public ResponseEntity<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoApproveRequestDto requestDto){
 
         log.info("approveRequestDto : " + requestDto.getItem_name());
-        log.info("approveRequestDto.getPartner_order_id : " + requestDto.getPartner_order_id());
 
         KakaoReadyResponseDto readyResponseDto = kakaoPayService.kakaoPayReady(requestDto);
         System.out.println("readyResponseDto.getTid() : " + readyResponseDto.getTid());
@@ -63,11 +62,11 @@ public class KakaoPayController {
      */
     @Tag(name = "Completed")
     @GetMapping("/completed")
-    public ResponseEntity afterPayRequest(@RequestBody KakaoCompletedRequestDto completedRequestDto) {
+    public ResponseEntity afterPayRequest(@RequestParam("pg_token")String pg_token) {
 
-        log.info("completedRequestDto.getCid() : " + completedRequestDto.getCid());
+        log.info("pg_token: " + pg_token);
 
-        KakaoApproveResponseDto approveResponseDto = kakaoPayService.approveResponse(completedRequestDto);
+        KakaoApproveResponseDto approveResponseDto = kakaoPayService.approveResponse(pg_token);
 
         log.info("approveResponseDto.getItem_code() : " + approveResponseDto.getItem_code());
 

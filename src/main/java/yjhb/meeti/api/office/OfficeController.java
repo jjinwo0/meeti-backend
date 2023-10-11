@@ -46,7 +46,7 @@ public class OfficeController {
         tokenManager.validateToken(accessToken);
         Office findOffice = officeService.findOfficeById(id);
 
-        OfficeResponseDto officeDto = OfficeResponseDto.of(findOffice);
+        OfficeResponseDto officeDto = OfficeResponseDto.from(findOffice);
 
         return ResponseEntity.ok(officeDto);
     }

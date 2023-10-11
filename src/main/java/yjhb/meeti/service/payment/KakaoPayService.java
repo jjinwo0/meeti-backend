@@ -25,6 +25,8 @@ public class KakaoPayService {
     private static String cid = "TC0ONETIME";
     @Value(value = "${kakao.admin.key}")
     private String adminKey;
+    private static String partner_order_id = "0320";
+    private static String partner_user_id = "mintmin";
     private KakaoReadyResponseDto readyResponseDto;
 
 
@@ -33,8 +35,8 @@ public class KakaoPayService {
         // 카카오페이 요청 양식
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("cid", cid);
-        parameters.add("partner_order_id", dto.getPartner_order_id());
-        parameters.add("partner_user_id", dto.getPartner_user_id());
+        parameters.add("partner_order_id", partner_order_id);
+        parameters.add("partner_user_id", partner_user_id);
         parameters.add("item_name", dto.getItem_name());
         parameters.add("item_code", dto.getItem_code());
         parameters.add("quantity", String.valueOf(dto.getQuantity()));
@@ -51,10 +53,12 @@ public class KakaoPayService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
-        return restTemplate.postForObject(
+        readyResponseDto = restTemplate.postForObject(
                 "https://kapi.kakao.com/v1/payment/ready",
                 requestEntity,
                 KakaoReadyResponseDto.class);
+
+        return readyResponseDto;
     }
 
     /**
@@ -74,16 +78,16 @@ public class KakaoPayService {
     /**
      * 결제 완료 승인
      */
-    public KakaoApproveResponseDto approveResponse(KakaoCompletedRequestDto dto){
+    public KakaoApproveResponseDto approveResponse(String pg_token){
 
         // 카카오 요청
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 
         parameters.add("cid", cid);
-        parameters.add("tid", dto.getTid());
-        parameters.add("partner_order_id", dto.getPartner_order_id());
-        parameters.add("partner_user_id", dto.getPartner_user_id());
-        parameters.add("pg_token", dto.getPg_token());
+        parameters.add("tid", readyResponseDto.getTid());
+        parameters.add("partner_order_id", partner_order_id);
+        parameters.add("partner_user_id", partner_user_id);
+        parameters.add("pg_token", pg_token);
 
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
@@ -92,10 +96,12 @@ public class KakaoPayService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 
-        return restTemplate.postForObject(
+        KakaoApproveResponseDto kakaoApproveResponseDto = restTemplate.postForObject(
                 "https://kapi.kakao.com/v1/payment/approve",
                 requestEntity,
                 KakaoApproveResponseDto.class);
+
+        return kakaoApproveResponseDto;
     }
 
 
