@@ -10,6 +10,7 @@ import org.springframework.test.context.TestConstructor;
 import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.domain.user.constant.UserType;
 import yjhb.meeti.domain.user.entity.User;
+import yjhb.meeti.global.error.exception.AuthenticationException;
 import yjhb.meeti.global.error.exception.BusinessException;
 import yjhb.meeti.repository.user.UserRepository;
 
@@ -35,7 +36,7 @@ class UserServiceTest {
 
         user1 = User.builder()
                 .username("test1")
-                .role(Role.COMMON)
+                .role(Role.ADMIN)
                 .email("test1@gmail.com")
                 .password("1234")
                 .userType(UserType.COMMON)
@@ -43,7 +44,7 @@ class UserServiceTest {
 
         user2 = User.builder()
                 .username("test2")
-                .role(Role.ADMIN)
+                .role(Role.ADMIN_OFFICE)
                 .email("test2@gmail.com")
                 .password("1234")
                 .userType(UserType.COMMON)
@@ -55,7 +56,7 @@ class UserServiceTest {
 
     @Test
     @DisplayName("유저 Email 중복 확인")
-    void 유저_중복() throws Exception{
+    void 유저_중복(){
 
         User test = User.builder()
                 .email("test1@gmail.com")
@@ -86,5 +87,14 @@ class UserServiceTest {
         User findUser = userService.findByEmailAndPassword(email, password);
 
         assertThat(user1.getId()).isEqualTo(findUser.getId());
+    }
+
+    @Test
+    @DisplayName("관리자 확인")
+    void 관리자_확인(){
+
+        assertThrows(AuthenticationException.class, () -> {
+            userService.validOfficeAdmin(user1.getId());
+        });
     }
 }
