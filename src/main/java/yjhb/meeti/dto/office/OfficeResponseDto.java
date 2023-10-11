@@ -19,7 +19,7 @@ public class OfficeResponseDto {
     private String image;
     private boolean status;
 
-    public static OfficeResponseDto of(Office office){
+    public static OfficeResponseDto from(Office office){
 
         return OfficeResponseDto.builder()
                 .id(office.getId())

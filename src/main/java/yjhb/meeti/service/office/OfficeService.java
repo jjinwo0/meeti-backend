@@ -14,6 +14,7 @@ import yjhb.meeti.global.error.exception.EntityNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -34,23 +35,10 @@ public class OfficeService {
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXISTS));
 
         List<Office> offices = findUser.getOffices();
-        List<OfficeResponseDto> response = new ArrayList<>();
 
-        for (Office office : offices){
-            response.add(
-                    OfficeResponseDto.builder()
-                            .id(office.getId())
-                            .placeName(office.getPlaceName())
-                            .pay(office.getPay())
-                            .description(office.getDescription())
-                            .address(office.getAddress())
-                            .addressDetail(office.getDetailAddress())
-                            .telNum(office.getTelNum())
-                            .image(office.getImage())
-                            .status(office.isStatus())
-                            .build()
-            );
-        }
+        List<OfficeResponseDto> response = offices.stream()
+                .map(OfficeResponseDto::from)
+                .collect(Collectors.toList());
 
         return response;
     }
@@ -58,23 +46,10 @@ public class OfficeService {
     public List<OfficeResponseDto> findOfficeByAddress(String address){
 
         List<Office> officeList = officeRepository.findByAddressContaining(address);
-        List<OfficeResponseDto> response = new ArrayList<>();
 
-        for (Office office : officeList){
-            response.add(
-                    OfficeResponseDto.builder()
-                            .id(office.getId())
-                            .placeName(office.getPlaceName())
-                            .pay(office.getPay())
-                            .description(office.getDescription())
-                            .address(office.getAddress())
-                            .addressDetail(office.getDetailAddress())
-                            .telNum(office.getTelNum())
-                            .image(office.getImage())
-                            .status(office.isStatus())
-                            .build()
-            );
-        }
+        List<OfficeResponseDto> response = officeList.stream()
+                .map(OfficeResponseDto::from)
+                .collect(Collectors.toList());
 
         return response;
     }
@@ -82,23 +57,10 @@ public class OfficeService {
     public List<OfficeResponseDto> findAllOffice(){
 
         List<Office> findAll = officeRepository.findAll();
-        List<OfficeResponseDto> response = new ArrayList<>();
 
-        for (Office office : findAll){
-            response.add(
-                    OfficeResponseDto.builder()
-                            .id(office.getId())
-                            .placeName(office.getPlaceName())
-                            .pay(office.getPay())
-                            .description(office.getDescription())
-                            .address(office.getAddress())
-                            .addressDetail(office.getDetailAddress())
-                            .telNum(office.getTelNum())
-                            .image(office.getImage())
-                            .status(office.isStatus())
-                            .build()
-            );
-        }
+        List<OfficeResponseDto> response = findAll.stream()
+                .map(OfficeResponseDto::from)
+                .collect(Collectors.toList());
 
         return response;
     }
@@ -106,22 +68,10 @@ public class OfficeService {
     public List<OfficeResponseDto> findByPlaceName(String placeName){
 
         List<Office> findOffices = officeRepository.findByPlaceNameContaining(placeName);
-        List<OfficeResponseDto> response = new ArrayList<>();
 
-        for (Office office : findOffices){
-            response.add(
-                    OfficeResponseDto.builder()
-                            .id(office.getId())
-                            .placeName(office.getPlaceName())
-                            .pay(office.getPay())
-                            .description(office.getDescription())
-                            .address(office.getAddress())
-                            .addressDetail(office.getDetailAddress())
-                            .telNum(office.getTelNum())
-                            .image(office.getImage())
-                            .build()
-            );
-        }
+        List<OfficeResponseDto> response = findOffices.stream()
+                .map(OfficeResponseDto::from)
+                .collect(Collectors.toList());
 
         return response;
     }
