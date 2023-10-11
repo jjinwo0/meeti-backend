@@ -14,6 +14,7 @@ import yjhb.meeti.global.error.exception.BusinessException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -46,20 +47,10 @@ public class MeetingService {
         User findUser = userService.findUserByUserId(userId);
 
         List<Meeting> meetings = findUser.getMeetings();
-        List<MeetingDto.Response> response = new ArrayList<>();
 
-        for (Meeting meet : meetings){
-
-            response.add(
-                    MeetingDto.Response.builder()
-                            .id(meet.getId())
-                            .username(meet.getUser().getUsername())
-                            .title(meet.getTitle())
-                            .detail(meet.getDetail())
-                            .date(meet.getDate())
-                            .build()
-            );
-        }
+        List<MeetingDto.Response> response = meetings.stream()
+                .map(MeetingDto.Response::from)
+                .collect(Collectors.toList());
 
         return response;
     }

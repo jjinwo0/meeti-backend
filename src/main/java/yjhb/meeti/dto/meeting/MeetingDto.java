@@ -3,6 +3,7 @@ package yjhb.meeti.dto.meeting;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
+import yjhb.meeti.domain.meeting.Meeting;
 
 import java.time.LocalDate;
 
@@ -36,6 +37,17 @@ public class MeetingDto {
             this.username = username;
             this.detail = detail;
             this.date = date;
+        }
+
+        public static MeetingDto.Response from(Meeting meet){
+
+            return MeetingDto.Response.builder()
+                    .id(meet.getId())
+                    .username(meet.getUser().getUsername())
+                    .title(meet.getTitle())
+                    .detail(meet.getDetail())
+                    .date(meet.getDate())
+                    .build();
         }
     }
 }
