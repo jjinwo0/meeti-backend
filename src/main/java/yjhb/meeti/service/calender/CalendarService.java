@@ -20,6 +20,7 @@ import yjhb.meeti.global.error.exception.BusinessException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -40,21 +41,9 @@ public class CalendarService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_EXISTS));
 
         List<Calendar> calenders = findUser.getCalenders();
-        List<CalendarResponseDto> response = new ArrayList<>();
-        for (Calendar cal : calenders){
-            response.add(
-                    CalendarResponseDto.builder()
-                            .id(cal.getId())
-                            .title(cal.getTitle())
-                            .color(cal.getColor())
-                            .start(cal.getStart())
-                            .initTime(cal.getInitTime())
-                            .end(cal.getEnd())
-                            .finishTime(cal.getFinishTime())
-                            .place(cal.getPlace())
-                            .build()
-            );
-        }
+        List<CalendarResponseDto> response = calenders.stream()
+                .map(CalendarResponseDto::from)
+                .collect(Collectors.toList());
 
         return response;
     }
