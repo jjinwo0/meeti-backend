@@ -97,4 +97,15 @@ class UserServiceTest {
             userService.validOfficeAdmin(user1.getId());
         });
     }
+
+    @Test
+    @DisplayName("유저 삭제")
+    void 유저_삭제(){
+
+        userService.deleteUser(user1.getId());
+
+        assertThrows(BusinessException.class, () -> {
+            userService.findUserByUserId(user1.getId());
+        });
+    }
 }
