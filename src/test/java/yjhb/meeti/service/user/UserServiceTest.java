@@ -75,4 +75,16 @@ class UserServiceTest {
 
         assertThat(user1.getId()).isEqualTo(findUser.getId());
     }
+
+    @Test
+    @DisplayName("유저 Email Password 검색")
+    void 유저_Email_Password_검색(){
+
+        String email = user1.getEmail();
+        String password = user1.getPassword();
+
+        User findUser = userService.findByEmailAndPassword(email, password);
+
+        assertThat(user1.getId()).isEqualTo(findUser.getId());
+    }
 }
