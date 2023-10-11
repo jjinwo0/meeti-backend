@@ -65,4 +65,14 @@ class UserServiceTest {
             userService.registerUser(test);
         });
     }
+
+    @Test
+    @DisplayName("유저 id 검색")
+    void 유저_ID_검색(){
+
+        Long user1Id = user1.getId();
+        User findUser = userService.findUserByUserId(user1Id);
+
+        assertThat(user1.getId()).isEqualTo(findUser.getId());
+    }
 }
