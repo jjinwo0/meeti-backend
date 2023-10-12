@@ -25,6 +25,17 @@ public class FriendService {
     private final UserService userService;
     private final FriendRepository friendRepository;
 
+    public Friend validFriend(Long toId, Long fromId){
+
+        Friend findFriend = friendRepository.findByFromId(toId, fromId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.FRIEND_NOT_FOUND));
+
+        if (!findFriend.isPermit())
+            throw new BusinessException(ErrorCode.FRIEND_NOT_PERMIT);
+
+        return findFriend;
+    }
+
     // 친구 요청 메서드
     @Transactional
     public void addFriend(Long fromId, Long toId){
@@ -66,12 +77,12 @@ public class FriendService {
     }
 
     // 즐겨찾기 T/F 메서드
+    @Transactional
     public void changeFavorite(Long toId, Long fromId){
 
-        Friend friend = friendRepository.findByFromId(toId, fromId)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.FRIEND_NOT_FOUND));
+        Friend findFriend = validFriend(toId, fromId);
 
-        friend.updateFavorite();
+        findFriend.updateFavorite();
     }
 
     public List<UserInfoDto> findFriendByUserId(Long userId){
@@ -97,6 +108,7 @@ public class FriendService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void deleteFriend(Long userId, Long friendId) {
 
         Friend findFromId = friendRepository.findByFromId(userId, friendId)
