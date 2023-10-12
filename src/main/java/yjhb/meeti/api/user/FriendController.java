@@ -60,6 +60,24 @@ public class FriendController {
         return ResponseEntity.ok(true);
     }
 
+    /**
+     * 친구 즐겨찾기 API
+     */
+    @PostMapping("friend/favorite/{userId}/{friendId}")
+    public ResponseEntity<Boolean> changeFavoriteFriend(@PathVariable("userId") Long userId,
+                                                       @PathVariable("friendId") Long friendId,
+                                                       HttpServletRequest request){
+
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        friendService.changeFavorite(userId, friendId);
+
+        return ResponseEntity.ok(true);
+    }
+
     @GetMapping("friend/request/{userId}")
     public ResponseEntity<List> searchWaitRequestFriendList(@PathVariable("userId") Long userId,
                                                             HttpServletRequest request){

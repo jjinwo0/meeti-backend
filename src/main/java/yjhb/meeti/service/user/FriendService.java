@@ -48,11 +48,11 @@ public class FriendService {
         Friend findFriend = friendRepository.findByFromId(toId, fromId)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.FRIEND_NOT_FOUND));
 
-        findFriend.acceptPermit(); // 요청 수락 (친구 관계 허가 완료)
-
         // 만약 이미 처리된 건이라면,
         if (findFriend.isPermit())
             throw new BusinessException(ErrorCode.FRIEND_ALREADY_PERMIT);
+
+        findFriend.acceptPermit(); // 요청 수락 (친구 관계 허가 완료)
 
         // 양방향 설정을 위해 객체 추가
         Friend friend = Friend.builder()
@@ -63,6 +63,15 @@ public class FriendService {
                 .build();
 
         friendRepository.save(friend);
+    }
+
+    // 즐겨찾기 T/F 메서드
+    public void changeFavorite(Long toId, Long fromId){
+
+        Friend friend = friendRepository.findByFromId(toId, fromId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.FRIEND_NOT_FOUND));
+
+        friend.updateFavorite();
     }
 
     public List<UserInfoDto> findFriendByUserId(Long userId){

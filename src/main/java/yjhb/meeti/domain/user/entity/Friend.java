@@ -39,8 +39,10 @@ public class Friend {
         this.permit = true;
     }
 
-    public void refusePermit(){
+    public void updateFavorite(){
 
-        this.permit = false;
+        if (this.isFavorite())
+            this.favorite = false;
+        else this.favorite = true;
     }
 }
