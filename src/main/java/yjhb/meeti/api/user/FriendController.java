@@ -111,7 +111,7 @@ public class FriendController {
      * 친구 캘린더 조회 API
      */
     @GetMapping("/friend/search/{userId}/{friendId}")
-    public ResponseEntity<List> searchFriendCalendar(@PathVariable("userId") Long userId,
+    public ResponseEntity<List> searchFriendCalender(@PathVariable("userId") Long userId,
                                                      @PathVariable("friendId") Long friendId,
                                                      HttpServletRequest request){
 
