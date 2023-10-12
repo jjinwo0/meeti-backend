@@ -20,14 +20,17 @@ public class Friend {
     @JoinColumn(name = "friends")
     private User user;
 
-    private Long fId;
+    private Long fromId; // 요청을 보내는 user의 id
 
     private boolean favorite;
 
+    private boolean permit;
+
     @Builder
-    public Friend(User user, Long fId, boolean favorite) {
+    public Friend(User user, Long fromId, boolean favorite, boolean permit) {
         this.user = user;
-        this.fId = fId;
+        this.fromId = fromId;
         this.favorite = favorite;
+        this.permit = permit;
     }
 }
