@@ -19,7 +19,11 @@ public class FriendController {
     private final TokenManager tokenManager;
     private final FriendService friendService;
 
-    // 친구 요청 API
+    /*
+     * 친구 요청 API
+     * userId : fromId (요청하는 사람)
+     * friendId : toId (요청받는 사람)
+     */
     @PostMapping("/friend/add/{userId}/{friendId}")
     public ResponseEntity<Boolean> addFriend(@PathVariable("userId") Long userId,
                                              @PathVariable("friendId") Long friendId,
@@ -31,6 +35,27 @@ public class FriendController {
         tokenManager.validateToken(accessToken);
 
         friendService.addFriend(userId, friendId);
+
+        return ResponseEntity.ok(true);
+    }
+
+    /**
+     * 친구 요청 허가 API
+     * userId : toId 관점
+     * friendId : fromId 관점
+     * 요청 보낸 사람의 id값(fromId)을 통해 요청 허가 처리
+     */
+    @PostMapping("friend/permit/{userId}/{friendId}")
+    public ResponseEntity<Boolean> permitFriendRequest(@PathVariable("userId") Long userId,
+                                                       @PathVariable("friendId") Long friendId,
+                                                       HttpServletRequest request){
+
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        friendService.permitFriend(userId, friendId);
 
         return ResponseEntity.ok(true);
     }

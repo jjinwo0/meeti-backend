@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.user.entity.Friend;
 import yjhb.meeti.domain.user.entity.User;
+import yjhb.meeti.global.error.ErrorCode;
+import yjhb.meeti.global.error.exception.BusinessException;
 import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 import yjhb.meeti.repository.user.FriendRepository;
 
@@ -24,13 +26,13 @@ public class FriendService {
 
     // 친구 요청 메서드
     @Transactional
-    public void addFriend(Long userId, Long friendId){
+    public void addFriend(Long fromId, Long toId){
 
-        User findUser = userService.findUserByUserId(friendId);
+        User findUser = userService.findUserByUserId(toId);
 
         Friend friend = Friend.builder()
                 .user(findUser) // 요청을 받는 사람
-                .fromId(userId) // 요청을 보내는 사람의 id
+                .fromId(fromId) // 요청을 보내는 사람의 id
                 .favorite(false)
                 .permit(false)
                 .build();
@@ -40,32 +42,41 @@ public class FriendService {
 
     // 요청 승인 메서드
     @Transactional
-    public void permitFriend(Long userId, Long fromId){
-        // todo
+    public void permitFriend(Long toId, Long fromId){
+
+        Friend findFriend = friendRepository.findByFromId(toId, fromId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.FRIEND_NOT_FOUND));
+
+        findFriend.acceptPermit(); // 요청 수락 (친구 관계 허가 완료)
+
+        // 만약 이미 처리된 건이라면,
+        if (findFriend.isPermit())
+            throw new BusinessException(ErrorCode.FRIEND_ALREADY_PERMIT);
+
+        // 양방향 설정을 위해 객체 추가
+        Friend friend = Friend.builder()
+                .user(userService.findUserByUserId(fromId)) // 요청을 보냈던 사람
+                .fromId(toId) // 요청을 받은 사람
+                .favorite(false)
+                .permit(true) // 요청 수락 상태로 빌드
+                .build();
+
+        friendRepository.save(friend);
     }
 
     public List<UserInfoDto> findFriendByUserId(Long userId){
 
         User findUser = userService.findUserByUserId(userId);
 
-        List<Friend> friends = findUser.getFriends();
-        List<UserInfoDto> friendDtoList = new ArrayList<>();
-
-        for (Friend f : friends){
-
-            User findFriend = userService.findUserByUserId(f.getFromId());
-
-            friendDtoList.add(
-                    UserInfoDto.builder()
+        return findUser.getFriends().stream()
+                .map(f -> userService.findUserByUserId(f.getFromId()))
+                .map(findFriend -> UserInfoDto.builder()
                         .id(findFriend.getId())
                         .username(findFriend.getUsername())
                         .profile(findFriend.getProfile())
                         .role(findFriend.getRole())
-                        .build()
-            );
-        }
-
-        return friendDtoList;
+                        .build())
+                .collect(Collectors.toList());
     }
 
     // 요청 승인 대기 목록 조회 메서드

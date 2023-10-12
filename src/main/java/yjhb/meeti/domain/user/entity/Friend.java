@@ -33,4 +33,14 @@ public class Friend {
         this.favorite = favorite;
         this.permit = permit;
     }
+
+    public void acceptPermit(){
+
+        this.permit = true;
+    }
+
+    public void refusePermit(){
+
+        this.permit = false;
+    }
 }
