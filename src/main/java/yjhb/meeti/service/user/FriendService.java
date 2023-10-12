@@ -8,6 +8,7 @@ import yjhb.meeti.domain.user.entity.Friend;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
+import yjhb.meeti.global.error.exception.EntityNotFoundException;
 import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 import yjhb.meeti.repository.user.FriendRepository;
 
@@ -45,7 +46,7 @@ public class FriendService {
     public void permitFriend(Long toId, Long fromId){
 
         Friend findFriend = friendRepository.findByFromId(toId, fromId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.FRIEND_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.FRIEND_NOT_FOUND));
 
         findFriend.acceptPermit(); // 요청 수락 (친구 관계 허가 완료)
 
@@ -85,5 +86,17 @@ public class FriendService {
         return friendRepository.findByToId(userId).stream()
                 .filter(f -> !f.isPermit())
                 .collect(Collectors.toList());
+    }
+
+    public void deleteFriend(Long userId, Long friendId) {
+
+        Friend findFromId = friendRepository.findByFromId(userId, friendId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.FRIEND_NOT_FOUND));
+
+        Friend findToId = friendRepository.findByFromId(friendId, userId)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.FRIEND_NOT_FOUND));
+
+        friendRepository.delete(findFromId);
+        friendRepository.delete(findToId);
     }
 }

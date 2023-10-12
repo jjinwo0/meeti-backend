@@ -87,4 +87,19 @@ public class FriendController {
 
         return ResponseEntity.ok(findFriends);
     }
+
+    @DeleteMapping("/friend/delete/{userId}/{friendId}")
+    public ResponseEntity<Boolean> deleteFriend(@PathVariable("userId")Long userId,
+                                                @PathVariable("friendId")Long friendId,
+                                                HttpServletRequest request){
+
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        friendService.deleteFriend(userId, friendId);
+
+        return ResponseEntity.ok(true);
+    }
 }
