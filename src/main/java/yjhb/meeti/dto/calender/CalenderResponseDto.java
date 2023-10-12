@@ -5,7 +5,7 @@ import yjhb.meeti.domain.calender.Calendar;
 
 @Getter @Builder
 @NoArgsConstructor @AllArgsConstructor
-public class CalendarResponseDto {
+public class CalenderResponseDto {
 
     private Long id;
     private String title;
@@ -24,9 +24,9 @@ public class CalendarResponseDto {
     private String finishTime;
     private String place;
 
-    public static CalendarResponseDto from(Calendar cal){
+    public static CalenderResponseDto from(Calendar cal){
 
-        return CalendarResponseDto.builder()
+        return CalenderResponseDto.builder()
                 .id(cal.getId())
                 .title(cal.getTitle())
                 .color(cal.getColor())

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.calender.Calendar;
 import yjhb.meeti.domain.office.Office;
 import yjhb.meeti.dto.calender.CalendarRegDto;
-import yjhb.meeti.dto.calender.CalendarResponseDto;
+import yjhb.meeti.dto.calender.CalenderResponseDto;
 import yjhb.meeti.dto.meeting.MeetingDto;
 import yjhb.meeti.dto.reservation.ReservationRegDto;
 import yjhb.meeti.global.error.exception.AuthenticationException;
@@ -18,7 +18,6 @@ import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,19 +35,20 @@ public class CalendarService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_CALENDER));
     }
 
-    public List<CalendarResponseDto> findCalenderByUserId(Long userId) {
+    public List<CalenderResponseDto> findCalenderByUserId(Long userId) {
         User findUser = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_EXISTS));
 
         List<Calendar> calenders = findUser.getCalenders();
-        List<CalendarResponseDto> response = calenders.stream()
-                .map(CalendarResponseDto::from)
+        List<CalenderResponseDto> response = calenders.stream()
+                .map(CalenderResponseDto::from)
                 .collect(Collectors.toList());
 
         return response;
     }
 
-    public CalendarResponseDto registrationCalender(CalendarRegDto calendarRegDto, User user){
+    @Transactional
+    public CalenderResponseDto registrationCalender(CalendarRegDto calendarRegDto, User user){
 
         String startDate = calendarRegDto.getStart().substring(0, 10);
         String endDate = calendarRegDto.getEnd().substring(0, 10);
@@ -72,10 +72,11 @@ public class CalendarService {
 
         calendarRepository.save(calender);
 
-        return CalendarResponseDto.builder().build();
+        return CalenderResponseDto.builder().build();
     }
 
-    public CalendarResponseDto registrationCalenderByMeeting(MeetingDto.Request meetingDto, User user){
+    @Transactional
+    public CalenderResponseDto registrationCalenderByMeeting(MeetingDto.Request meetingDto, User user){
 
         Calendar calender = Calendar.builder()
                 .user(user)
@@ -90,11 +91,11 @@ public class CalendarService {
 
         calendarRepository.save(calender);
 
-        return CalendarResponseDto.builder().build();
+        return CalenderResponseDto.builder().build();
     }
 
     @Transactional
-    public CalendarResponseDto registrationCalenderByReservation(ReservationRegDto dto, Office office, User user){
+    public CalenderResponseDto registrationCalenderByReservation(ReservationRegDto dto, Office office, User user){
 
         // todo Office 규격 수정
 
@@ -111,9 +112,10 @@ public class CalendarService {
 
         calendarRepository.save(calender);
 
-        return CalendarResponseDto.builder().build();
+        return CalenderResponseDto.builder().build();
     }
 
+    @Transactional
     public Boolean updateCalendar(Calendar calendar, CalendarRegDto dto, User user){
 
         if (!user.getCalenders().contains(calendar))

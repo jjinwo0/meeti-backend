@@ -6,13 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.user.entity.Friend;
 import yjhb.meeti.domain.user.entity.User;
+import yjhb.meeti.dto.calender.CalenderResponseDto;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
 import yjhb.meeti.global.error.exception.EntityNotFoundException;
 import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 import yjhb.meeti.repository.user.FriendRepository;
+import yjhb.meeti.service.calender.CalendarService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +24,10 @@ import java.util.stream.Collectors;
 public class FriendService {
 
     private final UserService userService;
+    private final CalendarService calendarService;
     private final FriendRepository friendRepository;
 
+    // 친구 요청 수락 여부 검증
     public Friend validFriend(Long toId, Long fromId){
 
         Friend findFriend = friendRepository.findByFromId(toId, fromId)
@@ -106,6 +109,13 @@ public class FriendService {
         return friendRepository.findByToId(userId).stream()
                 .filter(f -> !f.isPermit())
                 .collect(Collectors.toList());
+    }
+
+    public List<CalenderResponseDto> findFriendsCalender(Long toId, Long fromId){
+
+        validFriend(toId, fromId);
+
+        return calendarService.findCalenderByUserId(fromId);
     }
 
     @Transactional

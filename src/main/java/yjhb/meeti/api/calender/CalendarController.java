@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.domain.calender.Calendar;
 import yjhb.meeti.dto.calender.CalendarRegDto;
-import yjhb.meeti.dto.calender.CalendarResponseDto;
+import yjhb.meeti.dto.calender.CalenderResponseDto;
 import yjhb.meeti.service.calender.CalendarService;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.service.user.UserService;
@@ -34,7 +34,7 @@ public class CalendarController {
         String accessToken = authorization.split(" ")[1];
 
         tokenManager.validateToken(accessToken);
-        List<CalendarResponseDto> calenders = calendarService.findCalenderByUserId(userId);
+        List<CalenderResponseDto> calenders = calendarService.findCalenderByUserId(userId);
 
         return ResponseEntity.ok(calenders);
     }

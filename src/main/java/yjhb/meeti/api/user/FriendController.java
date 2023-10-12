@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.domain.user.entity.Friend;
+import yjhb.meeti.dto.calender.CalenderResponseDto;
 import yjhb.meeti.global.jwt.service.TokenManager;
 import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 import yjhb.meeti.service.user.FriendService;
@@ -104,6 +105,24 @@ public class FriendController {
         List<UserInfoDto> findFriends = friendService.findFriendByUserId(userId);
 
         return ResponseEntity.ok(findFriends);
+    }
+
+    /**
+     * 친구 캘린더 조회 API
+     */
+    @GetMapping("/friend/search/{userId}/{friendId}")
+    public ResponseEntity<List> searchFriendCalendar(@PathVariable("userId") Long userId,
+                                                     @PathVariable("friendId") Long friendId,
+                                                     HttpServletRequest request){
+
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        List<CalenderResponseDto> friendsCalender = friendService.findFriendsCalender(userId, friendId);
+
+        return ResponseEntity.ok(friendsCalender);
     }
 
     @DeleteMapping("/friend/delete/{userId}/{friendId}")
