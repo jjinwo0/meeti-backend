@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import yjhb.meeti.domain.user.constant.UserType;
 import yjhb.meeti.domain.user.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -12,5 +13,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
     Optional<User> findByRefreshToken(String refreshToken);
     UserType findUserTypeByEmailAndPassword(String email, String password);
+    List<User> findUserByUsernameContaining(String username);
 }
 

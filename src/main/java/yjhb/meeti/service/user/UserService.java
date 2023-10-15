@@ -14,7 +14,9 @@ import yjhb.meeti.global.error.exception.EntityNotFoundException;
 import yjhb.meeti.dto.user.UserInfoDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -81,6 +83,19 @@ public class UserService {
                 .profile(findUser.getProfile())
                 .role(findUser.getRole())
                 .build();
+    }
+
+    public List<UserInfoDto> findUserInfoByUsername(String username){
+
+        return userRepository.findUserByUsernameContaining(username)
+                .stream()
+                .map(u -> UserInfoDto.builder()
+                        .id(u.getId())
+                        .username(u.getUsername())
+                        .profile(u.getProfile())
+                        .role(u.getRole())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     public void validOfficeAdmin(Long id){
