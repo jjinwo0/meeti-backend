@@ -1,5 +1,6 @@
 server:
   port: 8080
+  ip: ENC(EkHU2fna9iJ66USIfcJLbaUJrl/0zg/v)
 
 token:
   secret: ENC(F9QSTSYJ/xZMn0qoiNe8sWbMF/CggHI1) # 임의의 문자열
