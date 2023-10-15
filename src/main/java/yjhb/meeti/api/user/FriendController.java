@@ -108,6 +108,23 @@ public class FriendController {
     }
 
     /**
+     * 즐겨찾기 친구 List 조회
+     */
+    @GetMapping("/friend/search/favorite/{userId}")
+    public ResponseEntity<List> searchFavoriteFriend(@PathVariable("userId") Long userId,
+                                                     HttpServletRequest request){
+
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        List<UserInfoDto> findFriends = friendService.findFavoriteFriendByUserId(userId);
+
+        return ResponseEntity.ok(findFriends);
+    }
+
+    /**
      * 친구 캘린더 조회 API
      */
     @GetMapping("/friend/search/{userId}/{friendId}")
