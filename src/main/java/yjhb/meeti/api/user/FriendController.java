@@ -3,10 +3,10 @@ package yjhb.meeti.api.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import yjhb.meeti.domain.user.entity.Friend;
 import yjhb.meeti.dto.calender.CalenderResponseDto;
+import yjhb.meeti.dto.user.FriendInfoDto;
 import yjhb.meeti.global.jwt.service.TokenManager;
-import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
+import yjhb.meeti.dto.user.UserInfoDto;
 import yjhb.meeti.service.user.FriendService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -102,7 +102,7 @@ public class FriendController {
 
         tokenManager.validateToken(accessToken);
 
-        List<UserInfoDto> findFriends = friendService.findFriendByUserId(userId);
+        List<FriendInfoDto> findFriends = friendService.findFriendByUserId(userId);
 
         return ResponseEntity.ok(findFriends);
     }

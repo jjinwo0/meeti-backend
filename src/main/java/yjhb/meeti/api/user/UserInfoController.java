@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yjhb.meeti.global.resolver.memberinfo.UserInfo;
-import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
+import yjhb.meeti.dto.user.UserInfoDto;
 import yjhb.meeti.service.user.UserService;
 
 @RestController

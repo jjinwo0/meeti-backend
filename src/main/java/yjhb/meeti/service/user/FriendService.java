@@ -7,10 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.user.entity.Friend;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.dto.calender.CalenderResponseDto;
+import yjhb.meeti.dto.user.FriendInfoDto;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.BusinessException;
 import yjhb.meeti.global.error.exception.EntityNotFoundException;
-import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
+import yjhb.meeti.dto.user.UserInfoDto;
 import yjhb.meeti.repository.user.FriendRepository;
 import yjhb.meeti.service.calender.CalendarService;
 
@@ -89,18 +90,21 @@ public class FriendService {
         return findFriend.updateFavorite();
     }
 
-    public List<UserInfoDto> findFriendByUserId(Long userId){
+    public List<FriendInfoDto> findFriendByUserId(Long userId){
 
-        User findUser = userService.findUserByUserId(userId);
+        List<Friend> friends = userService.findUserByUserId(userId).getFriends();
 
-        return findUser.getFriends().stream()
-                .map(f -> userService.findUserByUserId(f.getFromId()))
-                .map(findFriend -> UserInfoDto.builder()
-                        .id(findFriend.getId())
-                        .username(findFriend.getUsername())
-                        .profile(findFriend.getProfile())
-                        .role(findFriend.getRole())
-                        .build())
+        return friends.stream()
+                .map(f -> {
+                    User findUser = userService.findUserByUserId(f.getFromId());
+
+                    return FriendInfoDto.builder()
+                            .id(findUser.getId())
+                            .username(findUser.getUsername())
+                            .profile(findUser.getProfile())
+                            .favorite(f.isFavorite())
+                            .build();
+                })
                 .collect(Collectors.toList());
     }
 

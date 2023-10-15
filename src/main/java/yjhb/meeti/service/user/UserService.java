@@ -5,17 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.domain.user.constant.UserType;
-import yjhb.meeti.domain.user.entity.Friend;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.repository.user.UserRepository;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.AuthenticationException;
 import yjhb.meeti.global.error.exception.BusinessException;
 import yjhb.meeti.global.error.exception.EntityNotFoundException;
-import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
+import yjhb.meeti.dto.user.UserInfoDto;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service

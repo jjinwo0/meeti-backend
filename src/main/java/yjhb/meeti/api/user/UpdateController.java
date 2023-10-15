@@ -7,11 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import yjhb.meeti.domain.user.entity.User;
-import yjhb.meeti.dto.user.UpdateDTO;
 import yjhb.meeti.service.user.UpdateService;
 import yjhb.meeti.global.jwt.service.TokenManager;
-import yjhb.meeti.global.resolver.memberinfo.UserInfo;
-import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 import yjhb.meeti.global.util.AuthorizationHeaderUtils;
 import yjhb.meeti.service.user.UserService;
 

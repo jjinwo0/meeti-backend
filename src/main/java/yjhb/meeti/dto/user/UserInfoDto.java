@@ -1,4 +1,4 @@
-package yjhb.meeti.global.resolver.memberinfo;
+package yjhb.meeti.dto.user;
 
 import lombok.Builder;
 import lombok.Getter;
