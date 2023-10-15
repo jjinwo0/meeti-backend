@@ -82,11 +82,11 @@ public class FriendService {
 
     // 즐겨찾기 T/F 메서드
     @Transactional
-    public void changeFavorite(Long toId, Long fromId){
+    public Boolean changeFavorite(Long toId, Long fromId){
 
         Friend findFriend = validFriend(toId, fromId);
 
-        findFriend.updateFavorite();
+        return findFriend.updateFavorite();
     }
 
     public List<UserInfoDto> findFriendByUserId(Long userId){

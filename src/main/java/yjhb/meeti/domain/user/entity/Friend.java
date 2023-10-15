@@ -39,10 +39,12 @@ public class Friend {
         this.permit = true;
     }
 
-    public void updateFavorite(){
+    public Boolean updateFavorite(){
 
         if (this.isFavorite())
             this.favorite = false;
         else this.favorite = true;
+
+        return this.favorite;
     }
 }

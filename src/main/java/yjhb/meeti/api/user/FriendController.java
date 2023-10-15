@@ -74,9 +74,9 @@ public class FriendController {
 
         tokenManager.validateToken(accessToken);
 
-        friendService.changeFavorite(userId, friendId);
+        Boolean favorite = friendService.changeFavorite(userId, friendId);
 
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(favorite);
     }
 
     @GetMapping("friend/request/{userId}")
