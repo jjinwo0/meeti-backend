@@ -20,11 +20,8 @@ public class ChatMessageService {
     public void sendMessage(String type, Long roomId, Long userId, String message){
 
         template.convertAndSend(
-                "/sub/chat/room" + roomId,
+                "/sub/chat/"+message,
                 ChatMessageDto.Response.builder()
-                        .sender(userService.findUserByUserId(userId).getUsername())
-                        .type(type)
-                        .value(message)
-        );
+                        .);
     }
 }
