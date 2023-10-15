@@ -88,7 +88,7 @@ public class FriendController {
 
         tokenManager.validateToken(accessToken);
 
-        List<Friend> requestList = friendService.findFriendRequestByToId(userId);
+        List<UserInfoDto> requestList = friendService.findFriendRequestByToId(userId);
 
         return ResponseEntity.ok(requestList);
     }

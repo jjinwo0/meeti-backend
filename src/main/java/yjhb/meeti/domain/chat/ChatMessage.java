@@ -1,4 +1,4 @@
-package yjhb.meeti.domain.message;
+package yjhb.meeti.domain.chat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

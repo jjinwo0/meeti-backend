@@ -14,6 +14,7 @@ import yjhb.meeti.global.resolver.memberinfo.UserInfoDto;
 import yjhb.meeti.repository.user.FriendRepository;
 import yjhb.meeti.service.calender.CalendarService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,12 +104,44 @@ public class FriendService {
                 .collect(Collectors.toList());
     }
 
-    // 요청 승인 대기 목록 조회 메서드
-    public List<Friend> findFriendRequestByToId(Long userId){
+    public List<UserInfoDto> findFavoriteFriendByUserId(Long userId){
 
-        return friendRepository.findByToId(userId).stream()
+        User findUser = userService.findUserByUserId(userId);
+
+        return findUser.getFriends().stream()
+                .filter(Friend::isFavorite)
+                .map(f -> userService.findUserByUserId(f.getFromId()))
+                .map(findFriend -> UserInfoDto.builder()
+                        .id(findFriend.getId())
+                        .username(findFriend.getUsername())
+                        .profile(findFriend.getProfile())
+                        .role(findFriend.getRole())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    // 요청 승인 대기 목록 조회 메서드
+    public List<UserInfoDto> findFriendRequestByToId(Long userId){
+
+        List<Friend> findRequestList = friendRepository.findByToId(userId).stream()
                 .filter(f -> !f.isPermit())
                 .collect(Collectors.toList());
+
+        List<UserInfoDto> userInfoDtos = new ArrayList<>();
+
+        for (Friend f : findRequestList){
+
+            User fromUser = userService.findUserByUserId(f.getFromId());
+
+            userInfoDtos.add(UserInfoDto.builder()
+                    .id(fromUser.getId())
+                    .username(fromUser.getUsername())
+                    .profile(fromUser.getProfile())
+                    .role(fromUser.getRole())
+                    .build());
+        }
+
+        return userInfoDtos;
     }
 
     public List<CalenderResponseDto> findFriendsCalender(Long toId, Long fromId){

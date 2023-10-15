@@ -1,5 +1,6 @@
-package yjhb.meeti.domain.message;
+package yjhb.meeti.domain.chat;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,4 +16,9 @@ public class ChatRoom {
     private Long id;
 
     private String roomName;
+
+    @Builder
+    public ChatRoom(String roomName) {
+        this.roomName = roomName;
+    }
 }

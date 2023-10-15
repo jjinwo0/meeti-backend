@@ -1,6 +1,4 @@
-package yjhb.meeti.domain.message;
-
-import yjhb.meeti.domain.user.constant.Role;
+package yjhb.meeti.domain.chat;
 
 public enum MessageType {
 
