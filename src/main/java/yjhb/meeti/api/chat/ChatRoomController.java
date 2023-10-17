@@ -66,8 +66,8 @@ public class ChatRoomController {
     /**
      * roomName으로 ChatRoom 조회
      */
-    @GetMapping("/rooms")
-    public ResponseEntity<List> findRoomByRoomName(@RequestParam()String roomName){
+    @GetMapping("/rooms/name")
+    public ResponseEntity<List> findRoomByRoomName(@RequestParam String roomName){
 
         return ResponseEntity.ok(chatRoomService.findByRoomName(roomName));
     }
