@@ -23,9 +23,12 @@ public class ChatUser {
     @JoinColumn(name = "room_id")
     private ChatRoom chatRoom;
 
+    private RoomRole role;
+
     @Builder
-    public ChatUser(User user, ChatRoom chatRoom) {
+    public ChatUser(User user, ChatRoom chatRoom, RoomRole role) {
         this.user = user;
         this.chatRoom = chatRoom;
+        this.role = role;
     }
 }
