@@ -1,4 +1,4 @@
-package yjhb.meeti.dto.chat;
+package yjhb.meeti.service.chat;
 
 import com.sun.security.auth.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.socket.messaging.DefaultSimpUserRegistry;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
+import yjhb.meeti.dto.chat.EventProperties;
+import yjhb.meeti.dto.chat.JoinServerMessage;
 import yjhb.meeti.global.jwt.service.TokenManager;
 
 import java.util.List;

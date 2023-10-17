@@ -1,9 +1,24 @@
 package yjhb.meeti.dto.chat;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-public class ChatMessageDto {
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class ChatMessage {
+
+    @NotNull
+    private Long roomId;
+
+    private String sourceName;
+
+    @NotEmpty
+    @Size(max = 300, min = 1)
+    private String message;
 
     @Data
     public static class Request{
