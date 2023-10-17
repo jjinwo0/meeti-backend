@@ -79,11 +79,16 @@ public class TokenManager {
     }
 
     // 토큰 검증
-    public void validateToken(String token){
+    public String validateToken(String token){
+
+        String username = null;
+
         try {
             Jwts.parser()
                     .setSigningKey(tokenSecret.getBytes(StandardCharsets.UTF_8))
-                    .parseClaimsJws(token); //token parsing
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .get("username"); //token parsing
         } catch (ExpiredJwtException e){
             log.info("token 만료", e);
             throw new AuthenticationException(ErrorCode.TOKEN_EXPIRED);
@@ -91,6 +96,8 @@ public class TokenManager {
             log.info("유효하지 않은 token", e);
             throw new AuthenticationException(ErrorCode.NOT_VALID_TOKEN);
         }
+
+        return username;
     }
 
     public Claims getTokenClaims(String token){
