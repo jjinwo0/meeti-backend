@@ -1,5 +1,6 @@
 package yjhb.meeti.service.chat;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class ChatRoomService {
         return chatRoomRepository.save(createRoom).getId();
     }
 
+    @Transactional
     public void joinRoom(ChatRoomDto.JoinRequest request){
 
         ChatRoom findRoom = findByRoomId(request.getRoomId());
@@ -52,5 +54,10 @@ public class ChatRoomService {
     public List<ChatRoom> findByRoomName(String roomName){
 
         return chatRoomRepository.findChatRoomByRoomNameContaining(roomName);
+    }
+
+    public List<ChatRoom> findAll(){
+
+        return chatRoomRepository.findAll();
     }
 }
