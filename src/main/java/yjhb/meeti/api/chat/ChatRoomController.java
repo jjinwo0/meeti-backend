@@ -1,7 +1,6 @@
 package yjhb.meeti.api.chat;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,7 +15,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/meeti/chat")
+@RequestMapping("/meeti/chat/rooms")
 @RequiredArgsConstructor
 public class ChatRoomController {
 
@@ -26,7 +25,7 @@ public class ChatRoomController {
     /**
      * ChatRoom 생성
      */
-    @PostMapping("/rooms/create")
+    @PostMapping("/create")
     public ResponseEntity<?> createChatRoom(@RequestBody @Valid ChatRoomDto.CreateRequest dto,
                                             HttpServletRequest request){
 
@@ -48,7 +47,7 @@ public class ChatRoomController {
     /**
      * ChatRoom 조회
      */
-    @GetMapping("/rooms")
+    @GetMapping("/list")
     public ResponseEntity<List> findRoomList(){
 
         return ResponseEntity.ok(chatRoomService.findAll());
@@ -57,7 +56,7 @@ public class ChatRoomController {
     /**
      * roomId으로 ChatRoom 조회
      */
-    @GetMapping("/rooms/{roomId}")
+    @GetMapping("/{roomId}")
     public ResponseEntity<ChatRoom> findRoomByRoomId(@PathVariable("roomId")Long roomId){
 
         return ResponseEntity.ok(chatRoomService.findByRoomId(roomId));
@@ -66,7 +65,7 @@ public class ChatRoomController {
     /**
      * roomName으로 ChatRoom 조회
      */
-    @GetMapping("/rooms/name")
+    @GetMapping("/name")
     public ResponseEntity<List> findRoomByRoomName(@RequestParam String roomName){
 
         return ResponseEntity.ok(chatRoomService.findByRoomName(roomName));
@@ -75,7 +74,7 @@ public class ChatRoomController {
     /**
      * ChatRoom 입장
      */
-    @PostMapping("/rooms/users")
+    @PostMapping("/users")
     public ResponseEntity<Boolean> joinRoom(@RequestBody @Valid ChatRoomDto.JoinRequest dto,
                                    HttpServletRequest request){
 
