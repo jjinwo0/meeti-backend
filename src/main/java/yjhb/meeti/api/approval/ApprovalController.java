@@ -27,6 +27,29 @@ public class ApprovalController {
     private final ApprovalService approvalService;
     private final UserService userService;
 
+    @Schema(name = "Approval Update")
+    @PostMapping(value = "/approval/update/{approvalId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Boolean> updateApproval(@PathVariable("approvalId") Long approvalId,
+                                                  @RequestPart(value = "request")String request,
+                                                  @RequestPart(value = "proceeding")String proceeding,
+                                                  @RequestPart(value = "file") MultipartFile file,
+                                                  HttpServletRequest httpServletRequest) throws IOException{
+
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        ApprovalDto.Request dto = ApprovalDto.Request.builder()
+                .requestDetail(request)
+                .proceeding(proceeding)
+                .build();
+
+        approvalService.update(approvalId, dto, file);
+
+        return ResponseEntity.ok(true);
+    }
+
     @Schema(name = "Approval Registration")
     @PostMapping(value = "/approval/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Boolean> registrationApproval(@PathVariable("userId") Long userId,
@@ -48,29 +71,6 @@ public class ApprovalController {
                 .build();
 
         approvalService.regApproval(dto, findUser, file);
-
-        return ResponseEntity.ok(true);
-    }
-
-    @Schema(name = "Approval Update")
-    @PostMapping(value = "/approval/update/{approvalId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Boolean> updateApproval(@PathVariable("approvalId") Long approvalId,
-                                                  @RequestPart(value = "request")String request,
-                                                  @RequestPart(value = "proceeding")String proceeding,
-                                                  @RequestPart(value = "file") MultipartFile file,
-                                                  HttpServletRequest httpServletRequest) throws IOException{
-
-        String authorization = httpServletRequest.getHeader("Authorization");
-        String accessToken = authorization.split(" ")[1];
-
-        tokenManager.validateToken(accessToken);
-
-        ApprovalDto.Request dto = ApprovalDto.Request.builder()
-                .requestDetail(request)
-                .proceeding(proceeding)
-                .build();
-
-        approvalService.update(approvalId, dto, file);
 
         return ResponseEntity.ok(true);
     }

@@ -39,6 +39,7 @@ public class ApprovalService {
                 .user(user)
                 .requestDetail(dto.getRequestDetail())
                 .proceeding(dto.getProceeding())
+                .decision(Decision.WAIT)
                 .file(s3Service.upload(file, "approvalFile"))
                 .build();
 

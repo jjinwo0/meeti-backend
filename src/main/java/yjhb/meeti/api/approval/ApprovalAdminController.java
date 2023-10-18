@@ -51,7 +51,7 @@ public class ApprovalAdminController {
      * Admin Decision
      */
     @Schema(name = "Admin Decision")
-    @PostMapping(value = "/approval/decision/{approvalId}")
+    @PostMapping(value = "/decision/{approvalId}")
     public ResponseEntity<Boolean> decisionByAdmin(@PathVariable("approvalId") Long approvalId,
                                                 @RequestBody ApprovalDto.Admin dto,
                                                 HttpServletRequest request){
@@ -70,7 +70,7 @@ public class ApprovalAdminController {
      * Office 내 Approval 모든 리스트 불러오기
      */
     @Schema(name = "Find Approval List")
-    @GetMapping(value = "/approval/list/{userId}")
+    @GetMapping(value = "/list/{userId}")
     public ResponseEntity<List> findApprovalList(@PathVariable("userId") Long userId){
 
         List<ApprovalDto.Response> responseList = approvalService.approvalListForOffice(userId).stream()
@@ -84,7 +84,7 @@ public class ApprovalAdminController {
      * 대기중인 Approval List 조회
      */
     @Schema(name = "All Approval List")
-    @GetMapping(value = "/approval/list/wait")
+    @GetMapping(value = "/list/wait/{userId}")
     public ResponseEntity<List> findWaitApproval(@PathVariable("userId") Long userId){
 
         List<Approval> list = approvalService.approvalListForOffice(userId).stream()
@@ -98,7 +98,7 @@ public class ApprovalAdminController {
      * 승인된 Approval List 조회
      */
     @Schema(name = "All Approval List")
-    @GetMapping(value = "/approval/list/confirm")
+    @GetMapping(value = "/list/confirm/{userId}")
     public ResponseEntity<List> findConfirmApproval(@PathVariable("userId") Long userId){
 
         List<Approval> list = approvalService.approvalListForOffice(userId).stream()
@@ -112,7 +112,7 @@ public class ApprovalAdminController {
      * 거절된 Approval List 조회
      */
     @Schema(name = "All Approval List")
-    @GetMapping(value = "/approval/list/reject")
+    @GetMapping(value = "/list/reject/{userId}")
     public ResponseEntity<List> findAll(@PathVariable("userId") Long userId){
 
         List<Approval> list = approvalService.approvalListForOffice(userId).stream()
