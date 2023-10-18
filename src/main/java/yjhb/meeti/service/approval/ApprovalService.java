@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import yjhb.meeti.dto.approval.ApprovalDto;
 import yjhb.meeti.domain.approval.constant.Decision;
 import yjhb.meeti.domain.approval.entity.Approval;
+import yjhb.meeti.global.error.exception.BusinessException;
 import yjhb.meeti.repository.approval.ApprovalRepository;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.global.error.ErrorCode;
@@ -61,7 +62,7 @@ public class ApprovalService {
         approval.update(dto.getRequestDetail(), dto.getProceeding(), s3Service.upload(file, "approvalFile"));
     }
 
-    // 같은 Office 내 결재 리스트 조회
+    // 같은 Office 내 결재 리스트 조회e
     public List<Approval> approvalListForOffice(Long userId){
 
         String email = userService.findUserByUserId(userId).getEmail();
@@ -76,5 +77,15 @@ public class ApprovalService {
     public void approvalDecisionByAdmin(Long approvalId, ApprovalDto.Admin dto){
 
         findApprovalById(approvalId).adminUpdate(dto.getDecisionDetail(), dto.getDecision());
+    }
+
+    public void deleteApproval(Long userId, Long approvalId){
+
+        Approval findApproval = findApprovalById(approvalId);
+
+        if (!findApproval.getUser().getId().equals(userId))
+            throw new BusinessException(ErrorCode.NOT_VALID_USER);
+
+        approvalRepository.delete(findApproval);
     }
 }

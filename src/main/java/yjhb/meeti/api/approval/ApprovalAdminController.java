@@ -51,15 +51,17 @@ public class ApprovalAdminController {
      * Admin Decision
      */
     @Schema(name = "Admin Decision")
-    @PostMapping(value = "/approval/decision/{userId}/{approvalId}")
-    public ResponseEntity<Boolean> decisionByAdmin(@PathVariable("userId") Long userId,
-                                                @PathVariable("approvalId") Long approvalId,
+    @PostMapping(value = "/approval/decision/{approvalId}")
+    public ResponseEntity<Boolean> decisionByAdmin(@PathVariable("approvalId") Long approvalId,
                                                 @RequestBody ApprovalDto.Admin dto,
                                                 HttpServletRequest request){
 
-        Approval findApproval = approvalService.findApprovalById(approvalId);
+        String authorization = request.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
 
-        findApproval.adminUpdate(dto.getDecisionDetail(), dto.getDecision());
+        tokenManager.validateToken(accessToken);
+
+        approvalService.approvalDecisionByAdmin(approvalId, dto);
 
         return ResponseEntity.ok(true);
     }

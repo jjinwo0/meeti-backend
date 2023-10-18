@@ -75,4 +75,18 @@ public class ApprovalController {
         return ResponseEntity.ok(true);
     }
 
+    @DeleteMapping("/approval/delete/{approvalId}/{userId}")
+    public ResponseEntity<Boolean> deleteApproval(@PathVariable("userId") Long userId,
+                                                  @PathVariable("approvalId") Long approvalId,
+                                                  HttpServletRequest httpServletRequest){
+
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        approvalService.deleteApproval(userId, approvalId);
+
+        return ResponseEntity.ok(true);
+    }
 }
