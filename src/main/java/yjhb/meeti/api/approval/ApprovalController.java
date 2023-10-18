@@ -32,8 +32,6 @@ public class ApprovalController {
     public ResponseEntity<Boolean> registrationApproval(@PathVariable("userId") Long userId,
                                                         @RequestPart(value = "request")String request,
                                                         @RequestPart(value = "proceeding")String proceeding,
-                                                        @RequestPart(value = "decision")Decision decision,
-                                                        @RequestPart(value = "decisionDetail")String decisionDetail,
                                                         @RequestPart(value = "file") MultipartFile file,
                                                         HttpServletRequest httpServletRequest) throws IOException {
 
@@ -47,8 +45,6 @@ public class ApprovalController {
         ApprovalDto.Request dto = ApprovalDto.Request.builder()
                 .requestDetail(request)
                 .proceeding(proceeding)
-                .decision(decision)
-                .decisionDetail(decisionDetail)
                 .build();
 
         approvalService.regApproval(dto, findUser, file);
@@ -61,8 +57,6 @@ public class ApprovalController {
     public ResponseEntity<Boolean> updateApproval(@PathVariable("approvalId") Long approvalId,
                                                   @RequestPart(value = "request")String request,
                                                   @RequestPart(value = "proceeding")String proceeding,
-                                                  @RequestPart(value = "decision")Decision decision,
-                                                  @RequestPart(value = "decisionDetail")String decisionDetail,
                                                   @RequestPart(value = "file") MultipartFile file,
                                                   HttpServletRequest httpServletRequest) throws IOException{
 
@@ -71,11 +65,9 @@ public class ApprovalController {
 
         tokenManager.validateToken(accessToken);
 
-        ApprovalDto dto = ApprovalDto.builder()
+        ApprovalDto.Request dto = ApprovalDto.Request.builder()
                 .requestDetail(request)
                 .proceeding(proceeding)
-                .decision(decision)
-                .decisionDetail(decisionDetail)
                 .build();
 
         approvalService.update(approvalId, dto, file);

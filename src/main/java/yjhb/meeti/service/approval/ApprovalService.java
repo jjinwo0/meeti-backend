@@ -58,10 +58,11 @@ public class ApprovalService {
         Approval approval = approvalRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_APPROVAL));
 
-        approval.update(dto.getRequestDetail(), dto.getProceeding(), dto.getDecisionDetail(), dto.getDecision(), s3Service.upload(file, "approvalFile"));
+        approval.update(dto.getRequestDetail(), dto.getProceeding(), s3Service.upload(file, "approvalFile"));
     }
 
-    public List<Approval> approvalListForAdmin(Long userId){
+    // 같은 Office 내 결재 리스트 조회
+    public List<Approval> approvalListForOffice(Long userId){
 
         String email = userService.findUserByUserId(userId).getEmail();
 
@@ -70,5 +71,10 @@ public class ApprovalService {
                 .collect(Collectors.toList());
 
         return findList;
+    }
+
+    public void approvalDecisionByAdmin(Long approvalId, ApprovalDto.Admin dto){
+
+        findApprovalById(approvalId).adminUpdate(dto.getDecisionDetail(), dto.getDecision());
     }
 }

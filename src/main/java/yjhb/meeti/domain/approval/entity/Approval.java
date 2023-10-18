@@ -40,11 +40,16 @@ public class Approval {
         this.decision = decision;
     }
 
-    public void update(String requestDetail, String proceeding, String decisionDetail, Decision decision, String file) {
-        this.requestDetail = requestDetail;
-        this.proceeding = proceeding;
+    // update by Admin
+    public void adminUpdate(String decisionDetail, Decision decision) {
         this.decisionDetail = decisionDetail;
         this.decision = decision;
+    }
+
+    // update by User
+    public void update(String requestDetail, String proceeding, String file) {
+        this.requestDetail = requestDetail;
+        this.proceeding = proceeding;
         this.file = file;
     }
 }

@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.domain.approval.constant.Decision;
 import yjhb.meeti.domain.approval.entity.Approval;
 import yjhb.meeti.domain.user.entity.User;
+import yjhb.meeti.dto.approval.ApprovalDto;
 import yjhb.meeti.service.approval.ApprovalService;
 import yjhb.meeti.global.jwt.service.TokenManager;
 import yjhb.meeti.service.user.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/meeti/admin/approval")
@@ -45,11 +47,75 @@ public class ApprovalAdminController {
         return ResponseEntity.ok("Approval is " + decision.toString());
     }
 
+    /**
+     * Admin Decision
+     */
+    @Schema(name = "Admin Decision")
+    @PostMapping(value = "/approval/decision/{userId}/{approvalId}")
+    public ResponseEntity<Boolean> decisionByAdmin(@PathVariable("userId") Long userId,
+                                                @PathVariable("approvalId") Long approvalId,
+                                                @RequestBody ApprovalDto.Admin dto,
+                                                HttpServletRequest request){
+
+        Approval findApproval = approvalService.findApprovalById(approvalId);
+
+        findApproval.adminUpdate(dto.getDecisionDetail(), dto.getDecision());
+
+        return ResponseEntity.ok(true);
+    }
+
+    /**
+     * Office 내 Approval 모든 리스트 불러오기
+     */
     @Schema(name = "Find Approval List")
     @GetMapping(value = "/approval/list/{userId}")
     public ResponseEntity<List> findApprovalList(@PathVariable("userId") Long userId){
 
-        List<Approval> list = approvalService.approvalListForAdmin(userId);
+        List<ApprovalDto.Response> responseList = approvalService.approvalListForOffice(userId).stream()
+                .map(ApprovalDto.Response::from)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(responseList);
+    }
+
+    /**
+     * 대기중인 Approval List 조회
+     */
+    @Schema(name = "All Approval List")
+    @GetMapping(value = "/approval/list/wait")
+    public ResponseEntity<List> findWaitApproval(@PathVariable("userId") Long userId){
+
+        List<Approval> list = approvalService.approvalListForOffice(userId).stream()
+                .filter(approval -> approval.getDecision().equals(Decision.WAIT))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(list);
+    }
+
+    /**
+     * 승인된 Approval List 조회
+     */
+    @Schema(name = "All Approval List")
+    @GetMapping(value = "/approval/list/confirm")
+    public ResponseEntity<List> findConfirmApproval(@PathVariable("userId") Long userId){
+
+        List<Approval> list = approvalService.approvalListForOffice(userId).stream()
+                .filter(approval -> approval.getDecision().equals(Decision.CONFIRM))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(list);
+    }
+
+    /**
+     * 거절된 Approval List 조회
+     */
+    @Schema(name = "All Approval List")
+    @GetMapping(value = "/approval/list/reject")
+    public ResponseEntity<List> findAll(@PathVariable("userId") Long userId){
+
+        List<Approval> list = approvalService.approvalListForOffice(userId).stream()
+                .filter(approval -> approval.getDecision().equals(Decision.REJECT))
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(list);
     }
