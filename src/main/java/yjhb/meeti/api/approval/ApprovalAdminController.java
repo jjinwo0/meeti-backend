@@ -45,7 +45,7 @@ public class ApprovalAdminController {
         return ResponseEntity.ok("Approval is " + decision.toString());
     }
 
-    @Schema(name = "Approval List")
+    @Schema(name = "Find Approval List")
     @GetMapping(value = "/approval/list/{userId}")
     public ResponseEntity<List> findApprovalList(@PathVariable("userId") Long userId){
 

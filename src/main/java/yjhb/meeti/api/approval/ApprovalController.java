@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import yjhb.meeti.domain.approval.constant.Decision;
-import yjhb.meeti.dto.approval.ApprovalRegDto;
+import yjhb.meeti.dto.approval.ApprovalDto;
 import yjhb.meeti.service.approval.ApprovalService;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.service.user.UserService;
@@ -44,7 +44,7 @@ public class ApprovalController {
 
         User findUser = userService.findUserByUserId(userId);
 
-        ApprovalRegDto dto = ApprovalRegDto.builder()
+        ApprovalDto.Request dto = ApprovalDto.Request.builder()
                 .requestDetail(request)
                 .proceeding(proceeding)
                 .decision(decision)
@@ -71,7 +71,7 @@ public class ApprovalController {
 
         tokenManager.validateToken(accessToken);
 
-        ApprovalRegDto dto = ApprovalRegDto.builder()
+        ApprovalDto dto = ApprovalDto.builder()
                 .requestDetail(request)
                 .proceeding(proceeding)
                 .decision(decision)

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import yjhb.meeti.dto.approval.ApprovalRegDto;
+import yjhb.meeti.dto.approval.ApprovalDto;
 import yjhb.meeti.domain.approval.constant.Decision;
 import yjhb.meeti.domain.approval.entity.Approval;
 import yjhb.meeti.repository.approval.ApprovalRepository;
@@ -15,7 +15,6 @@ import yjhb.meeti.service.file.S3Service;
 import yjhb.meeti.service.user.UserService;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +32,7 @@ public class ApprovalService {
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXISTS));
     }
 
-    public Long regApproval(ApprovalRegDto dto, User user, MultipartFile file) throws IOException {
+    public Long regApproval(ApprovalDto.Request dto, User user, MultipartFile file) throws IOException {
 
         Approval approval = Approval.builder()
                 .user(user)
@@ -54,7 +53,7 @@ public class ApprovalService {
         findApproval.updateDecision(decision);
     }
 
-    public void update(Long id, ApprovalRegDto dto, MultipartFile file) throws IOException {
+    public void update(Long id, ApprovalDto.Request dto, MultipartFile file) throws IOException {
 
         Approval approval = approvalRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_APPROVAL));
