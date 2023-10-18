@@ -66,7 +66,7 @@ public class ApprovalService {
     // 같은 Office 내 결재 리스트 조회e
     public List<Approval> approvalListForOffice(Long userId){
 
-        String email = userService.findUserByUserId(userId).getEmail();
+        String email = userService.findUserByUserId(userId).getEmail().split("@")[1];
 
         List<Approval> findList = approvalRepository.findAll().stream()
                 .filter(approval -> approval.getUser().getEmail().split("@")[1].equals(email))
