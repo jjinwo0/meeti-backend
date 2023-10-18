@@ -24,11 +24,11 @@ public class TokenManager {
     private final String refreshTokenExpirationTime;
     private final String tokenSecret;
 
-    public JwtTokenDto createJwtTokenDto(Long id, Role role){
+    public JwtTokenDto createJwtTokenDto(Long id, String username, Role role){
         Date accessTokenExpireTime = createAccessTokenExpireTime();
         Date refreshTokenExpireTime = createRefreshTokenExpireTime();
 
-        String accessToken = createAccessToken(id, role, accessTokenExpireTime);
+        String accessToken = createAccessToken(id, username, role, accessTokenExpireTime);
         String refreshToken = createRefreshToken(id, refreshTokenExpireTime);
 
         return JwtTokenDto.builder()
@@ -51,12 +51,13 @@ public class TokenManager {
         return new Date(System.currentTimeMillis() + Long.parseLong(refreshTokenExpirationTime));
     }
 
-    public String createAccessToken(Long id, Role role, Date expirationTime){
+    public String createAccessToken(Long id, String username, Role role, Date expirationTime){
         String accessToken = Jwts.builder()
                 .setSubject(TokenType.ACCESS.name())                // token의 제목
                 .setIssuedAt(new Date(System.currentTimeMillis()))  // token이 생성된 시간 (현재 시간)
                 .setExpiration(expirationTime)                      // 만료 시간
                 .claim("id", id)                              // 회원 id
+                .claim("username", username)                  // 회원 username
                 .claim("role", role)                          // 사용자 역할
                 .signWith(SignatureAlgorithm.HS512, tokenSecret.getBytes(StandardCharsets.UTF_8))
                 .setHeaderParam("type", "JWT")

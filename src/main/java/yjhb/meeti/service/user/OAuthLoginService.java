@@ -40,13 +40,13 @@ public class OAuthLoginService {
             // 등록
             userService.registerUser(oauthUser);
 
-            jwtTokenDto = tokenManager.createJwtTokenDto(oauthUser.getId(), oauthUser.getRole());
+            jwtTokenDto = tokenManager.createJwtTokenDto(oauthUser.getId(), oauthUser.getUsername(), oauthUser.getRole());
             oauthUser.updateToken(jwtTokenDto);
         }else{ // 기존 회원
             // 토큰 생성
             User oauthUser = findUser.get();
 
-            jwtTokenDto = tokenManager.createJwtTokenDto(oauthUser.getId(), oauthUser.getRole());
+            jwtTokenDto = tokenManager.createJwtTokenDto(oauthUser.getId(), oauthUser.getUsername(), oauthUser.getRole());
             oauthUser.updateToken(jwtTokenDto);
         }
 

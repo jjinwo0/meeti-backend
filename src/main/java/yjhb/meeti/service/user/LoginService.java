@@ -25,7 +25,7 @@ public class LoginService {
 
         JwtTokenDto jwtTokenDto;
 
-        jwtTokenDto = tokenManager.createJwtTokenDto(findUser.getId(), findUser.getRole());
+        jwtTokenDto = tokenManager.createJwtTokenDto(findUser.getId(), findUser.getUsername(), findUser.getRole());
         findUser.updateToken(jwtTokenDto);
 
         return LoginDTO.Response.of(jwtTokenDto);

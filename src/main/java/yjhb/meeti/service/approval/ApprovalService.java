@@ -12,8 +12,12 @@ import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.EntityNotFoundException;
 import yjhb.meeti.service.file.S3Service;
+import yjhb.meeti.service.user.UserService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,6 +26,7 @@ public class ApprovalService {
 
     private final ApprovalRepository approvalRepository;
     private final S3Service s3Service;
+    private final UserService userService;
 
     public Approval findApprovalById(Long id){
         return approvalRepository.findById(id)
@@ -55,5 +60,16 @@ public class ApprovalService {
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_APPROVAL));
 
         approval.update(dto.getRequestDetail(), dto.getProceeding(), dto.getDecisionDetail(), dto.getDecision(), s3Service.upload(file, "approvalFile"));
+    }
+
+    public List<Approval> approvalListForAdmin(Long userId){
+
+        String email = userService.findUserByUserId(userId).getEmail();
+
+        List<Approval> findList = approvalRepository.findAll().stream()
+                .filter(approval -> approval.getUser().getEmail().split("@")[1].equals(email))
+                .collect(Collectors.toList());
+
+        return findList;
     }
 }
