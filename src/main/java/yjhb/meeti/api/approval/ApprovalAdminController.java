@@ -28,6 +28,7 @@ public class ApprovalAdminController {
     private final ApprovalService approvalService;
     private final UserService userService;
 
+    // 보류
     @Tag(name = "Approval Process")
     @PostMapping("/{userId}/{approvalId}")
     public ResponseEntity<String> process(@PathVariable("userId") Long userId,
@@ -87,8 +88,9 @@ public class ApprovalAdminController {
     @GetMapping(value = "/list/wait/{userId}")
     public ResponseEntity<List> findWaitApproval(@PathVariable("userId") Long userId){
 
-        List<Approval> list = approvalService.approvalListForOffice(userId).stream()
+        List<ApprovalDto.Response> list = approvalService.approvalListForOffice(userId).stream()
                 .filter(approval -> approval.getDecision().equals(Decision.WAIT))
+                .map(ApprovalDto.Response::from)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(list);
@@ -101,8 +103,9 @@ public class ApprovalAdminController {
     @GetMapping(value = "/list/confirm/{userId}")
     public ResponseEntity<List> findConfirmApproval(@PathVariable("userId") Long userId){
 
-        List<Approval> list = approvalService.approvalListForOffice(userId).stream()
+        List<ApprovalDto.Response> list = approvalService.approvalListForOffice(userId).stream()
                 .filter(approval -> approval.getDecision().equals(Decision.CONFIRM))
+                .map(ApprovalDto.Response::from)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(list);
@@ -115,8 +118,9 @@ public class ApprovalAdminController {
     @GetMapping(value = "/list/reject/{userId}")
     public ResponseEntity<List> findAll(@PathVariable("userId") Long userId){
 
-        List<Approval> list = approvalService.approvalListForOffice(userId).stream()
+        List<ApprovalDto.Response> list = approvalService.approvalListForOffice(userId).stream()
                 .filter(approval -> approval.getDecision().equals(Decision.REJECT))
+                .map(ApprovalDto.Response::from)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(list);
