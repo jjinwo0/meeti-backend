@@ -64,6 +64,7 @@ public class ApprovalDto {
                     .adminUsername(approval.getAdminUsername())
                     .decisionDetail(approval.getDecisionDetail())
                     .decision(approval.getDecision())
+                    .requestFile(approval.getFile())
                     .build();
         }
     }
