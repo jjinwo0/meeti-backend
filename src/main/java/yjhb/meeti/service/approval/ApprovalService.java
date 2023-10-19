@@ -77,7 +77,15 @@ public class ApprovalService {
 
     public void approvalDecisionByAdmin(Long approvalId, ApprovalDto.Admin dto){
 
-        findApprovalById(approvalId).adminUpdate(dto.getDecisionDetail(), dto.getDecision());
+        Decision decision = null;
+
+        if (dto.getDecision().equals(Decision.CONFIRM.toString()))
+            decision = Decision.CONFIRM;
+        if (dto.getDecision().equals(Decision.REJECT.toString()))
+            decision = Decision.REJECT;
+        else decision = Decision.WAIT;
+
+        findApprovalById(approvalId).adminUpdate(dto.getDecisionDetail(), decision);
     }
 
     public void deleteApproval(Long userId, Long approvalId){

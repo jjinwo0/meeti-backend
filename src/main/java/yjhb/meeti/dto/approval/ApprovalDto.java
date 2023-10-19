@@ -26,10 +26,10 @@ public class ApprovalDto {
     public static class Admin{
 
         private String decisionDetail;
-        private Decision decision;
+        private String decision;
 
         @Builder
-        public Admin(String decisionDetail, Decision decision) {
+        public Admin(String decisionDetail, String decision) {
             this.decisionDetail = decisionDetail;
             this.decision = decision;
         }
