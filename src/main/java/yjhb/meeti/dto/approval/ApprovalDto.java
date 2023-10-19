@@ -11,13 +11,13 @@ public class ApprovalDto {
     @Data
     public static class Request{
 
+        private String adminUsername;
         private String requestDetail;
-        private String proceeding;
 
         @Builder
-        public Request(String requestDetail, String proceeding) {
+        public Request(String adminUsername, String requestDetail) {
+            this.adminUsername = adminUsername;
             this.requestDetail = requestDetail;
-            this.proceeding = proceeding;
         }
 
     }
@@ -38,15 +38,19 @@ public class ApprovalDto {
     @Data
     public static class Response{
 
+        private String requestUsername;
         private String requestDetail;
-        private String proceeding;
+        private String requestFile;
+        private String adminUsername;
         private String decisionDetail;
         private Decision decision;
 
         @Builder
-        public Response(String requestDetail, String proceeding, String decisionDetail, Decision decision) {
+        public Response(String requestUsername, String requestDetail, String requestFile, String adminUsername, String decisionDetail, Decision decision) {
+            this.requestUsername = requestUsername;
             this.requestDetail = requestDetail;
-            this.proceeding = proceeding;
+            this.requestFile = requestFile;
+            this.adminUsername = adminUsername;
             this.decisionDetail = decisionDetail;
             this.decision = decision;
         }
@@ -54,8 +58,10 @@ public class ApprovalDto {
         public static Response from(Approval approval){
 
             return Response.builder()
+                    .requestUsername(approval.getUser().getUsername())
                     .requestDetail(approval.getRequestDetail())
-                    .proceeding(approval.getProceeding())
+                    .requestFile(approval.getFile())
+                    .adminUsername(approval.getAdminUsername())
                     .decisionDetail(approval.getDecisionDetail())
                     .decision(approval.getDecision())
                     .build();

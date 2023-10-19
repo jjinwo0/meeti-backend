@@ -20,17 +20,17 @@ public class Approval {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    private String adminUsername;
     private String requestDetail;
-    private String proceeding;
     private String decisionDetail;
     private Decision decision;
     private String file;
 
     @Builder
-    public Approval(User user, String requestDetail, String proceeding, String decisionDetail, Decision decision, String file) {
+    public Approval(User user, String adminUsername, String requestDetail, String decisionDetail, Decision decision, String file) {
         this.user = user;
+        this.adminUsername = adminUsername;
         this.requestDetail = requestDetail;
-        this.proceeding = proceeding;
         this.decisionDetail = decisionDetail;
         this.decision = decision;
         this.file = file;
@@ -47,9 +47,9 @@ public class Approval {
     }
 
     // update by User
-    public void update(String requestDetail, String proceeding, String file) {
+    public void update(String adminUsername, String requestDetail, String file) {
+        this.adminUsername = adminUsername;
         this.requestDetail = requestDetail;
-        this.proceeding = proceeding;
         this.file = file;
     }
 }

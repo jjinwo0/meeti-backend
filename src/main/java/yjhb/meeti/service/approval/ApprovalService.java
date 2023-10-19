@@ -39,8 +39,8 @@ public class ApprovalService {
 
         Approval approval = Approval.builder()
                 .user(user)
+                .adminUsername(dto.getAdminUsername())
                 .requestDetail(dto.getRequestDetail())
-                .proceeding(dto.getProceeding())
                 .decision(Decision.WAIT)
                 .file(s3Service.upload(file, "approvalFile"))
                 .build();
@@ -62,16 +62,17 @@ public class ApprovalService {
         Approval approval = approvalRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_APPROVAL));
 
-        approval.update(dto.getRequestDetail(), dto.getProceeding(), s3Service.upload(file, "approvalFile"));
+        approval.update(dto.getAdminUsername(), dto.getRequestDetail(), s3Service.upload(file, "approvalFile"));
     }
 
     // 같은 Office 내 결재 리스트 조회e
-    public List<Approval> approvalListForOffice(Long userId){
+    public List<ApprovalDto.Response> approvalListForOffice(Long userId){
 
         String email = userService.findUserByUserId(userId).getEmail().split("@")[1];
 
-        List<Approval> findList = approvalRepository.findAll().stream()
+        List<ApprovalDto.Response> findList = approvalRepository.findAll().stream()
                 .filter(approval -> approval.getUser().getEmail().split("@")[1].equals(email))
+                .map(ApprovalDto.Response::from)
                 .collect(Collectors.toList());
 
         return findList;

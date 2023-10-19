@@ -30,7 +30,7 @@ public class ApprovalController {
     @Schema(name = "Find Admin List")
     @GetMapping(value = "/approval/adminList/{userId}")
     public ResponseEntity<Boolean> updateApproval(@PathVariable("userId") Long userId,
-                                                  HttpServletRequest httpServletRequest) throws IOException{
+                                                  HttpServletRequest httpServletRequest){
 
         String authorization = httpServletRequest.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
@@ -48,7 +48,7 @@ public class ApprovalController {
     @PostMapping(value = "/approval/update/{approvalId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Boolean> updateApproval(@PathVariable("approvalId") Long approvalId,
                                                   @RequestPart(value = "request")String request,
-                                                  @RequestPart(value = "proceeding")String proceeding,
+                                                  @RequestPart(value = "proceeding")String adminUsername,
                                                   @RequestPart(value = "file") MultipartFile file,
                                                   HttpServletRequest httpServletRequest) throws IOException{
 
@@ -58,8 +58,8 @@ public class ApprovalController {
         tokenManager.validateToken(accessToken);
 
         ApprovalDto.Request dto = ApprovalDto.Request.builder()
+                .adminUsername(adminUsername)
                 .requestDetail(request)
-                .proceeding(proceeding)
                 .build();
 
         approvalService.update(approvalId, dto, file);
@@ -71,7 +71,7 @@ public class ApprovalController {
     @PostMapping(value = "/approval/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Boolean> registrationApproval(@PathVariable("userId") Long userId,
                                                         @RequestPart(value = "request")String request,
-                                                        @RequestPart(value = "proceeding")String proceeding,
+                                                        @RequestPart(value = "proceeding")String adminUsername,
                                                         @RequestPart(value = "file") MultipartFile file,
                                                         HttpServletRequest httpServletRequest) throws IOException {
 
@@ -83,8 +83,8 @@ public class ApprovalController {
         User findUser = userService.findUserByUserId(userId);
 
         ApprovalDto.Request dto = ApprovalDto.Request.builder()
+                .adminUsername(adminUsername)
                 .requestDetail(request)
-                .proceeding(proceeding)
                 .build();
 
         approvalService.regApproval(dto, findUser, file);

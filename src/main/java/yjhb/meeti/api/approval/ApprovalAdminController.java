@@ -74,9 +74,7 @@ public class ApprovalAdminController {
     @GetMapping(value = "/list/{userId}")
     public ResponseEntity<List> findApprovalList(@PathVariable("userId") Long userId){
 
-        List<ApprovalDto.Response> responseList = approvalService.approvalListForOffice(userId).stream()
-                .map(ApprovalDto.Response::from)
-                .collect(Collectors.toList());
+        List<ApprovalDto.Response> responseList = approvalService.approvalListForOffice(userId);
 
         return ResponseEntity.ok(responseList);
     }
@@ -90,7 +88,6 @@ public class ApprovalAdminController {
 
         List<ApprovalDto.Response> list = approvalService.approvalListForOffice(userId).stream()
                 .filter(approval -> approval.getDecision().equals(Decision.WAIT))
-                .map(ApprovalDto.Response::from)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(list);
@@ -105,7 +102,6 @@ public class ApprovalAdminController {
 
         List<ApprovalDto.Response> list = approvalService.approvalListForOffice(userId).stream()
                 .filter(approval -> approval.getDecision().equals(Decision.CONFIRM))
-                .map(ApprovalDto.Response::from)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(list);
@@ -120,7 +116,6 @@ public class ApprovalAdminController {
 
         List<ApprovalDto.Response> list = approvalService.approvalListForOffice(userId).stream()
                 .filter(approval -> approval.getDecision().equals(Decision.REJECT))
-                .map(ApprovalDto.Response::from)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(list);
