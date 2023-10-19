@@ -24,7 +24,7 @@ public class TokenService {
         User findUser = userService.findUserByRefreshToken(refreshToken);
 
         Date accessTokenExpireTime = tokenManager.createAccessTokenExpireTime();
-        String accessToken = tokenManager.createAccessToken(findUser.getId(), findUser.getRole(), accessTokenExpireTime);
+        String accessToken = tokenManager.createAccessToken(findUser.getId(), findUser.getUsername(), findUser.getRole(), accessTokenExpireTime);
 
         return AccessTokenResponseDTO.builder()
                 .grantType(GrantType.BEARER.getType())
