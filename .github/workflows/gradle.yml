@@ -46,6 +46,10 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    # 5. Docker Hub 이미지 PUSH
+    - name: docker Hub push
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/meeti-backend
         
   # 위 과정에서 푸시한 이미지를 ec2에서 풀받아서 실행시키는 과정 
   run-docker-image-on-ec2:
@@ -69,7 +73,3 @@ jobs:
       # 4. 미사용 이미지를 정리합니다
       - name: delete old docker image
         run: sudo docker system prune -f
-
-    # 5. Docker Hub 이미지 PUSH
-    - name: docker Hub push
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/meeti-backend
