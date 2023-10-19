@@ -27,6 +27,23 @@ public class ApprovalController {
     private final ApprovalService approvalService;
     private final UserService userService;
 
+    @Schema(name = "Find Admin List")
+    @GetMapping(value = "/approval/adminList/{userId}")
+    public ResponseEntity<Boolean> updateApproval(@PathVariable("userId") Long userId,
+                                                  HttpServletRequest httpServletRequest) throws IOException{
+
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        User findUser = userService.findUserByUserId(userId);
+
+        approvalService.findAdminByUserEmail(findUser.getEmail());
+
+        return ResponseEntity.ok(true);
+    }
+
     @Schema(name = "Approval Update")
     @PostMapping(value = "/approval/update/{approvalId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Boolean> updateApproval(@PathVariable("approvalId") Long approvalId,

@@ -37,6 +37,11 @@ public class UserService {
             throw new BusinessException(ErrorCode.ALREADY_REGISTERED_MEMBER);
     }
 
+    public List<User> findAll(){
+
+        return userRepository.findAll();
+    }
+
     public Optional<User> findUserByEmail(String email){
         return userRepository.findByEmail(email);
     }

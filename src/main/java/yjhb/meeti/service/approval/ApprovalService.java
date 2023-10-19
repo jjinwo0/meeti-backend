@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.dto.approval.ApprovalDto;
 import yjhb.meeti.domain.approval.constant.Decision;
 import yjhb.meeti.domain.approval.entity.Approval;
+import yjhb.meeti.dto.user.UserInfoDto;
 import yjhb.meeti.global.error.exception.BusinessException;
 import yjhb.meeti.repository.approval.ApprovalRepository;
 import yjhb.meeti.domain.user.entity.User;
@@ -96,5 +98,16 @@ public class ApprovalService {
             throw new BusinessException(ErrorCode.NOT_VALID_USER);
 
         approvalRepository.delete(findApproval);
+    }
+
+    public List<UserInfoDto> findAdminByUserEmail(String email) {
+
+        String domain = email.split("@")[1];
+
+        return userService.findAll().stream()
+                .filter(user -> user.getEmail().split("@")[1].equals(domain))
+                .filter(user -> user.getRole().equals(Role.ADMIN_OFFICE))
+                .map(UserInfoDto::from)
+                .collect(Collectors.toList());
     }
 }
