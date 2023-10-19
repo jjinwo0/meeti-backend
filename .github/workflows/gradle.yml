@@ -47,6 +47,6 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    # 5. Docker Hub 이미지 푸시
+    # 5. Docker Hub 이미지 PUSH
     - name: docker Hub push
       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/meeti-backend
