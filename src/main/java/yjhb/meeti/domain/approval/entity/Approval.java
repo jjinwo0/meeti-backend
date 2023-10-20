@@ -16,6 +16,7 @@ import java.io.File;
 public class Approval {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "approval_id")
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

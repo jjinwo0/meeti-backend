@@ -35,14 +35,17 @@ public class ApprovalService {
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_EXISTS));
     }
 
+    @Transactional
     public Long regApproval(ApprovalDto.Request dto, User user, MultipartFile file) throws IOException {
+
+        String uploadFile = s3Service.upload(file, "approvalFile");
 
         Approval approval = Approval.builder()
                 .user(user)
                 .adminUsername(dto.getAdminUsername())
                 .requestDetail(dto.getRequestDetail())
                 .decision(Decision.WAIT)
-                .file(s3Service.upload(file, "approvalFile"))
+                .file(uploadFile)
                 .build();
 
         approvalRepository.save(approval);
@@ -57,6 +60,7 @@ public class ApprovalService {
         findApproval.updateDecision(decision);
     }
 
+    @Transactional
     public void update(Long id, ApprovalDto.Request dto, MultipartFile file) throws IOException {
 
         Approval approval = approvalRepository.findById(id)
@@ -78,19 +82,24 @@ public class ApprovalService {
         return findList;
     }
 
+    @Transactional
     public void approvalDecisionByAdmin(Long approvalId, ApprovalDto.Admin dto){
 
-        Decision decision = null;
+        Approval findApproval = findApprovalById(approvalId);
+
+        System.out.println("dto : " + dto.getDecision());
+        System.out.println(Decision.CONFIRM.toString().equals(dto.getDecision()));
 
         if (dto.getDecision().equals(Decision.CONFIRM.toString()))
-            decision = Decision.CONFIRM;
+            findApproval.adminUpdate(dto.getDecisionDetail(), Decision.CONFIRM);
         if (dto.getDecision().equals(Decision.REJECT.toString()))
-            decision = Decision.REJECT;
-        else decision = Decision.WAIT;
+            findApproval.adminUpdate(dto.getDecisionDetail(), Decision.REJECT);
+        else
+            findApproval.adminUpdate(dto.getDecisionDetail(), Decision.CONFIRM);
 
-        findApprovalById(approvalId).adminUpdate(dto.getDecisionDetail(), decision);
     }
 
+    @Transactional
     public void deleteApproval(Long userId, Long approvalId){
 
         Approval findApproval = findApprovalById(approvalId);

@@ -9,6 +9,7 @@ import yjhb.meeti.domain.approval.entity.Approval;
 public class ApprovalDto {
 
     @Data
+    @NoArgsConstructor
     public static class Request{
 
         private String adminUsername;
@@ -23,6 +24,7 @@ public class ApprovalDto {
     }
 
     @Data
+    @NoArgsConstructor
     public static class Admin{
 
         private String decisionDetail;
@@ -36,8 +38,10 @@ public class ApprovalDto {
     }
 
     @Data
+    @NoArgsConstructor
     public static class Response{
 
+        private Long id;
         private String requestUsername;
         private String requestDetail;
         private String requestFile;
@@ -46,7 +50,8 @@ public class ApprovalDto {
         private Decision decision;
 
         @Builder
-        public Response(String requestUsername, String requestDetail, String requestFile, String adminUsername, String decisionDetail, Decision decision) {
+        public Response(Long id, String requestUsername, String requestDetail, String requestFile, String adminUsername, String decisionDetail, Decision decision) {
+            this.id = id;
             this.requestUsername = requestUsername;
             this.requestDetail = requestDetail;
             this.requestFile = requestFile;
@@ -58,6 +63,7 @@ public class ApprovalDto {
         public static Response from(Approval approval){
 
             return Response.builder()
+                    .id(approval.getId())
                     .requestUsername(approval.getUser().getUsername())
                     .requestDetail(approval.getRequestDetail())
                     .requestFile(approval.getFile())

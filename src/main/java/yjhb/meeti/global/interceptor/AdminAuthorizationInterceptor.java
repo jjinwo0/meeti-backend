@@ -21,13 +21,20 @@ public class AdminAuthorizationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        // preflight 요청 넘기기
+        if (request.getMethod().equals("OPTIONS")) {
+            return true;
+        }
+
         String authorization = request.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
 
         Claims tokenClaims = tokenManager.getTokenClaims(accessToken);
         String role = (String) tokenClaims.get("role");
-        if (!Role.ADMIN.equals(role) || !Role.ADMIN_OFFICE.equals(role))
-            throw new AuthenticationException(ErrorCode.FORBIDDEN_ADMIN);
+        if (!role.equals(Role.ADMIN.toString())) {
+            if (!role.equals(Role.ADMIN_OFFICE.toString()))
+                throw new AuthenticationException(ErrorCode.FORBIDDEN_ADMIN);
+        }
 
         return true;
     }
