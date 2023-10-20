@@ -13,7 +13,7 @@ import yjhb.meeti.global.error.exception.BusinessException;
 import yjhb.meeti.global.error.exception.EntityNotFoundException;
 import yjhb.meeti.dto.user.UserInfoDto;
 import yjhb.meeti.repository.user.FriendRepository;
-import yjhb.meeti.service.calender.CalendarService;
+import yjhb.meeti.service.calender.CalenderService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class FriendService {
 
     private final UserService userService;
-    private final CalendarService calendarService;
+    private final CalenderService calendarService;
     private final FriendRepository friendRepository;
 
     // 친구 요청 수락 여부 검증

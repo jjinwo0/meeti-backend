@@ -1,8 +1,8 @@
 package yjhb.meeti.repository.calender;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import yjhb.meeti.domain.calender.Calendar;
+import yjhb.meeti.domain.calender.Calender;
 
-public interface CalendarRepository extends JpaRepository<Calendar, Long> {
+public interface CalendarRepository extends JpaRepository<Calender, Long> {
 
 }

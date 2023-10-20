@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import yjhb.meeti.dto.reservation.ReservationRegDto;
 import yjhb.meeti.dto.reservation.ReservationResponseDto;
 import yjhb.meeti.domain.office.Office;
-import yjhb.meeti.service.calender.CalendarService;
+import yjhb.meeti.service.calender.CalenderService;
 import yjhb.meeti.service.office.OfficeService;
 import yjhb.meeti.domain.reservation.Reservation;
 import yjhb.meeti.service.reservation.ReservationService;
@@ -28,7 +28,7 @@ public class ReservationController {
     private final ReservationService reservationService;
     private final UserService userService;
     private final OfficeService officeService;
-    private final CalendarService calendarService;
+    private final CalenderService calendarService;
 
     @Tag(name = "Find Reservation")
     @GetMapping("/search/{reservationId}")

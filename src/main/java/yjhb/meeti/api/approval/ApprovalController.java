@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import yjhb.meeti.domain.approval.constant.Decision;
 import yjhb.meeti.dto.approval.ApprovalDto;
+import yjhb.meeti.dto.user.UserInfoDto;
 import yjhb.meeti.service.approval.ApprovalService;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.service.user.UserService;
@@ -16,6 +17,7 @@ import yjhb.meeti.global.jwt.service.TokenManager;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 @Tag(name = "Approval Registration", description = "결재 등록 API")
 @RestController
@@ -29,8 +31,8 @@ public class ApprovalController {
 
     @Schema(name = "Find Admin List")
     @GetMapping(value = "/approval/adminList/{userId}")
-    public ResponseEntity<Boolean> updateApproval(@PathVariable("userId") Long userId,
-                                                  HttpServletRequest httpServletRequest){
+    public ResponseEntity<List> updateApproval(@PathVariable("userId") Long userId,
+                                               HttpServletRequest httpServletRequest){
 
         String authorization = httpServletRequest.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
@@ -39,16 +41,16 @@ public class ApprovalController {
 
         User findUser = userService.findUserByUserId(userId);
 
-        approvalService.findAdminByUserEmail(findUser.getEmail());
+        List<UserInfoDto> findList = approvalService.findAdminByUserEmail(findUser.getEmail());
 
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(findList);
     }
 
     @Schema(name = "Approval Update")
     @PostMapping(value = "/approval/update/{approvalId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Boolean> updateApproval(@PathVariable("approvalId") Long approvalId,
                                                   @RequestPart(value = "request")String request,
-                                                  @RequestPart(value = "proceeding")String adminUsername,
+                                                  @RequestPart(value = "adminUsername")String adminUsername,
                                                   @RequestPart(value = "file") MultipartFile file,
                                                   HttpServletRequest httpServletRequest) throws IOException{
 
@@ -71,7 +73,7 @@ public class ApprovalController {
     @PostMapping(value = "/approval/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Boolean> registrationApproval(@PathVariable("userId") Long userId,
                                                         @RequestPart(value = "request")String request,
-                                                        @RequestPart(value = "proceeding")String adminUsername,
+                                                        @RequestPart(value = "adminUsername")String adminUsername,
                                                         @RequestPart(value = "file") MultipartFile file,
                                                         HttpServletRequest httpServletRequest) throws IOException {
 

@@ -1,7 +1,7 @@
 package yjhb.meeti.dto.calender;
 
 import lombok.*;
-import yjhb.meeti.domain.calender.Calendar;
+import yjhb.meeti.domain.calender.Calender;
 
 @Getter @Builder
 @NoArgsConstructor @AllArgsConstructor
@@ -24,7 +24,7 @@ public class CalenderResponseDto {
     private String finishTime;
     private String place;
 
-    public static CalenderResponseDto from(Calendar cal){
+    public static CalenderResponseDto from(Calender cal){
 
         return CalenderResponseDto.builder()
                 .id(cal.getId())
