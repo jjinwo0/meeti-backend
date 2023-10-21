@@ -61,11 +61,12 @@ jobs:
         script: |
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}
           
-          docker stop ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}
+          docker stop ${{ DOCKERHUB_NAME }}
           
-          docker rm ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}
+          docker rm ${{ DOCKERHUB_NAME }}
           
-          docker run -d \
+          docker run --name ${{ secrets.DOCKERHUB_NAME }} \ 
+          -d \
           -p 8080:8080 \
           ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}
           
