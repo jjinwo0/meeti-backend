@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yjhb.meeti.domain.reservation.Reservation;
+import yjhb.meeti.domain.reservation.Status;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,16 +27,44 @@ public class ReservationResponseDto {
     private String telNum;
     private String image;
 
+    // todo 추후 수정 예정
     public static ReservationResponseDto of(Reservation reservation){
 
-        return ReservationResponseDto.builder()
-                .id(reservation.getId())
-                .date(reservation.getDate())
-                .startTime(reservation.getStartTime())
-                .endTime(reservation.getEndTime())
-                .officeName(reservation.getOffice().getPlaceName())
-                .telNum(reservation.getOffice().getTelNum())
-                .image(reservation.getOffice().getImage())
-                .build();
+        Status status = reservation.getStatus();
+        ReservationResponseDto dto = null;
+
+        if(status.equals(Status.WAIT)) {
+            dto = ReservationResponseDto.builder()
+                    .id(reservation.getId())
+                    .date(reservation.getDate())
+                    .startTime(reservation.getStartTime())
+                    .endTime(reservation.getEndTime())
+                    .officeName("[대기중] " + reservation.getOffice().getPlaceName())
+                    .telNum(reservation.getOffice().getTelNum())
+                    .image(reservation.getOffice().getImage())
+                    .build();
+        } else if (status.equals(Status.CONFIRM)){
+            dto = ReservationResponseDto.builder()
+                    .id(reservation.getId())
+                    .date(reservation.getDate())
+                    .startTime(reservation.getStartTime())
+                    .endTime(reservation.getEndTime())
+                    .officeName(reservation.getOffice().getPlaceName())
+                    .telNum(reservation.getOffice().getTelNum())
+                    .image(reservation.getOffice().getImage())
+                    .build();
+        }else {
+            dto = ReservationResponseDto.builder()
+                    .id(reservation.getId())
+                    .date(reservation.getDate())
+                    .startTime(reservation.getStartTime())
+                    .endTime(reservation.getEndTime())
+                    .officeName("[거절] " + reservation.getOffice().getPlaceName())
+                    .telNum(reservation.getOffice().getTelNum())
+                    .image(reservation.getOffice().getImage())
+                    .build();
+        }
+
+        return dto;
     }
 }

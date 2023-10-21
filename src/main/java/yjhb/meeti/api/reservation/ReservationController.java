@@ -77,6 +77,21 @@ public class ReservationController {
         return ResponseEntity.ok(findReservation);
     }
 
+    @Tag(name = "Find Reservation by Office Id")
+    @GetMapping("/search/officeUser/{officeId}")
+    public ResponseEntity<List> findReservationByOfficeUser(@PathVariable("officeId") Long userId,
+                                                            HttpServletRequest httpServletRequest){
+
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        List<ReservationResponseDto> findReservation = reservationService.findReservationByUserId(userId);
+
+        return ResponseEntity.ok(findReservation);
+    }
+
     @Tag(name = "Create Reservation")
     @PostMapping("/reg/{userId}")
     public ResponseEntity<Boolean> createReservation(@RequestBody ReservationRegDto reservationRegDto,
@@ -92,6 +107,27 @@ public class ReservationController {
         Office findOffice = officeService.findOfficeById(reservationRegDto.getOfficeId());
 
         reservationService.createReservation(findUser, reservationRegDto, findOffice);
+
+        calendarService.registrationCalenderByReservation(reservationRegDto, findOffice, findUser);
+
+        return ResponseEntity.ok(true);
+    }
+
+    @Tag(name = "Create Reservation By Officer")
+    @PostMapping("/reg/officer/{userId}")
+    public ResponseEntity<Boolean> createReservationByOfficeUser(@RequestBody ReservationRegDto reservationRegDto,
+                                                                 @PathVariable("userId") Long userId,
+                                                                 HttpServletRequest httpServletRequest){
+
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        User findUser = userService.findUserByUserId(userId);
+        Office findOffice = officeService.findOfficeById(reservationRegDto.getOfficeId());
+
+        reservationService.createReservationByOfficeUser(findUser, reservationRegDto, findOffice);
 
         calendarService.registrationCalenderByReservation(reservationRegDto, findOffice, findUser);
 

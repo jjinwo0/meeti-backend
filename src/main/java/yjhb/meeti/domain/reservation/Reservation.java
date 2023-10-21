@@ -26,6 +26,7 @@ public class Reservation {
     private LocalTime startTime;
     @Column
     private LocalTime endTime;
+    private Status status;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -38,11 +39,16 @@ public class Reservation {
     private KakaoPay payment;
 
     @Builder
-    public Reservation(LocalDate date, LocalTime startTime, LocalTime endTime, User user, Office office) {
+    public Reservation(LocalDate date, LocalTime startTime, LocalTime endTime, User user, Office office, Status status) {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.user = user;
         this.office = office;
+        this.status = status;
+    }
+
+    public void updateStatus(Status status){
+        this.status = status;
     }
 }
