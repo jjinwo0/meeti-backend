@@ -2,8 +2,10 @@ package yjhb.meeti.api.office;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import yjhb.meeti.dto.office.OfficeRegDto;
 import yjhb.meeti.dto.office.OfficeResponseDto;
 import yjhb.meeti.domain.office.Office;
@@ -88,8 +90,9 @@ public class OfficeController {
     }
 
     @Tag(name = "Office Registration")
-    @PostMapping("/reg/{userId}")
-    public ResponseEntity<Boolean> registrationOffice(@RequestBody OfficeRegDto officeRegDto,
+    @PostMapping(value = "/reg/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Boolean> registrationOffice(@RequestPart("officeRegDto") OfficeRegDto officeRegDto,
+                                                      @RequestPart("image") MultipartFile image,
                                                       @PathVariable("userId") Long userId,
                                                       HttpServletRequest httpServletRequest) throws IOException {
         String authorization = httpServletRequest.getHeader("Authorization");
@@ -97,7 +100,7 @@ public class OfficeController {
         tokenManager.validateToken(accessToken);
 
         User findUser = userService.findUserByUserId(userId);
-        officeService.registrationOffice(officeRegDto, findUser);
+        officeService.registrationOffice(officeRegDto, image, findUser);
 
         return ResponseEntity.ok(true);
     }

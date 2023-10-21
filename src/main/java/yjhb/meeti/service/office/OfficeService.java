@@ -3,6 +3,7 @@ package yjhb.meeti.service.office;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import yjhb.meeti.dto.office.OfficeRegDto;
 import yjhb.meeti.dto.office.OfficeResponseDto;
 import yjhb.meeti.domain.office.Office;
@@ -11,7 +12,9 @@ import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.repository.user.UserRepository;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.EntityNotFoundException;
+import yjhb.meeti.service.file.S3Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +26,7 @@ public class OfficeService {
 
     private final UserRepository userRepository;
     private final OfficeRepository officeRepository;
+    private final S3Service s3Service;
 
     public Office findOfficeById(Long id){
         return officeRepository.findById(id)
@@ -76,11 +80,14 @@ public class OfficeService {
         return response;
     }
 
-    public Long registrationOffice(OfficeRegDto officeRegDto, User user){
+    public Long registrationOffice(OfficeRegDto officeRegDto, MultipartFile image, User user) throws IOException {
+
+        String officeImage = s3Service.upload(image, "officeImage");
+
         Office office = Office.builder()
                 .user(user)
                 .placeName(officeRegDto.getPlaceName())
-                .image(officeRegDto.getImage())
+                .image(officeImage)
                 .telNum(officeRegDto.getTelNum())
                 .pay(officeRegDto.getPay())
                 .description(officeRegDto.getDescription())

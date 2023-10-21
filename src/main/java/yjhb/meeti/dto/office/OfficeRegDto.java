@@ -14,7 +14,6 @@ public class OfficeRegDto {
     private String description;
     private String address;
     private String detailAddress;
-    private String image;
     private String telNum;
 
 }
