@@ -77,9 +77,9 @@ public class ReservationController {
         return ResponseEntity.ok(findReservation);
     }
 
-    @Tag(name = "Find Reservation by Office Id")
-    @GetMapping("/search/officeUser/{officeId}")
-    public ResponseEntity<List> findReservationByOfficeUser(@PathVariable("officeId") Long userId,
+    @Tag(name = "Find Reservation by UserId")
+    @GetMapping("/search/user/wait/{userId}")
+    public ResponseEntity<List> findWaitReservationByUserId(@PathVariable("userId") Long userId,
                                                             HttpServletRequest httpServletRequest){
 
         String authorization = httpServletRequest.getHeader("Authorization");
@@ -87,7 +87,7 @@ public class ReservationController {
 
         tokenManager.validateToken(accessToken);
 
-        List<ReservationResponseDto> findReservation = reservationService.findReservationByUserId(userId);
+        List<ReservationResponseDto> findReservation = reservationService.findWaitReservationByUserId(userId);
 
         return ResponseEntity.ok(findReservation);
     }

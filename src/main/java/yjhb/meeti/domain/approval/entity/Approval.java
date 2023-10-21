@@ -26,15 +26,17 @@ public class Approval {
     private String decisionDetail;
     private Decision decision;
     private String file;
+    private String placeName;
 
     @Builder
-    public Approval(User user, String adminUsername, String requestDetail, String decisionDetail, Decision decision, String file) {
+    public Approval(User user, String adminUsername, String requestDetail, String decisionDetail, Decision decision, String file, String placeName) {
         this.user = user;
         this.adminUsername = adminUsername;
         this.requestDetail = requestDetail;
         this.decisionDetail = decisionDetail;
         this.decision = decision;
         this.file = file;
+        this.placeName = placeName;
     }
 
     public void updateDecision(Decision decision){

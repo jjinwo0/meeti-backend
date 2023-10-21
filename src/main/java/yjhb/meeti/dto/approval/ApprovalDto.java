@@ -25,6 +25,22 @@ public class ApprovalDto {
 
     @Data
     @NoArgsConstructor
+    public static class ReservationRequest{
+
+        private String adminUsername;
+        private String requestDetail;
+        private String placeName;
+
+        @Builder
+        public ReservationRequest(String adminUsername, String requestDetail, String placeName) {
+            this.adminUsername = adminUsername;
+            this.requestDetail = requestDetail;
+            this.placeName = placeName;
+        }
+    }
+
+    @Data
+    @NoArgsConstructor
     public static class Admin{
 
         private String decisionDetail;

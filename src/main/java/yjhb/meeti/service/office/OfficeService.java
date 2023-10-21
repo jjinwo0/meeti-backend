@@ -80,6 +80,12 @@ public class OfficeService {
         return response;
     }
 
+    public Office findOneByPlaceName(String placeName){
+
+        return officeRepository.findByPlaceName(placeName)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_OFFICE));
+    }
+
     public Long registrationOffice(OfficeRegDto officeRegDto, MultipartFile image, User user) throws IOException {
 
         String officeImage = s3Service.upload(image, "officeImage");

@@ -62,6 +62,19 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
+    // 대기 상태 예약 리스트
+    public List<ReservationResponseDto> findWaitReservationByUserId(Long id){
+
+        User findUser = userService.findUserByUserId(id);
+
+        List<Reservation> findReservation = findUser.getReservations();
+
+        return findReservation.stream()
+                .map(ReservationResponseDto::of)
+                .filter(reservationResponseDto -> findReservationById(reservationResponseDto.getId()).getStatus().equals(Status.WAIT))
+                .collect(Collectors.toList());
+    }
+
     public void validateReservation(Office office, Reservation reservation){
         List<Reservation> reservations = office.getReservations();
 
@@ -139,5 +152,13 @@ public class ReservationService {
             findReservation.updateStatus(Status.CONFIRM);
 
         return findReservation.getStatus();
+    }
+
+    public Reservation findReservationByPlaceNameNameAndUserId(String placeName, Long userId){
+
+        User findUser = userService.findUserByUserId(userId);
+        Office findOffice = officeService.findOneByPlaceName(placeName);
+
+        return reservationRepository.findByOfficeAndUser(findOffice, findUser);
     }
 }

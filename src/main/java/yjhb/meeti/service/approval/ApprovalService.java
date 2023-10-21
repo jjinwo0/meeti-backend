@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import yjhb.meeti.domain.reservation.Reservation;
+import yjhb.meeti.domain.reservation.Status;
 import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.dto.approval.ApprovalDto;
 import yjhb.meeti.domain.approval.constant.Decision;
@@ -15,6 +17,7 @@ import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.EntityNotFoundException;
 import yjhb.meeti.service.file.S3Service;
+import yjhb.meeti.service.reservation.ReservationService;
 import yjhb.meeti.service.user.UserService;
 
 import java.io.IOException;
@@ -29,6 +32,7 @@ public class ApprovalService {
     private final ApprovalRepository approvalRepository;
     private final S3Service s3Service;
     private final UserService userService;
+    private final ReservationService reservationService;
 
     public Approval findApprovalById(Long id){
         return approvalRepository.findById(id)
@@ -52,6 +56,26 @@ public class ApprovalService {
 
         return approval.getId();
     }
+
+    @Transactional
+    public Long regReservationApproval(ApprovalDto.ReservationRequest dto, User user, MultipartFile file) throws IOException {
+
+        String uploadFile = s3Service.upload(file, "approvalFile");
+
+        Approval approval = Approval.builder()
+                .user(user)
+                .adminUsername(dto.getAdminUsername())
+                .requestDetail(dto.getRequestDetail())
+                .decision(Decision.WAIT)
+                .file(uploadFile)
+                .placeName(dto.getPlaceName())
+                .build();
+
+        approvalRepository.save(approval);
+
+        return approval.getId();
+    }
+
 
     public void proceed(Long id, Decision decision){
 
@@ -86,16 +110,23 @@ public class ApprovalService {
     public void approvalDecisionByAdmin(Long approvalId, ApprovalDto.Admin dto){
 
         Approval findApproval = findApprovalById(approvalId);
+        Reservation findReservation =
+                reservationService.findReservationByPlaceNameNameAndUserId(findApproval.getPlaceName(), findApproval.getUser().getId());
 
-        System.out.println("dto : " + dto.getDecision());
-        System.out.println(Decision.CONFIRM.toString().equals(dto.getDecision()));
+        if (dto.getDecision().equals(Decision.CONFIRM.toString())) {
 
-        if (dto.getDecision().equals(Decision.CONFIRM.toString()))
             findApproval.adminUpdate(dto.getDecisionDetail(), Decision.CONFIRM);
-        if (dto.getDecision().equals(Decision.REJECT.toString()))
+            findReservation.updateStatus(Status.CONFIRM);
+        }
+        if (dto.getDecision().equals(Decision.REJECT.toString())) {
+
             findApproval.adminUpdate(dto.getDecisionDetail(), Decision.REJECT);
-        else
-            findApproval.adminUpdate(dto.getDecisionDetail(), Decision.CONFIRM);
+            findReservation.updateStatus(Status.REJECT);
+        }
+        else { // 사용 안할 예정
+            findApproval.adminUpdate(dto.getDecisionDetail(), Decision.WAIT);
+            findReservation.updateStatus(Status.WAIT);
+        }
 
     }
 
