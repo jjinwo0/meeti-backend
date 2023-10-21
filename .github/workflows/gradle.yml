@@ -50,9 +50,7 @@ jobs:
     # 5. Docker Hub 이미지 PUSH
     - name: docker Hub push
       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/meeti-backend
-        
-  # 위 과정에서 푸시한 이미지를 ec2에서 풀받아서 실행시키는 과정 
-  run-docker-image-on-ec2:
+
     - name: EC2에 원격 접속 후 배포하기
       uses: appleboy/ssh-action@master
       with:
