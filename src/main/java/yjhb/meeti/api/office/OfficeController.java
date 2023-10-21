@@ -91,7 +91,12 @@ public class OfficeController {
 
     @Tag(name = "Office Registration")
     @PostMapping(value = "/reg/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Boolean> registrationOffice(@RequestPart("officeRegDto") OfficeRegDto officeRegDto,
+    public ResponseEntity<Boolean> registrationOffice(@RequestPart("placeName") String placeName,
+                                                      @RequestPart("pay") String pay,
+                                                      @RequestPart("description") String description,
+                                                      @RequestPart("address") String address,
+                                                      @RequestPart("detailAddress") String detailAddress,
+                                                      @RequestPart("telNum") String telNum,
                                                       @RequestPart("image") MultipartFile image,
                                                       @PathVariable("userId") Long userId,
                                                       HttpServletRequest httpServletRequest) throws IOException {
@@ -100,7 +105,16 @@ public class OfficeController {
         tokenManager.validateToken(accessToken);
 
         User findUser = userService.findUserByUserId(userId);
-        officeService.registrationOffice(officeRegDto, image, findUser);
+
+        OfficeRegDto dto = OfficeRegDto.builder()
+                .placeName(placeName)
+                .pay(pay)
+                .description(description)
+                .address(address)
+                .detailAddress(detailAddress)
+                .telNum(telNum)
+                .build();
+        officeService.registrationOffice(dto, image, findUser);
 
         return ResponseEntity.ok(true);
     }

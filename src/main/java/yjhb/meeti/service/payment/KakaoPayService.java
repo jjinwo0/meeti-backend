@@ -27,6 +27,9 @@ public class KakaoPayService {
     private String adminKey;
     private static String partner_order_id = "0320";
     private static String partner_user_id = "mintmin";
+    private static int quantity = 1;
+    private static int tax_free_amount = 0;
+
     private KakaoReadyResponseDto readyResponseDto;
 
 
@@ -39,9 +42,9 @@ public class KakaoPayService {
         parameters.add("partner_user_id", partner_user_id);
         parameters.add("item_name", dto.getItem_name());
         parameters.add("item_code", dto.getItem_code());
-        parameters.add("quantity", String.valueOf(dto.getQuantity()));
+        parameters.add("quantity", String.valueOf(quantity));
         parameters.add("total_amount", String.valueOf(dto.getTotal_amount()));
-        parameters.add("tax_free_amount", String.valueOf(dto.getTax_free_amount()));
+        parameters.add("tax_free_amount", String.valueOf(tax_free_amount));
         parameters.add("approval_url", "http://localhost:8080/kakao/payment/completed"); // 성공 시 redirect url
         parameters.add("cancel_url", "http://localhost:8080/kakao/payment/cancel"); // 취소 시 redirect url
         parameters.add("fail_url", "http://localhost:8080/kakao/payment/fail"); // 실패 시 redirect url
