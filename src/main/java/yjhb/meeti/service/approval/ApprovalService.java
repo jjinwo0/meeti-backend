@@ -85,7 +85,7 @@ public class ApprovalService {
     }
 
     @Transactional
-    public void update(Long id, ApprovalDto.Request dto, MultipartFile file) throws IOException {
+    public void update(Long id, ApprovalDto.ReservationRequest dto, MultipartFile file) throws IOException {
 
         Approval approval = approvalRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_APPROVAL));
