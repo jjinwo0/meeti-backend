@@ -80,7 +80,7 @@ public class MeetingController {
 
         tokenManager.validateToken(accessToken);
 
-        List findMeetings = meetingService.findMeetingByUserId(userId);
+        List<MeetingDto.Response> findMeetings = meetingService.findMeetingByUserId(userId);
 
         return ResponseEntity.ok(findMeetings);
     }

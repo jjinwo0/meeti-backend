@@ -72,6 +72,7 @@ public class OfficeController {
         String accessToken = authorization.split(" ")[1];
 
         tokenManager.validateToken(accessToken);
+
         Office findOffice = officeService.findOneByPlaceName(placeName);
 
         OfficeResponseDto response = OfficeResponseDto.builder()

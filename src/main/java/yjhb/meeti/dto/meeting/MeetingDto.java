@@ -43,7 +43,7 @@ public class MeetingDto {
 
             return MeetingDto.Response.builder()
                     .id(meet.getId())
-                    .username(meet.getUser().getUsername())
+                    .username(meet.getUser().getUsername().toString())
                     .title(meet.getTitle())
                     .detail(meet.getDetail())
                     .date(meet.getDate())

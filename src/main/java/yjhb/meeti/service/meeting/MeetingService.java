@@ -46,9 +46,7 @@ public class MeetingService {
 
         User findUser = userService.findUserByUserId(userId);
 
-        List<Meeting> meetings = findUser.getMeetings();
-
-        List<MeetingDto.Response> response = meetings.stream()
+        List<MeetingDto.Response> response = findUser.getMeetings().stream()
                 .map(MeetingDto.Response::from)
                 .collect(Collectors.toList());
 
