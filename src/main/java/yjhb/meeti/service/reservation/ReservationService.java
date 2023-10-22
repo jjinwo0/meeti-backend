@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.approval.constant.Decision;
 import yjhb.meeti.domain.reservation.Status;
+import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.dto.reservation.ReservationRegDto;
 import yjhb.meeti.dto.reservation.ReservationResponseDto;
 import yjhb.meeti.domain.office.Office;
@@ -94,42 +95,27 @@ public class ReservationService {
         LocalTime startTime = LocalTime.parse(dto.getStartTime(), formatter);
         LocalTime endTime = LocalTime.parse(dto.getEndTime(), formatter);
 
-        Reservation reservation = Reservation.builder()
-                .date(date)
-                .startTime(startTime)
-                .endTime(endTime)
-                .user(user)
-                .office(office)
-                .status(Status.CONFIRM)
-                .build();
+        Reservation reservation;
 
-        validateReservation(office, reservation);
-        office.updateStatus(false); //todo: 예약 기간에 따른 상태 변경 로직 구현
-
-        office.getReservations().add(reservation);
-
-        reservationRepository.save(reservation);
-
-        return reservation.getId();
-    }
-
-    @Transactional
-    public Long createReservationByOfficeUser(User user, ReservationRegDto dto, Office office){
-
-        LocalDate date = LocalDate.parse(dto.getDate().substring(0, 10));
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime startTime = LocalTime.parse(dto.getStartTime(), formatter);
-        LocalTime endTime = LocalTime.parse(dto.getEndTime(), formatter);
-
-        Reservation reservation = Reservation.builder()
-                .date(date)
-                .startTime(startTime)
-                .endTime(endTime)
-                .user(user)
-                .office(office)
-                .status(Status.WAIT)
-                .build();
+        if(user.getRole().equals(Role.ADMIN_OFFICE) || user.getRole().equals(Role.ADMIN_OFFICE)){
+            reservation = Reservation.builder()
+                    .date(date)
+                    .startTime(startTime)
+                    .endTime(endTime)
+                    .user(user)
+                    .office(office)
+                    .status(Status.WAIT)
+                    .build();
+        }else {
+            reservation = Reservation.builder()
+                    .date(date)
+                    .startTime(startTime)
+                    .endTime(endTime)
+                    .user(user)
+                    .office(office)
+                    .status(Status.CONFIRM)
+                    .build();
+        }
 
         validateReservation(office, reservation);
         office.updateStatus(false); //todo: 예약 기간에 따른 상태 변경 로직 구현

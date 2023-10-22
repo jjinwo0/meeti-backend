@@ -127,7 +127,7 @@ public class ReservationController {
         User findUser = userService.findUserByUserId(userId);
         Office findOffice = officeService.findOfficeById(reservationRegDto.getOfficeId());
 
-        reservationService.createReservationByOfficeUser(findUser, reservationRegDto, findOffice);
+        reservationService.createReservation(findUser, reservationRegDto, findOffice);
 
         calendarService.registrationCalenderByReservation(reservationRegDto, findOffice, findUser);
 
