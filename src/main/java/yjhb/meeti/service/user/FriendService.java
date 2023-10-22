@@ -95,6 +95,7 @@ public class FriendService {
         List<Friend> friends = userService.findUserByUserId(userId).getFriends();
 
         return friends.stream()
+                .filter(friend -> friend.isPermit() == true)
                 .map(f -> {
                     User findUser = userService.findUserByUserId(f.getFromId());
 
