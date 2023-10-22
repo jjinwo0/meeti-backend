@@ -51,6 +51,7 @@ public class ApprovalController {
     public ResponseEntity<Boolean> updateApproval(@PathVariable("approvalId") Long approvalId,
                                                   @RequestPart(value = "request")String request,
                                                   @RequestPart(value = "adminUsername")String adminUsername,
+                                                  @RequestPart(value = "placeName")String placeName,
                                                   @RequestPart(value = "file") MultipartFile file,
                                                   HttpServletRequest httpServletRequest) throws IOException{
 
@@ -59,9 +60,10 @@ public class ApprovalController {
 
         tokenManager.validateToken(accessToken);
 
-        ApprovalDto.Request dto = ApprovalDto.Request.builder()
+        ApprovalDto.ReservationRequest dto = ApprovalDto.ReservationRequest.builder()
                 .adminUsername(adminUsername)
                 .requestDetail(request)
+                .placeName(placeName)
                 .build();
 
         approvalService.update(approvalId, dto, file);
