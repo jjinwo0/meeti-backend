@@ -106,9 +106,11 @@ public class ReservationController {
         User findUser = userService.findUserByUserId(userId);
         Office findOffice = officeService.findOfficeById(reservationRegDto.getOfficeId());
 
-        reservationService.createReservation(findUser, reservationRegDto, findOffice);
+        Long reservationId = reservationService.createReservation(findUser, reservationRegDto, findOffice);
 
-        calendarService.registrationCalenderByReservation(reservationRegDto, findOffice, findUser);
+        Reservation createReservation = reservationService.findReservationById(reservationId);
+
+        calendarService.registrationCalenderByReservation(createReservation, findUser);
 
         return ResponseEntity.ok(true);
     }
@@ -127,9 +129,11 @@ public class ReservationController {
         User findUser = userService.findUserByUserId(userId);
         Office findOffice = officeService.findOfficeById(reservationRegDto.getOfficeId());
 
-        reservationService.createReservation(findUser, reservationRegDto, findOffice);
+        Long reservationId = reservationService.createReservation(findUser, reservationRegDto, findOffice);
 
-        calendarService.registrationCalenderByReservation(reservationRegDto, findOffice, findUser);
+        Reservation createReservation = reservationService.findReservationById(reservationId);
+
+        calendarService.registrationCalenderByReservation(createReservation, findUser);
 
         return ResponseEntity.ok(true);
     }

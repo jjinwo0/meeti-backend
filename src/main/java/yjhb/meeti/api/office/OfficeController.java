@@ -66,15 +66,27 @@ public class OfficeController {
     }
 
     @GetMapping("/search/place/{placeName}")
-    public ResponseEntity<List> findOfficeByPlaceName(@PathVariable("placeName") String placeName,
+    public ResponseEntity<OfficeResponseDto> findOfficeByPlaceName(@PathVariable("placeName") String placeName,
                                                     HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
 
         tokenManager.validateToken(accessToken);
-        List<OfficeResponseDto> findOfficeList = officeService.findByPlaceName(placeName);
+        Office findOffice = officeService.findOneByPlaceName(placeName);
 
-        return ResponseEntity.ok(findOfficeList);
+        OfficeResponseDto response = OfficeResponseDto.builder()
+                .id(findOffice.getId())
+                .placeName(findOffice.getPlaceName())
+                .address(findOffice.getAddress())
+                .pay(findOffice.getPay())
+                .status(findOffice.isStatus())
+                .description(findOffice.getDescription())
+                .telNum(findOffice.getTelNum())
+                .addressDetail(findOffice.getDetailAddress())
+                .image(findOffice.getImage())
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/search")

@@ -10,7 +10,7 @@ token:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true # query문 구조를 갖춰서 출력

@@ -69,20 +69,9 @@ public class OfficeService {
         return response;
     }
 
-    public List<OfficeResponseDto> findByPlaceName(String placeName){
-
-        List<Office> findOffices = officeRepository.findByPlaceNameContaining(placeName);
-
-        List<OfficeResponseDto> response = findOffices.stream()
-                .map(OfficeResponseDto::from)
-                .collect(Collectors.toList());
-
-        return response;
-    }
-
     public Office findOneByPlaceName(String placeName){
 
-        return officeRepository.findByPlaceName(placeName)
+        return officeRepository.findByPlaceNameContaining(placeName)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_OFFICE));
     }
 

@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.calender.Calender;
 import yjhb.meeti.domain.office.Office;
+import yjhb.meeti.domain.reservation.Reservation;
 import yjhb.meeti.dto.calender.CalenderRegDto;
 import yjhb.meeti.dto.calender.CalenderResponseDto;
 import yjhb.meeti.dto.meeting.MeetingDto;
 import yjhb.meeti.dto.reservation.ReservationRegDto;
+import yjhb.meeti.dto.reservation.ReservationResponseDto;
 import yjhb.meeti.global.error.exception.AuthenticationException;
 import yjhb.meeti.repository.calender.CalendarRepository;
 import yjhb.meeti.domain.user.entity.User;
@@ -95,19 +97,21 @@ public class CalenderService {
     }
 
     @Transactional
-    public CalenderResponseDto registrationCalenderByReservation(ReservationRegDto dto, Office office, User user){
+    public CalenderResponseDto registrationCalenderByReservation(Reservation reservation, User user){
+
+        ReservationResponseDto reservationDto = ReservationResponseDto.of(reservation);
 
         // todo Office 규격 수정
 
         Calender calender = Calender.builder()
                 .user(user)
-                .title(office.getPlaceName())
+                .title(reservationDto.getOfficeName())
                 .color("#548ff7")
                 .start(LocalDate.now().toString())
-                .initTime(dto.getStartTime())
+                .initTime(reservationDto.getStartTime().toString())
                 .end(LocalDate.now().toString())
-                .finishTime(dto.getEndTime())
-                .place(office.getPlaceName())
+                .finishTime(reservationDto.getEndTime().toString())
+                .place(reservationDto.getOfficeName())
                 .build();
 
         calendarRepository.save(calender);
