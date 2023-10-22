@@ -11,7 +11,7 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
 
     List<Office> findByAddressContaining(String address);
 
-    Optional<Office> findByPlaceNameContaining(String placeName);
+    List<Office> findByPlaceNameContaining(String placeName);
 
     @Query("select o from Office o")
     List<Office> findAll();

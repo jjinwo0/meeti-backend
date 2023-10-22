@@ -71,8 +71,12 @@ public class OfficeService {
 
     public Office findOneByPlaceName(String placeName){
 
-        return officeRepository.findByPlaceNameContaining(placeName)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_OFFICE));
+        List<Office> findOffice = officeRepository.findByPlaceNameContaining(placeName);
+
+        if (findOffice.isEmpty())
+            throw new EntityNotFoundException(ErrorCode.NOT_FOUND_OFFICE);
+
+        return findOffice.get(0);
     }
 
     public Long registrationOffice(OfficeRegDto officeRegDto, MultipartFile image, User user) throws IOException {
