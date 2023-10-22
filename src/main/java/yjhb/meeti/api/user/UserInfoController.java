@@ -34,10 +34,11 @@ public class UserInfoController {
         return ResponseEntity.ok(findUserInfoList);
     }
 
-    @GetMapping("/info/all")
-    public ResponseEntity<List> findAll(){
+    @GetMapping("/info/all/{userId}")
+    public ResponseEntity<List> findAll(@PathVariable("userId") Long userId){
 
         List<UserInfoDto> response = userService.findAll().stream()
+                .filter(user -> user.getId() != userId)
                 .map(UserInfoDto::from)
                 .collect(Collectors.toList());
 

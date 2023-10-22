@@ -128,7 +128,7 @@ public class FriendService {
     public List<UserInfoDto> findFriendRequestByToId(Long userId){
 
         List<Friend> findRequestList = friendRepository.findByToId(userId).stream()
-                .filter(f -> !f.isPermit())
+                .filter(f -> f.isPermit() == false)
                 .collect(Collectors.toList());
 
         List<UserInfoDto> userInfoDtos = new ArrayList<>();
