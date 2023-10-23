@@ -47,6 +47,9 @@ public class FriendService {
 
         User findUser = userService.findUserByUserId(toId);
 
+        if (friendRepository.findByFromId(toId, fromId).isPresent())
+            throw new BusinessException(ErrorCode.ALREADY_REQUEST);
+
         Friend friend = Friend.builder()
                 .user(findUser) // 요청을 받는 사람
                 .fromId(fromId) // 요청을 보내는 사람의 id

@@ -61,6 +61,7 @@ public enum ErrorCode {
     FRIEND_NOT_FOUND(HttpStatus.NOT_FOUND, "FR-001", "해당하는 친구 정보 객체를 찾을 수 없습니다."),
     FRIEND_ALREADY_PERMIT(HttpStatus.BAD_REQUEST, "FR-002", "이미 친구 관계입니다."),
     FRIEND_NOT_PERMIT(HttpStatus.BAD_REQUEST, "FR-003", "친구 요청 수락이 완료되지 않았습니다."),
+    ALREADY_REQUEST(HttpStatus.BAD_REQUEST, "FR-004", "이미 친구 요청한 회원입니다."),
 
     // 채팅
     NOT_FOUNT_ROOM(HttpStatus.BAD_REQUEST, "C-001", "ChatRoom을 찾을 수 없습니다."),
