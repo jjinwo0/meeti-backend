@@ -31,7 +31,7 @@ public class Message {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @OnDelete(action = OnDeleteAction.NO_ACTION) // Sender or Receiver가 지우면 함께 지우기 위함
     private User sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -47,7 +47,7 @@ public class Message {
         this.deletedByReceiver = true;
     }
 
-    public boolean isDeleted() {
+    public boolean isDeleted() { // 삭제 여부 판단 (둘 중에 하나라도 삭제되었으면 false)
         return isDeletedBySender() && isDeletedByReceiver();
     }
 }
