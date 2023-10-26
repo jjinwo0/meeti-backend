@@ -115,4 +115,9 @@ public class TokenManager {
 
         return claims;
     }
+
+    public Long getUserIdFromClaims(String token){
+
+        return Long.parseLong(getTokenClaims(token).getId());
+    }
 }

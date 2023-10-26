@@ -29,10 +29,7 @@ public class MessageService {
     }
 
     @Transactional
-    public Long write(Long senderId, Long receiverId, MessageDto messageDto){
-
-        User sender = userService.findUserByUserId(senderId);
-        User receiver = userService.findUserByUserId(receiverId);
+    public Long write(User sender, User receiver, MessageDto messageDto){
 
         Message message = Message.builder()
                 .title(messageDto.getTitle())
@@ -49,9 +46,7 @@ public class MessageService {
     /**
      * 받은 편지함 조회
      */
-    public List<MessageDto> receiveMessageList(Long receiverId){
-
-        User receiver = userService.findUserByUserId(receiverId);
+    public List<MessageDto> receiveMessageList(User receiver){
 
         return messageRepository.findByReceiver(receiver).stream()
                 .filter(message -> !message.isDeletedByReceiver())
@@ -63,9 +58,7 @@ public class MessageService {
      * 받은 편지 삭제
      */
     @Transactional
-    public void deleteMessageByReceiver(Long messageId, Long receiverId){
-
-        User receiver = userService.findUserByUserId(receiverId);
+    public void deleteMessageByReceiver(Long messageId, User receiver){
 
         Message findMessage = findMessageById(messageId);
 
@@ -81,9 +74,7 @@ public class MessageService {
     /**
      * 보낸 편지함 조회
      */
-    public List<MessageDto> sentMessage(Long senderId){
-
-        User sender = userService.findUserByUserId(senderId);
+    public List<MessageDto> sentMessage(User sender){
 
         return messageRepository.findBySender(sender).stream()
                 .filter(message -> !message.isDeletedBySender())
