@@ -20,7 +20,7 @@ public class MessageDto {
 
     private String receiverName;
 
-    public MessageDto from(Message message){
+    public static MessageDto from(Message message){
 
         return MessageDto.builder()
                 .title(message.getTitle())

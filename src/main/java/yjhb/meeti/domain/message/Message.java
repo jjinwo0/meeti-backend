@@ -12,8 +12,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Message {
 
@@ -38,6 +36,16 @@ public class Message {
     @JoinColumn(name = "receiver_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User receiver;
+
+    @Builder
+    public Message(String title, String content, boolean deletedBySender, boolean deletedByReceiver, User sender, User receiver) {
+        this.title = title;
+        this.content = content;
+        this.deletedBySender = deletedBySender;
+        this.deletedByReceiver = deletedByReceiver;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
 
     public void deleteBySender() {
         this.deletedBySender = true;

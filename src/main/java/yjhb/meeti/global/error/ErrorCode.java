@@ -65,6 +65,9 @@ public enum ErrorCode {
 
     // 채팅
     NOT_FOUNT_ROOM(HttpStatus.BAD_REQUEST, "C-001", "ChatRoom을 찾을 수 없습니다."),
+
+    // 쪽지
+    NOT_FOUND_MESSAGE(HttpStatus.BAD_REQUEST, "MS-001", "Message를 찾을 수 없습니다."),
     ;
 
     ErrorCode(HttpStatus httpStatus, String errorCode, String message) {
