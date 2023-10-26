@@ -75,7 +75,7 @@ public class MessageService {
             if (findMessage.isDeleted()) // 둘 다 삭제했다면,
                 messageRepository.delete(findMessage); // 양쪽 모두 삭제
         }
-        else return throw new IllegalStateException(ErrorCode.USER_NOT_EXISTS.getMessage());
+        else throw new IllegalStateException(ErrorCode.USER_NOT_EXISTS.getMessage());
     }
 
     /**
