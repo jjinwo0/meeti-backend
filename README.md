@@ -3,6 +3,7 @@
 - 프로젝트 인원 : 4명
 - 프로젝트 기간 : 23.07 ~ ing (Nest.js에서 Spring Boot로 대체 진행중)
 - 백엔드 전체 기능구현
+- Front-end Part : <a href="https://github.com/mintmin0320/meeti-front-deploy">https://github.com/mintmin0320/meeti-front-deploy</a>
 
   
 # 개발배경   
