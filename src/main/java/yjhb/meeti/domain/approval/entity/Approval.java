@@ -24,6 +24,7 @@ public class Approval {
     private String adminUsername;
     private String requestDetail;
     private String decisionDetail;
+    @Enumerated(value = EnumType.STRING)
     private Decision decision;
     private String file;
     private String placeName;

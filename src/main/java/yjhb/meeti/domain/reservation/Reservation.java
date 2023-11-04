@@ -25,6 +25,7 @@ public class Reservation {
     private LocalTime startTime;
     @Column
     private LocalTime endTime;
+    @Enumerated(value = EnumType.STRING)
     private Status status;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

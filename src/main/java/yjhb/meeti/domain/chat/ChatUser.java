@@ -23,6 +23,7 @@ public class ChatUser {
     @JoinColumn(name = "room_id")
     private ChatRoom chatRoom;
 
+    @Enumerated(value = EnumType.STRING)
     private RoomRole role;
 
     @Builder
