@@ -123,10 +123,6 @@ public class ApprovalService {
             findApproval.adminUpdate(dto.getDecisionDetail(), Decision.REJECT);
             findReservation.updateStatus(Status.REJECT);
         }
-        else { // 사용 안할 예정
-            findApproval.adminUpdate(dto.getDecisionDetail(), Decision.WAIT);
-            findReservation.updateStatus(Status.WAIT);
-        }
 
     }
 
