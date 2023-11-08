@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import yjhb.meeti.domain.approval.entity.Approval;
 import yjhb.meeti.domain.calender.Calender;
 import yjhb.meeti.domain.chat.ChatUser;
@@ -101,5 +102,14 @@ public class User extends BaseTimeEntity {
 
     public void expireToken(LocalDateTime now) {
         this.tokenExpirationTime = now;
+    }
+
+    public User hashPassword(PasswordEncoder encoder){
+        this.password = encoder.encode(this.password);
+        return this;
+    }
+
+    public boolean checkPassword(String plainPassword, PasswordEncoder encoder){
+        return encoder.matches(plainPassword, this.password);
     }
 }
