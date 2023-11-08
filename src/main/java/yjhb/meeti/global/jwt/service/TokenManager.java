@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import yjhb.meeti.domain.user.constant.Role;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.AuthenticationException;
@@ -17,7 +16,6 @@ import yjhb.meeti.global.jwt.dto.JwtTokenDto;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
-@Service
 @Slf4j
 @RequiredArgsConstructor
 public class TokenManager {
