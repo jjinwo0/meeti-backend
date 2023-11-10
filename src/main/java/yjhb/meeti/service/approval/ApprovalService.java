@@ -109,10 +109,13 @@ public class ApprovalService {
     @Transactional
     public void approvalDecisionByAdmin(Long approvalId, ApprovalDto.Admin dto){
 
+        // 결재 정보 확인
         Approval findApproval = findApprovalById(approvalId);
-        Reservation findReservation =
-                reservationService.findReservationByPlaceNameNameAndUserId(findApproval.getPlaceName(), findApproval.getUser().getId());
 
+        Reservation findReservation =
+                reservationService.findReservationByPlaceNameNameAndUserId(findApproval.getPlaceName().substring(6, findApproval.getPlaceName().length()), findApproval.getUser().getId());
+
+        // Admin Decision
         if (dto.getDecision().equals(Decision.CONFIRM.toString())) {
 
             findApproval.adminUpdate(dto.getDecisionDetail(), Decision.CONFIRM);
