@@ -33,7 +33,7 @@ public class ReservationResponseDto {
         Status status = reservation.getStatus();
         ReservationResponseDto dto = null;
 
-        if(status.equals(Status.WAIT)) {
+        if(status.equals(Status.WAIT.toString())) {
             dto = ReservationResponseDto.builder()
                     .id(reservation.getId())
                     .date(reservation.getDate())
