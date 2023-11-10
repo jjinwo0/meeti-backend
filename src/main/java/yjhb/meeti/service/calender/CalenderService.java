@@ -5,15 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yjhb.meeti.domain.calender.Calender;
-import yjhb.meeti.domain.office.Office;
 import yjhb.meeti.domain.reservation.Reservation;
 import yjhb.meeti.dto.calender.CalenderRegDto;
 import yjhb.meeti.dto.calender.CalenderResponseDto;
 import yjhb.meeti.dto.meeting.MeetingDto;
-import yjhb.meeti.dto.reservation.ReservationRegDto;
 import yjhb.meeti.dto.reservation.ReservationResponseDto;
 import yjhb.meeti.global.error.exception.AuthenticationException;
-import yjhb.meeti.repository.calender.CalendarRepository;
+import yjhb.meeti.repository.calender.CalenderRepository;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.repository.user.UserRepository;
 import yjhb.meeti.global.error.ErrorCode;
@@ -29,7 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CalenderService {
 
-    private final CalendarRepository calendarRepository;
+    private final CalenderRepository calendarRepository;
     private final UserRepository userRepository;
 
     public Calender findCalenderById(Long id){
@@ -143,5 +141,13 @@ public class CalenderService {
     public void deleteCalender(Long id){
 
         calendarRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void updateCalenderByApprovalDecision(Reservation reservation, User user){
+
+        ReservationResponseDto responseDto = ReservationResponseDto.of(reservation);
+
+        calendarRepository.findByUserAndPlace(user, responseDto.getPlace());
     }
 }

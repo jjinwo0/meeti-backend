@@ -24,6 +24,7 @@ public class ReservationResponseDto {
     private LocalTime endTime;
     @Schema(description = "예약 오피스의 이름")
     private String officeName;
+    private String place;
     private String telNum;
     private String image;
 
@@ -40,6 +41,7 @@ public class ReservationResponseDto {
                     .startTime(reservation.getStartTime())
                     .endTime(reservation.getEndTime())
                     .officeName("[대기중] " + reservation.getOffice().getPlaceName())
+                    .place(reservation.getOffice().getPlaceName())
                     .telNum(reservation.getOffice().getTelNum())
                     .image(reservation.getOffice().getImage())
                     .build();
@@ -50,6 +52,7 @@ public class ReservationResponseDto {
                     .startTime(reservation.getStartTime())
                     .endTime(reservation.getEndTime())
                     .officeName(reservation.getOffice().getPlaceName())
+                    .place(reservation.getOffice().getPlaceName())
                     .telNum(reservation.getOffice().getTelNum())
                     .image(reservation.getOffice().getImage())
                     .build();
@@ -60,6 +63,7 @@ public class ReservationResponseDto {
                     .startTime(reservation.getStartTime())
                     .endTime(reservation.getEndTime())
                     .officeName("[거절] " + reservation.getOffice().getPlaceName())
+                    .place(reservation.getOffice().getPlaceName())
                     .telNum(reservation.getOffice().getTelNum())
                     .image(reservation.getOffice().getImage())
                     .build();

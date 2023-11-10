@@ -16,6 +16,7 @@ import yjhb.meeti.repository.approval.ApprovalRepository;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.global.error.ErrorCode;
 import yjhb.meeti.global.error.exception.EntityNotFoundException;
+import yjhb.meeti.service.calender.CalenderService;
 import yjhb.meeti.service.file.S3Service;
 import yjhb.meeti.service.reservation.ReservationService;
 import yjhb.meeti.service.user.UserService;
@@ -33,6 +34,8 @@ public class ApprovalService {
     private final S3Service s3Service;
     private final UserService userService;
     private final ReservationService reservationService;
+    private final CalenderService calenderService;
+
 
     public Approval findApprovalById(Long id){
         return approvalRepository.findById(id)
@@ -115,16 +118,20 @@ public class ApprovalService {
         Reservation findReservation =
                 reservationService.findReservationByPlaceNameNameAndUserId(findApproval.getPlaceName().substring(6, findApproval.getPlaceName().length()), findApproval.getUser().getId());
 
+        User regUser = userService.findUserByUserId(findApproval.getUser().getId());
+
         // Admin Decision
         if (dto.getDecision().equals(Decision.CONFIRM.toString())) {
 
             findApproval.adminUpdate(dto.getDecisionDetail(), Decision.CONFIRM);
             findReservation.updateStatus(Status.CONFIRM);
+            calenderService.updateCalenderByApprovalDecision(findReservation, regUser);
         }
         if (dto.getDecision().equals(Decision.REJECT.toString())) {
 
             findApproval.adminUpdate(dto.getDecisionDetail(), Decision.REJECT);
             findReservation.updateStatus(Status.REJECT);
+            calenderService.updateCalenderByApprovalDecision(findReservation, regUser);
         }
 
     }
