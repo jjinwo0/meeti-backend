@@ -33,7 +33,7 @@ public class ReservationResponseDto {
         Status status = reservation.getStatus();
         ReservationResponseDto dto = null;
 
-        if(status.equals(Status.WAIT.toString())) {
+        if(status == Status.WAIT) {
             dto = ReservationResponseDto.builder()
                     .id(reservation.getId())
                     .date(reservation.getDate())
@@ -43,7 +43,7 @@ public class ReservationResponseDto {
                     .telNum(reservation.getOffice().getTelNum())
                     .image(reservation.getOffice().getImage())
                     .build();
-        } else if (status.equals(Status.CONFIRM.toString())){
+        } else if (status == Status.CONFIRM){
             dto = ReservationResponseDto.builder()
                     .id(reservation.getId())
                     .date(reservation.getDate())
