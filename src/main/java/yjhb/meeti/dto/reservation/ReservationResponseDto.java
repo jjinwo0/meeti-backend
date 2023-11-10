@@ -43,7 +43,7 @@ public class ReservationResponseDto {
                     .telNum(reservation.getOffice().getTelNum())
                     .image(reservation.getOffice().getImage())
                     .build();
-        } else if (status.equals(Status.CONFIRM)){
+        } else if (status.equals(Status.CONFIRM.toString())){
             dto = ReservationResponseDto.builder()
                     .id(reservation.getId())
                     .date(reservation.getDate())
