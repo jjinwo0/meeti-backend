@@ -120,4 +120,12 @@ public class TokenManager {
 
         return Long.parseLong(getTokenClaims(token).getId());
     }
+
+    public void validateOfficeUser(String token){
+
+        Role userRole = Role.from(String.valueOf(getTokenClaims(token).get("role")));
+
+        if (userRole != Role.COMMON_OFFICE)
+            throw new IllegalArgumentException(ErrorCode.NOT_OFFICE_USER.getMessage());
+    }
 }

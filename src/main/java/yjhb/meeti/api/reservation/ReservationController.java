@@ -125,6 +125,7 @@ public class ReservationController {
         String accessToken = authorization.split(" ")[1];
 
         tokenManager.validateToken(accessToken);
+        tokenManager.validateOfficeUser(accessToken);
 
         User findUser = userService.findUserByUserId(userId);
         Office findOffice = officeService.findOfficeById(reservationRegDto.getOfficeId());

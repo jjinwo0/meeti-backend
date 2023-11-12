@@ -30,6 +30,7 @@ public enum ErrorCode {
     NOT_EXISTS_PASSWORD(HttpStatus.BAD_REQUEST, "M-005", "Password가 일치하지 않습니다."),
     USERNAME_IS_NULL(HttpStatus.BAD_REQUEST, "M-006", "Username이 null 입니다."),
     NOT_VALID_CALENDAR(HttpStatus.BAD_REQUEST, "M-007", "해당 회원에게 접근 권한이 없는 일정입니다."),
+    NOT_OFFICE_USER(HttpStatus.BAD_REQUEST, "M-008", "Office User가 아닙니다."),
 
     // 스케쥴
     NOT_FOUND_CALENDER(HttpStatus.NOT_FOUND, "S-001", "스케쥴이 존재하지 않습니다."),
