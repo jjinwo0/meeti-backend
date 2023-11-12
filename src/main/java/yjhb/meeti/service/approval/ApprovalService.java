@@ -125,13 +125,12 @@ public class ApprovalService {
 
             findApproval.adminUpdate(dto.getDecisionDetail(), Decision.CONFIRM);
             findReservation.updateStatus(Status.CONFIRM);
-            calenderService.updateCalenderByApprovalDecision(findReservation, regUser);
+            calenderService.registrationCalenderByReservation(findReservation, regUser);
         }
         if (dto.getDecision().equals(Decision.REJECT.toString())) {
 
             findApproval.adminUpdate(dto.getDecisionDetail(), Decision.REJECT);
             findReservation.updateStatus(Status.REJECT);
-            calenderService.updateCalenderByApprovalDecision(findReservation, regUser);
         }
 
     }

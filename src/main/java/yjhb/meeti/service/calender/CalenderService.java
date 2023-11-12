@@ -142,12 +142,4 @@ public class CalenderService {
 
         calendarRepository.deleteById(id);
     }
-
-    @Transactional
-    public void updateCalenderByApprovalDecision(Reservation reservation, User user){
-
-        ReservationResponseDto responseDto = ReservationResponseDto.of(reservation);
-
-        calendarRepository.findByUserAndPlace(user, responseDto.getPlace());
-    }
 }
