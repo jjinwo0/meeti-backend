@@ -71,31 +71,6 @@ public class ApprovalController {
         return ResponseEntity.ok(true);
     }
 
-//    @Schema(name = "Approval Registration")
-//    @PostMapping(value = "/approval/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public ResponseEntity<Boolean> registrationApproval(@PathVariable("userId") Long userId,
-//                                                        @RequestPart(value = "request")String request,
-//                                                        @RequestPart(value = "adminUsername")String adminUsername,
-//                                                        @RequestPart(value = "file") MultipartFile file,
-//                                                        HttpServletRequest httpServletRequest) throws IOException {
-//
-//        String authorization = httpServletRequest.getHeader("Authorization");
-//        String accessToken = authorization.split(" ")[1];
-//
-//        tokenManager.validateToken(accessToken);
-//
-//        User findUser = userService.findUserByUserId(userId);
-//
-//        ApprovalDto.Request dto = ApprovalDto.Request.builder()
-//                .adminUsername(adminUsername)
-//                .requestDetail(request)
-//                .build();
-//
-//        approvalService.regApproval(dto, findUser, file);
-//
-//        return ResponseEntity.ok(true);
-//    }
-
     @Schema(name = "Approval Registration")
     @PostMapping(value = "/approval/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Boolean> registrationApprovalByReservation(@PathVariable("userId") Long userId,

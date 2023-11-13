@@ -97,7 +97,7 @@ public class ReservationService {
 
         Reservation reservation;
 
-        if(user.getRole().equals(Role.ADMIN_OFFICE) || user.getRole().equals(Role.ADMIN_OFFICE)){
+        if(user.getRole() == Role.COMMON_OFFICE || user.getRole() == Role.ADMIN_OFFICE){
             reservation = Reservation.builder()
                     .date(date)
                     .startTime(startTime)
