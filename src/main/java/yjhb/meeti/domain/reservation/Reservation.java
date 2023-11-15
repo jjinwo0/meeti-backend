@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import yjhb.meeti.domain.office.Office;
 import yjhb.meeti.domain.user.entity.User;
 
@@ -19,7 +20,6 @@ public class Reservation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     private Long id;
-    @Column
     private LocalDate date;
     @Column
     private LocalTime startTime;

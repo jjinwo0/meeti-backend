@@ -31,9 +31,7 @@ public class ReservationResponseDto {
     // todo 추후 수정 예정
     public static ReservationResponseDto of(Reservation reservation){
 
-//        Status status = reservation.getStatus();
-        ReservationResponseDto
-                dto = ReservationResponseDto.builder()
+        return ReservationResponseDto.builder()
                 .id(reservation.getId())
                 .date(reservation.getDate())
                 .startTime(reservation.getStartTime())
@@ -43,44 +41,5 @@ public class ReservationResponseDto {
                 .telNum(reservation.getOffice().getTelNum())
                 .image(reservation.getOffice().getImage())
                 .build();
-
-        /*
-        if(status == Status.WAIT) {
-            dto = ReservationResponseDto.builder()
-                    .id(reservation.getId())
-                    .date(reservation.getDate())
-                    .startTime(reservation.getStartTime())
-                    .endTime(reservation.getEndTime())
-                    .officeName("[대기중] " + reservation.getOffice().getPlaceName())
-                    .place(reservation.getOffice().getPlaceName())
-                    .telNum(reservation.getOffice().getTelNum())
-                    .image(reservation.getOffice().getImage())
-                    .build();
-        } else if (status == Status.CONFIRM){
-            dto = ReservationResponseDto.builder()
-                    .id(reservation.getId())
-                    .date(reservation.getDate())
-                    .startTime(reservation.getStartTime())
-                    .endTime(reservation.getEndTime())
-                    .officeName(reservation.getOffice().getPlaceName())
-                    .place(reservation.getOffice().getPlaceName())
-                    .telNum(reservation.getOffice().getTelNum())
-                    .image(reservation.getOffice().getImage())
-                    .build();
-        }else {
-            dto = ReservationResponseDto.builder()
-                    .id(reservation.getId())
-                    .date(reservation.getDate())
-                    .startTime(reservation.getStartTime())
-                    .endTime(reservation.getEndTime())
-                    .officeName("[거절] " + reservation.getOffice().getPlaceName())
-                    .place(reservation.getOffice().getPlaceName())
-                    .telNum(reservation.getOffice().getTelNum())
-                    .image(reservation.getOffice().getImage())
-                    .build();
-        }
-        */
-
-        return dto;
     }
 }
