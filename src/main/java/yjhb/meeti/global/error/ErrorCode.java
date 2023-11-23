@@ -37,6 +37,7 @@ public enum ErrorCode {
 
     // 오피스
     NOT_FOUND_OFFICE(HttpStatus.NOT_FOUND, "O-001","오피스가 존재하지 않습니다."),
+    NOT_OFFICE_OWNER(HttpStatus.NOT_FOUND, "O-002","오피스 삭제 권한이 없습니다."),
 
     // 승인
     NOT_FOUND_APPROVAL(HttpStatus.NOT_FOUND, "A-001", "결재 요청 내역이 존재하지 않습니다."),

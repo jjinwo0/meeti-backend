@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import yjhb.meeti.dto.office.OfficeRegDto;
 import yjhb.meeti.dto.office.OfficeResponseDto;
 import yjhb.meeti.domain.office.Office;
+import yjhb.meeti.global.error.exception.AuthenticationException;
 import yjhb.meeti.repository.office.OfficeRepository;
 import yjhb.meeti.domain.user.entity.User;
 import yjhb.meeti.repository.user.UserRepository;
@@ -108,7 +109,7 @@ public class OfficeService {
      * @param officeRegDto
      * @param image
      * @param user
-     * @return Office 식별자
+     * @return Office 식별ㅣㅐㅜㅎ
      * @throws IOException
      */
     public Long registrationOffice(OfficeRegDto officeRegDto, MultipartFile image, User user) throws IOException {
@@ -130,5 +131,19 @@ public class OfficeService {
         officeRepository.save(office);
 
         return office.getId();
+    }
+
+    /**
+     * Office 삭제
+     * @param id
+     */
+    public void deleteOffice(User user, Long officeId){
+
+        Office findOffice = findOfficeById(officeId);
+
+        if (!user.getOffices().contains(findOffice))
+            throw new AuthenticationException(ErrorCode.NOT_OFFICE_OWNER);
+
+        officeRepository.delete(findOffice);
     }
 }

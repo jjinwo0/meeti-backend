@@ -131,4 +131,21 @@ public class OfficeController {
 
         return ResponseEntity.ok(true);
     }
+
+    @DeleteMapping("/delete/{officeId}")
+    public ResponseEntity deleteOffice(@PathVariable("officeId")Long officeId,
+                                       HttpServletRequest httpServletRequest){
+
+        String authorization = httpServletRequest.getHeader("Authorization");
+        String accessToken = authorization.split(" ")[1];
+
+        tokenManager.validateToken(accessToken);
+
+        Long userId = tokenManager.getUserIdFromClaims(accessToken);
+        User findUser = userService.findUserByUserId(userId);
+
+        officeService.deleteOffice(findUser, officeId);
+
+        return ResponseEntity.ok(true);
+    }
 }
