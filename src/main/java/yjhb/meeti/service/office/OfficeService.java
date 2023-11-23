@@ -28,11 +28,21 @@ public class OfficeService {
     private final OfficeRepository officeRepository;
     private final S3Service s3Service;
 
+    /**
+     * 식별자를 통한 오피스 검색
+     * @param id
+     * @return Office Entity
+     */
     public Office findOfficeById(Long id){
         return officeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_OFFICE));
     }
 
+    /**
+     * User가 등록한 Office 검색
+     * @param userId
+     * @return List
+     */
     public List<OfficeResponseDto> findOfficeByUserId(Long userId){
 
         User findUser = userRepository.findById(userId)
@@ -47,6 +57,11 @@ public class OfficeService {
         return response;
     }
 
+    /**
+     * 주소로 Office 검색
+     * @param address
+     * @return List
+     */
     public List<OfficeResponseDto> findOfficeByAddress(String address){
 
         List<Office> officeList = officeRepository.findByAddressContaining(address);
@@ -58,6 +73,10 @@ public class OfficeService {
         return response;
     }
 
+    /**
+     * 모든 Office 검색
+     * @return List
+     */
     public List<OfficeResponseDto> findAllOffice(){
 
         List<Office> findAll = officeRepository.findAll();
@@ -69,6 +88,11 @@ public class OfficeService {
         return response;
     }
 
+    /**
+     * Office 이름으로 단일 검색
+     * @param placeName
+     * @return Office
+     */
     public Office findOneByPlaceName(String placeName){
 
         List<Office> findOffice = officeRepository.findByPlaceNameContaining(placeName);
@@ -79,6 +103,14 @@ public class OfficeService {
         return findOffice.get(0);
     }
 
+    /**
+     * Office 등록
+     * @param officeRegDto
+     * @param image
+     * @param user
+     * @return Office 식별자
+     * @throws IOException
+     */
     public Long registrationOffice(OfficeRegDto officeRegDto, MultipartFile image, User user) throws IOException {
 
         String officeImage = s3Service.upload(image, "officeImage");
