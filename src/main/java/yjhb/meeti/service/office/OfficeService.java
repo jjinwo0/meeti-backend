@@ -109,7 +109,7 @@ public class OfficeService {
      * @param officeRegDto
      * @param image
      * @param user
-     * @return Office 식별ㅣㅐㅜㅎ
+     * @return Office 식별
      * @throws IOException
      */
     public Long registrationOffice(OfficeRegDto officeRegDto, MultipartFile image, User user) throws IOException {
@@ -134,8 +134,9 @@ public class OfficeService {
     }
 
     /**
-     * Office 삭제
-     * @param id
+     * User가 등록한 Office 삭제
+     * @param user
+     * @param officeId
      */
     public void deleteOffice(User user, Long officeId){
 
