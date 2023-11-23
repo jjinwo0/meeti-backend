@@ -34,6 +34,11 @@ public class ReservationService {
     private final OfficeService officeService;
     private final UserService userService;
 
+    /**
+     * 식별자로 예약 내역 검색
+     * @param id
+     * @return Reservation
+     */
     public Reservation findReservationById(Long id){
         Reservation findReservation = reservationRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_RESERVATION));
@@ -41,6 +46,11 @@ public class ReservationService {
         return findReservation;
     }
 
+    /**
+     * Office의 예약 내역 검색
+     * @param id
+     * @return List
+     */
     public List<ReservationResponseDto> findReservationByOfficeId(Long id){
 
         Office findOffice = officeService.findOfficeById(id);
@@ -52,6 +62,11 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * User의 예약 내역 검색
+     * @param id
+     * @return List
+     */
     public List<ReservationResponseDto> findReservationByUserId(Long id){
 
         User findUser = userService.findUserByUserId(id);
@@ -63,7 +78,11 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
-    // 대기 상태 예약 리스트
+    /**
+     * User의 예약 내역 중 WAIT 상태인 예약 검색
+     * @param id
+     * @return List
+     */
     public List<ReservationResponseDto> findWaitReservationByUserId(Long id){
 
         User findUser = userService.findUserByUserId(id);
@@ -76,6 +95,11 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 예약 가능 상태인지 확인
+     * @param office
+     * @param reservation
+     */
     public void validateReservation(Office office, Reservation reservation){
         List<Reservation> reservations = office.getReservations();
 
@@ -86,6 +110,13 @@ public class ReservationService {
         }
     }
 
+    /**
+     * 예약 등록
+     * @param user
+     * @param dto
+     * @param office
+     * @return Reservation id
+     */
     @Transactional
     public Long createReservation(User user, ReservationRegDto dto, Office office){
 
@@ -127,6 +158,12 @@ public class ReservationService {
         return reservation.getId();
     }
 
+    /**
+     * 예약 내역 수정 (미사용)
+     * @param decision
+     * @param reservationId
+     * @return
+     */
     @Transactional
     public Status updateReservationStatus(String decision, Long reservationId){
 
@@ -140,6 +177,12 @@ public class ReservationService {
         return findReservation.getStatus();
     }
 
+    /**
+     * Office 이름과 User의 식별자로 예약 내역 확인
+     * @param placeName
+     * @param userId
+     * @return Reservation
+     */
     public Reservation findReservationByPlaceNameNameAndUserId(String placeName, Long userId){
 
         User findUser = userService.findUserByUserId(userId);
