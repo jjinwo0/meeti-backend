@@ -4,7 +4,7 @@ server:
 
 token:
   secret: ENC(F9QSTSYJ/xZMn0qoiNe8sWbMF/CggHI1) # 임의의 문자열
-  access-token-expiration-time: 60000 # 15분 1000(ms) x 60(s) x 15(m) (* 10 : 테스트용 -> 150분)
+  access-token-expiration-time: 90000000 # 15분 1000(ms) x 60(s) x 15(m) (* 10 : 테스트용 -> 150분)
   refresh-token-expiration-time: 1209600000 # 2주 1000(ms) x 60 (s) x 60(m) x 24(h) x 14(d)
 
 spring:
