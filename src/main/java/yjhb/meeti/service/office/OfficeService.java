@@ -106,8 +106,9 @@ public class OfficeService {
 
     public Office findOneByPlaceName(String placeName){
 
-        return officeRepository.findOneByPlaceNameContaining(placeName)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_OFFICE));
+        List<Office> findOfficeList = officeRepository.findByPlaceNameContaining(placeName);
+
+        return findOfficeList.get(0);
     }
 
     /**
