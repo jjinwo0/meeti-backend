@@ -13,6 +13,9 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
 
     List<Office> findByPlaceNameContaining(String placeName);
 
+    @Query("select o from Office o where o.placeName = :placeName limit 1")
+    Optional<Office> findOneByPlaceNameContaining(String placeName);
+
     @Query("select o from Office o")
     List<Office> findAll();
 }

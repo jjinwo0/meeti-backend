@@ -17,6 +17,7 @@ import yjhb.meeti.global.jwt.service.TokenManager;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -66,26 +67,18 @@ public class OfficeController {
     }
 
     @GetMapping("/search/place/{placeName}")
-    public ResponseEntity<OfficeResponseDto> findOfficeByPlaceName(@PathVariable("placeName") String placeName,
+    public ResponseEntity<List> findOfficeByPlaceName(@PathVariable("placeName") String placeName,
                                                     HttpServletRequest httpServletRequest){
         String authorization = httpServletRequest.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
 
         tokenManager.validateToken(accessToken);
 
-        Office findOffice = officeService.findOneByPlaceName(placeName);
+        List<Office> findOfficeList = officeService.findByPlaceName(placeName);
 
-        OfficeResponseDto response = OfficeResponseDto.builder()
-                .id(findOffice.getId())
-                .placeName(findOffice.getPlaceName())
-                .address(findOffice.getAddress())
-                .pay(findOffice.getPay())
-                .status(findOffice.isStatus())
-                .description(findOffice.getDescription())
-                .telNum(findOffice.getTelNum())
-                .addressDetail(findOffice.getDetailAddress())
-                .image(findOffice.getImage())
-                .build();
+        List<OfficeResponseDto> response = findOfficeList.stream()
+                .map(OfficeResponseDto::from)
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(response);
     }

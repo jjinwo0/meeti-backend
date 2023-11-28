@@ -90,18 +90,24 @@ public class OfficeService {
     }
 
     /**
-     * Office 이름으로 단일 검색
+     * Office 이름으로 검색
      * @param placeName
-     * @return Office
+     * @return List
      */
-    public Office findOneByPlaceName(String placeName){
+    public List<Office> findByPlaceName(String placeName){
 
         List<Office> findOffice = officeRepository.findByPlaceNameContaining(placeName);
 
         if (findOffice.isEmpty())
             throw new EntityNotFoundException(ErrorCode.NOT_FOUND_OFFICE);
 
-        return findOffice.get(0);
+        return findOffice;
+    }
+
+    public Office findOneByPlaceName(String placeName){
+
+        return officeRepository.findOneByPlaceNameContaining(placeName)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_OFFICE));
     }
 
     /**
