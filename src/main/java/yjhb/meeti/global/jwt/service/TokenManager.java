@@ -123,6 +123,8 @@ public class TokenManager {
 
     public void validateOfficeUser(String token){
 
+        validateToken(token);
+
         Role userRole = Role.from(String.valueOf(getTokenClaims(token).get("role")));
 
         if (userRole != Role.COMMON_OFFICE)

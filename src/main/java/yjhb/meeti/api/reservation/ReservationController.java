@@ -124,7 +124,7 @@ public class ReservationController {
         String authorization = httpServletRequest.getHeader("Authorization");
         String accessToken = authorization.split(" ")[1];
 
-        tokenManager.validateToken(accessToken);
+//        tokenManager.validateToken(accessToken);
         tokenManager.validateOfficeUser(accessToken);
 
         User findUser = userService.findUserByUserId(userId);
